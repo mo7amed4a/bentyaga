@@ -127,6 +127,9 @@ p {
   position: relative;
   height: 500px;
 }
+li:not(:first-child) .imageContainer{
+  border-left: 2px solid black !important;
+}
 
 .checkboxContainer {
   display: none;

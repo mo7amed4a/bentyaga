@@ -61,7 +61,14 @@ body {
     background: black;
 }
 
+#navbarSupportedContent .fa-close {
+    display: none;font-size: 24px;padding: 12px;
+}
+
 @media (max-width: 768px) {
+    #navbarSupportedContent .fa-close {
+        display: block;
+    }
     .product_details_wrapper >div h1, .product_details_wrapper >div p {
         padding: 0 20px;
     }
@@ -79,4 +86,84 @@ body {
         position: absolute;
         z-index: 2;
     }
+    #navbarSupportedContent {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 55;
+        background: #fbfbfb;
+    }
+    #navbarSupportedContent ul {
+        margin-top: 16px;
+        border-top: 2px solid #3838384b;
+    }
+    #navbarSupportedContent li {
+        padding: 0 !important;
+    }
+    #navbarSupportedContent ul a {
+        color: #383838 !important;
+        font-weight: 400 !important;
+        padding: 16px 10px !important;
+        border-bottom: 2px solid #3838384b;
+        background-color: #fff;
+    }
+    #navbarSupportedContent a {
+        color: #a1a1a1 !important;
+        font-weight: 500 !important;
+        line-height: 20px !important;
+        font-size: 14px;
+    }
+    #navbarSupportedContent .nav_icons {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .fa-cart-shopping {
+        font-family: 'Inter', sans-serif !important;
+    }
+    .fa-cart-shopping::before {
+        font-family: 'Inter', sans-serif !important;
+        content: "Cart" !important;
+        letter-spacing: normal !important;
+    }
+    .fa-heart {
+        font-family: 'Inter', sans-serif !important;
+    }
+    .fa-heart::before {
+        font-family: 'Inter', sans-serif !important;
+        content: "Wishlist" !important;
+        letter-spacing: normal !important;
+    }
+    .fa-user {
+        font-family: 'Inter', sans-serif !important;
+        padding: 0 !important;
+    }
+    .fa-user::before {
+        font-family: 'Inter', sans-serif !important;
+        content: "Login" !important;
+        letter-spacing: normal !important;
+        color: #a1a1a1 !important;
+        opacity: 1 !important;
+        padding: 0 !important;
+    }
+    .contact-form-wrapper input {
+        width: 100% !important;
+    }
+    .contact-form-wrapper textarea {
+        border: none;
+        margin: 0 !important;
+        border: 1px solid;
+        width: 100% !important;
+        height: 160px;
+        resize: none;
+        border-bottom: 0;
+    }
+    .contact-form-wrapper {
+        border-bottom: 2px solid black !important;
+    }
+}
+.contact-form-wrapper *:focus {
+    outline: none;
 }

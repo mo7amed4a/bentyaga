@@ -20,7 +20,7 @@
             <p className={Style.secondPara}>feel free to message us any time , anywhere</p>
           </div>
 
-          <div className='border border-black border-1'>
+          <div className='border border-black border-1 contact-form-wrapper'>
             
               <input type="text" className='w-50 p-4'  placeholder='Name'/>
 
