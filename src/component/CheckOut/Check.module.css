@@ -1,0 +1,145 @@
+*{
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font family */
+
+}
+.customInput{
+    border: black 1px solid !important;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    margin: 15px 0 ;
+}
+ .customInput:focus {
+    border-color: black !important; /* Change border color to black on focus */
+}
+
+.inputGroup {
+    position: relative;
+    width: 70%;
+}
+
+.customInputVoucher {
+    border: 1px solid black !important;
+    width: 90%; /* Adjust width as needed */
+    padding: 28px;
+    margin: 15px 0 ;
+
+}
+
+.customButton {
+    position: absolute;
+    right: 75px;
+    top: 35px;
+    height: auto;
+    width: 25%; /* Adjust button width */
+    background-color: black !important;
+    color: white !important;
+    border-radius: 0 !important;
+    padding: 10px !important;
+}
+.suringCard{
+    color: #222222C4;
+    font-weight: 400;
+}
+
+.confirmingButton{
+    border: black 1px solid !important;
+    background-color: black !important;
+    color: white !important;
+    width: 20%;
+    padding: 20px; 
+    margin-bottom: 10px;
+    border-radius: 0 !important;
+
+}
+
+.customCheckbox {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  
+  .customCheckbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .customCheckboxSpan {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    border: 1px solid black;
+  }
+  
+  .customCheckboxSpan:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+  
+  .customCheckbox input:checked + .customCheckboxSpan:after {
+    display: block;
+  }
+  
+  .customCheckbox input:checked + .customCheckboxSpan {
+    background-color: black;
+    border-color: black;
+  }
+
+  .newInput{
+    width: 50% !important;
+    margin: 15px;
+    padding: 15px;
+  }
+
+  .newInputCity{
+    width: 94% !important;
+    margin: 15px;
+    padding: 15px;
+
+  }
+  textarea{
+    width: 94% !important;
+    margin: 20px 15px !important;
+    padding: 15px;
+  }
+ .saveBtn{
+    width:90%;
+    margin: auto !important;
+    background-color: black !important;
+    padding: 10px ;
+    color: white;
+ }
+
+
+@media (max-width: 768px) {
+
+    .inputGroup{
+        width: 100%;
+
+    }
+
+    .addres{
+        padding: 15px 0;
+    }
+    .confirmOrder{
+        flex-direction: column;
+    }
+    .confirmingButton{
+        width: auto;
+    }
+
+}

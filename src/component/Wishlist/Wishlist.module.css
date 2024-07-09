@@ -1,0 +1,83 @@
+.flexContainer {
+    display: flex;
+  }
+  
+  .flexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensure columns stretch to match height */
+    position: relative;
+  }
+  
+  .imageContainer {
+    flex: 1; /* Allow image container to take full height of its parent */
+  }
+  
+  .removeBtn {
+    background-color: #E5002B !important;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 20px;
+    border: 0;
+  }
+  
+  .customlist {
+    padding-left: 5px; /* Space before the dots */
+  }
+  
+  .customlist .listitem {
+    position: relative;
+    padding-left: 20px; /* Space before the text */
+    margin-bottom: 5px; /* Space between items */
+    font-weight: 400;
+  }
+  
+  .customlist .listitem::before {
+    content: '•'; /* Unicode bullet character */
+    position: absolute;
+    left: 0;
+    color: black; /* Bullet color */
+  }
+  
+  .orderPara{
+    color: #4D4D4D;
+    font-weight: 400;
+  }
+
+  .dashed {
+    width: 100% ; /* Make the dashed line span the full width */
+    border-top: 1px dashed black; /* Define the dashed border style */
+    margin-top: 20px; /* Adjust margin as needed */
+    padding-top: 20px; /* Adjust padding as needed */
+  }
+
+
+  .orderSummaryColumn {
+    flex: 1; /* Allow image container to take full height of its parent */
+
+  }
+
+  .continueBtn{
+    background-color: black !important;
+    color: white;
+    width: 90%;
+    margin: 25px auto ;
+    padding: 10px 15px;
+    transition: all 1s;
+  }
+  .continueBtn:hover{
+    color: red;
+  }
+
+  .light
+  {
+    font-weight: 500;
+
+  }
+
+

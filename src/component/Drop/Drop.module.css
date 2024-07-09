@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+.theBackGround {
+    width: 100%;
+    height: 100vh; /* Set height to 75% of the viewport height */
+    background-image: url('https://s3-alpha-sig.figma.com/img/f826/d1b6/ac2c0abfc3631949cab9dca01b5aafc4?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=klhyy5-LK-yPZ67ZqHaMJpcPPtR3Do9Y1-N73ol6XaTF4Mkj-LQDY0kGG4yLIU44P-uovc3ZZJniXbZDE-pV36JMPjStf8NlpYbIFYks-OiHnsWuNCsqUTixWmNIqrTkHNUcikdf-szN8kxRThyTZPwZ1VVyyik~RamI2L~2HkURYtJs9b4YMOYFUe6JQY5WGgNVYxL-zFF-SavCt-2DS8lLSzj3Ly0MVkh-Y0kG-1zOBJteNWU~3myPoDlzVkgCsB34dxR45X4zNMEkZ4oT9E4t9wocp7vx79pfjfqnwHmfV6CRTLCqFTfh17KyCZbE4-hfHTzE09FoNCgjBVeBuQ__');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow: hidden; /* Prevent overflow of child elements */
+  }
+  
+  .layer2 {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to top, rgba(24, 24, 24, 0), rgba(24, 24, 24, 0.949));
+    display: flex;
+    align-items: center;
+  }
+  .results{
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+
+  }
+  
+/* General styles */
+.dropBTN {
+    color: black !important;
+    border: 1px solid black !important;
+    margin-right: 5px !important;
+}
+
+.viewBTN {
+    color: black !important;
+    border: 1px solid black !important;
+    margin-left: 5px !important;
+    display: flex;
+    border-radius: 0 !important;
+    align-items: center;
+    gap: 4px;
+}
+
+.viewBTN svg {
+    width: 22px;
+    height: 22px;
+}
+
+.product {
+    display: flex;
+}
+
+span {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Filter modal */
+.filterBtn {
+    background-color: black !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+.drops {
+    font-weight: lighter !important;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+}
+
+.filterBtns button {
+    width: 45%;
+}
+
+.customInput {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.btn1 {
+    background-color: white !important;
+    transition: all 1s;
+}
+
+.btn1:hover {
+    background-color: black !important;
+    color: white !important;
+}
+
+.btn2 {
+    background-color: black !important;
+    color: white;
+    transition: all 1s;
+}
+
+.btn2:hover {
+    background-color: white !important;
+    color: black;
+}
+
+.checkboxes {
+    position: absolute;
+    left: 20px;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.colorInput {
+    padding-left: 60px;
+}
+
+.checkboxes:checked + .colorInput {
+    background-color: var(--checkbox-color); /* Use custom property for color */
+}
+ .stickyFilterBtn {
+     position: fixed;
+     bottom: 20px; 
+     left: 50%;
+     transform: translate(-50%);
+     padding: 10px 20px;
+     border-radius: 5px;
+     z-index: 1000; 
+ }
+
+@media (max-width: 991px) {
+    .colorInputContainer {
+        flex: 0 0 50%; /* Two-column layout */
+        max-width: 50%;
+        padding-right: 10px; /* Adjust spacing between columns */
+    }
+    input{
+        border: 1px solid black !important;
+    }
+    .customInput {
+        flex-direction: column; /* Display inputs in column layout */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .checkboxes {
+        margin-top: 15px; /* Adjust checkbox margin */
+    }
+
+    .colorInput {
+        padding-left: 70px; /* Reset padding for smaller screens */
+    }
+
+    .filterBtns {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .filterBtns button {
+        width: 45%;
+    }
+
+    .drawerHeader {
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #000;
+        margin-bottom: 20px;
+    }
+
+    
+}
+
+
+@media (max-width: 768px) {
+    .theBackGround {
+      height: 100vh; /* Set height to 100% of the viewport height */
+      background-position: center center; /* Center the background image */
+      background-size: cover; /* Ensure the image covers the entire container */
+    }
+
+}

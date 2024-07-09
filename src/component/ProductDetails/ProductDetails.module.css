@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+.productDetailsContainer {
+    display: flex;
+    flex-direction: row; /* Stack vertically on smaller screens */
+    gap: 20px; /* Space between the images and details */
+    padding: 20px;
+    margin-top: 60px; /* Adjust this value based on your navbar height */
+}
+
+.imagesContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column; /* Display images in a column */
+    gap: 10px; /* Adjust as needed for space between images */
+}
+  select{
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 15px 10px;
+    width: 100% ;
+    font-size: 16px ;
+    font-weight: 300 ;
+    color: #00000099 ;
+    font-family: 'Inter', sans-serif;
+
+  }
+.productImage {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    border-right: 2px solid black; /* Border on the right */
+    border-bottom: 2px solid black; /* Border on the bottom */
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 0; /* Remove bottom margin */
+}
+
+.detailsContainer {
+    padding: 10px;
+    flex: 2;
+}
+
+.detailsContainer h1,
+.detailsContainer p {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 17px;
+    font-family: 'Inter' , sans-serif;
+}
+.detailsContainer1 p{
+    font-weight: 400;
+    font-size: 12px;
+    font-family: 'Roboto' , sans-serif;
+}
+
+
+.buyBtn, .addBtn {
+    width: 100%; /* Make buttons 100% width */
+    padding: 15px;
+    transition: all 1s;
+    text-decoration: none;
+    text-align: center;
+}
+
+.buyBtn {
+    margin-bottom: 10px;
+    background-color: black !important;
+    color: white;
+    font-weight: 600;
+    font-family: 'Roboto' , sans-serif;
+}
+
+.buyBtn:hover {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid black !important;
+}
+.detaills{
+    font-size: 16px !important;
+    font-weight: 300;
+}
+.specificDetail p ,.specificDetail strong{
+    font-weight: 300 ;
+    font-size: 12px;
+    font-family: 'Inter' , sans-serif;
+
+}
+.addBtn {
+    background-color: white !important;
+    color: black;
+    font-weight: 500;
+    font-family: 'Inter' , sans-serif;
+}
+
+.addBtn:hover {
+    background-color: black !important;
+    color: white !important;
+    border: 2px solid black !important;
+}
+
+.btnProductDetails {
+    border-left: 0 !important;
+    border-right: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .productDetailsContainer {
+        height: auto;
+        flex-direction: column; /* Arrange side by side on larger screens */
+        padding: 0;
+    }
+    .imagesContainer {
+        padding: 20px 20px 0
+    }
+    .detailsContainer {
+        padding: 0;
+    }
+    .imagesContainer {
+        width: 100%;
+        margin: auto;
+    }
+    .detailsContainer1 p{
+        width: 200px;
+        line-height: 14.06px;
+
+    }
+    .detailsContainer1{
+        border-bottom: 1px solid black;
+    }
+    .detail{
+        border-top: 1px solid black;
+        margin-top: 0 !important;
+    }
+   
+
+}

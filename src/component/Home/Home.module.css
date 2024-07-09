@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+.second {
+  position: relative;
+}
+
+.sale {
+  position: absolute;
+  background-color: red;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.forth {
+  position: relative;
+}
+
+.sale2 {
+  position: absolute;
+  background-color: red;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.theBackGround {
+  width: 100%;
+  height: 100vh; /* Set height to 75% of the viewport height */
+  background-image: url('https://s3-alpha-sig.figma.com/img/f826/d1b6/ac2c0abfc3631949cab9dca01b5aafc4?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=klhyy5-LK-yPZ67ZqHaMJpcPPtR3Do9Y1-N73ol6XaTF4Mkj-LQDY0kGG4yLIU44P-uovc3ZZJniXbZDE-pV36JMPjStf8NlpYbIFYks-OiHnsWuNCsqUTixWmNIqrTkHNUcikdf-szN8kxRThyTZPwZ1VVyyik~RamI2L~2HkURYtJs9b4YMOYFUe6JQY5WGgNVYxL-zFF-SavCt-2DS8lLSzj3Ly0MVkh-Y0kG-1zOBJteNWU~3myPoDlzVkgCsB34dxR45X4zNMEkZ4oT9E4t9wocp7vx79pfjfqnwHmfV6CRTLCqFTfh17KyCZbE4-hfHTzE09FoNCgjBVeBuQ__');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden; /* Prevent overflow of child elements */
+}
+
+.layer2 {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to top, rgba(24, 24, 24, 0), rgba(24, 24, 24, 0.949));
+  display: flex;
+  align-items: center;
+}
+
+
+
+.theBackGround1 {
+  width: 100%;
+  height: 100vh; /* Set height to 75% of the viewport height */
+  background-image: url('https://s3-alpha-sig.figma.com/img/f826/d1b6/ac2c0abfc3631949cab9dca01b5aafc4?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=klhyy5-LK-yPZ67ZqHaMJpcPPtR3Do9Y1-N73ol6XaTF4Mkj-LQDY0kGG4yLIU44P-uovc3ZZJniXbZDE-pV36JMPjStf8NlpYbIFYks-OiHnsWuNCsqUTixWmNIqrTkHNUcikdf-szN8kxRThyTZPwZ1VVyyik~RamI2L~2HkURYtJs9b4YMOYFUe6JQY5WGgNVYxL-zFF-SavCt-2DS8lLSzj3Ly0MVkh-Y0kG-1zOBJteNWU~3myPoDlzVkgCsB34dxR45X4zNMEkZ4oT9E4t9wocp7vx79pfjfqnwHmfV6CRTLCqFTfh17KyCZbE4-hfHTzE09FoNCgjBVeBuQ__');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden; /* Prevent overflow of child elements */
+}
+
+.layer1 {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(24, 24, 24, 0.6);
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+.theBackGround1 h1 {
+  position: absolute;
+  z-index: 2; /* Ensure the h1 is above layer2 */
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  font-weight: 800 !important;
+  font-size: 37.1px !important;
+  overflow: hidden;
+  top: 55%;
+  left: 10%;
+}
+
+.link {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 17.9px !important;
+  position: absolute;
+  top: 65%;
+  left: 10%;
+  display: inline-flex;
+  align-items: center; /* Align items vertically */
+  text-decoration: none; /* Remove default underline */
+  color: white; /* Set text color */
+}
+
+.link::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: white;
+  margin-top: 5px; /* Adjust the distance between the text and the line */
+  position: absolute;
+  left: 0;
+  top: 20px; /* Adjust the position of the line */
+
+}
+.link i {
+  padding-right: 5px; /* Adjust spacing between icon and text */
+  text-decoration: none; /* Remove default underline */
+
+}
+
+p {
+  font-weight: 800;
+}
+
+.imageContainer {
+  position: relative;
+  height: 500px;
+}
+
+.checkboxContainer {
+  display: none;
+  position: absolute;
+  top: 93%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 10px;
+}
+
+span {
+  font-weight: 300;
+  color: rgba(18, 18, 18, 1);
+}
+
+.imageContainer:hover .checkboxContainer {
+  display: flex;
+}
+
+.imageContainer:hover p {
+  display: none;
+}
+
+.checkbox {
+  display: none;
+}
+
+.checkboxLabelRed,
+.checkboxLabelGray {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.checkboxLabelRed {
+  background-color: red;
+}
+
+.checkboxLabelGray {
+  background-color: rgba(125, 125, 125, 1);
+}
+
+.sizeOptions {
+  display: none;
+  position: absolute;
+  top: 86%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 10px;
+  color: white;
+}
+
+.size {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dotSlider {
+  display: none;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 18px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: gray;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.active {
+  background-color: black;
+}
+
+.imageContainer:hover .dotSlider {
+  display: flex;
+}
+
+.imageContainer:hover .sizeOptions {
+  display: flex;
+}
+
+
+
+@media (max-width: 768px) {
+  .theBackGround {
+    height: 100vh; /* Set height to 100% of the viewport height */
+    background-position: center center; /* Center the background image */
+    background-size: cover; /* Ensure the image covers the entire container */
+  }
+
+  .theBackGround1 {
+    height: 100vh; /* Set height to 100% of the viewport height */
+    background-position: center center; /* Center the background image */
+    background-size: cover; /* Ensure the image covers the entire container */
+    position: relative;
+  }
+
+  .layer1{
+    background: linear-gradient(to bottom, rgba(24, 24, 24, 0.1), rgb(24, 24, 24));
+
+  }
+  .theBackGround1 h1{
+    position: absolute;
+    top: 70%;
+    left: 5px;
+  }  
+  .theBackGround1 .link{
+    position: absolute;
+    top: 80%;
+    left: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .imageContainer {
+    height: 100%;
+    padding-bottom: 30px;
+  }
+  .checkboxContainer {
+    top: 93%;
+  }
+  .dotSlider {
+    top: 75%;
+  }
+  .sizeOptions {
+    top: 83%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .imageContainer {
+    height: 100%;
+    padding-bottom: 30px;
+  }
+  .checkboxContainer {
+    top: 93%;
+  }
+  .dotSlider {
+    top: 75%;
+  }
+  .sizeOptions {
+    top: 83%;
+  }
+}
+
+@media (max-width: 1400px) {
+  .imageContainer {
+    height: 100%;
+    padding-bottom: 30px;
+  }
+  .checkboxContainer {
+    top: 93%;
+  }
+  .dotSlider {
+    top: 75%;
+  }
+  .sizeOptions {
+    top: 83%;
+  }
+}

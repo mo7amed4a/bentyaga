@@ -1,0 +1,131 @@
+.backContact {
+    height: 50vh; /* Adjusted height for responsiveness */
+    background-image: url('../../assets/images/ac2c0abfc3631949cab9dca01b5aafc4.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .layerContact {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to bottom , rgba(0, 0, 0, 0.899) ,rgba(255, 255, 255, 0));
+  }
+  
+  .backContact p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, 1);
+    font-size: 2rem; /* Adjusted font size for responsiveness */
+    text-align: center;
+  }
+  
+  .contactForm {
+    width: 90%; /* Adjusted width for responsiveness */
+    max-width: 600px; /* Added max-width for larger screens */
+    margin: 50px auto; /* Adjusted margin for responsiveness */
+  }
+  
+  .container {
+    padding: 30px;
+  }
+  
+  .formContact {
+    border: 2px solid black;
+    padding: 30px;
+
+  }
+  
+  .firstPara {
+    font-weight: 700;
+    font-size: 2rem; /* Adjusted font size for responsiveness */
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 10px;
+  }
+  
+  .secondPara {
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 20px; /* Adjusted margin for responsiveness */
+  }
+  
+  .msg {
+    width: 100%;
+    padding: 15px; /* Adjusted padding for responsiveness */
+    border-bottom: none;
+  }
+  
+  .sendBtn {
+    width: 100%;
+    max-width: 300px; /* Added max-width for larger screens */
+    height: 59px;
+    margin-top: 20px;
+  }
+  
+  .copy {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 50px; /* Adjusted margin for responsiveness */
+  }
+  
+  @media (max-width: 992px) {
+    .backContact {
+      height: 40vh;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .backContact {
+      height: 30vh;
+      margin-top: 55px;
+    }
+  
+    .contactForm {
+      width: 95%;
+      padding: 20px;
+    }
+  
+    .sendBtn {
+      max-width: 100%;
+    }
+  
+    .copy {
+      margin-bottom: 30px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .backContact {
+      height: 25vh;
+    }
+  
+    .contactForm {
+      width: 100%;
+    }
+  
+    .firstPara {
+      font-size: 1.5rem;
+    }
+  
+    .secondPara {
+      font-size: 1rem;
+    }
+  
+    .msg {
+      padding: 10px;
+    }
+  
+    .copy {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  
