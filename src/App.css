@@ -57,7 +57,7 @@ body {
     border-radius: 0;
     margin: 0 !important;
     width: 60px;
-    height: 3.5px;
+    height: 2px;
     background: black;
 }
 
@@ -82,7 +82,7 @@ body {
     .product_details_wrapper .detail_1 {
         margin-top: 0 !important;
     }
-    .product_details_wrapper .fa-heart  {
+    .product_details_wrapper .navbar  .fa-heart  {
         position: absolute;
         z-index: 2;
     }
@@ -120,27 +120,26 @@ body {
         flex-direction: column;
         gap: 8px;
     }
-    .fa-cart-shopping {
+    .navbar  .fa-cart-shopping {
         font-family: 'Inter', sans-serif !important;
     }
-    .fa-cart-shopping::before {
+    .navbar  .fa-cart-shopping::before {
         font-family: 'Inter', sans-serif !important;
         content: "Cart" !important;
         letter-spacing: normal !important;
     }
-    .fa-heart {
+    .navbar  .fa-heart {
         font-family: 'Inter', sans-serif !important;
     }
-    .fa-heart::before {
+    .navbar  .fa-heart::before {
         font-family: 'Inter', sans-serif !important;
         content: "Wishlist" !important;
         letter-spacing: normal !important;
     }
-    .fa-user {
+    .navbar  .fa-user {
         font-family: 'Inter', sans-serif !important;
-        padding: 0 !important;
     }
-    .fa-user::before {
+    .navbar  .fa-user::before {
         font-family: 'Inter', sans-serif !important;
         content: "Login" !important;
         letter-spacing: normal !important;
@@ -163,7 +162,60 @@ body {
     .contact-form-wrapper {
         border-bottom: 2px solid black !important;
     }
+    .login_wrapper {
+        border: none !important;
+        width: 100%;
+    }
+    .login_wrapper h3 {
+        font-size: 20px !important;
+    }
+    .form_wrapper {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }  
+    .bg-white-m {
+        background-color: #fff !important;
+    }  
+}
+.login_wrapper label {
+    color: #7C7C7C;
+    font-weight: 500;
+}
+.login_wrapper input, .login_wrapper select {
+    padding: 12px 16px !important;
+  border-radius: 3px;
+}
+
+.login_wrapper input {
+    padding: 10px 16px !important;
+    border-radius: 0;
+}
+.login_wrapper input:focus {
+    box-shadow: none;
+    outline: none;
+    border: none;
+}
+
+.login_wrapper button {
+    padding: 10px 16px !important;
+    border-radius: 0 !important;
 }
 .contact-form-wrapper *:focus {
     outline: none;
 }
+
+.toggleFeature button *{
+    font-size: 14px !important;
+    color: #383838;
+}
+.toggleFeature button{
+    padding: 10px 16px !important;
+    font-size: 16px !important;
+    background-color: transparent;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+.toggleFeature2 button{
+    border-top: none !important;
+}
+

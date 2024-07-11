@@ -46,15 +46,15 @@ export default function Login() {
 
   return <>
    
-    <div className="align-items-center d-flex flex-column justify-content-center">
-        <div className="col-md-6  border border-2 border-black border-bottom-0 py-5">
+    <div className=" align-items-center d-flex flex-column justify-content-center">
+        <div className="login_wrapper col-md-6  border border-2 border-black border-bottom-0 py-5">
             <div className='text-center mt-5 mb-3'>
                 <h3 className='overflow-hidden fw-bold mt-5 mb-5'>LOGIN</h3>
 
             </div>
            
 
-             <div className='w-100 mx-auto pb-5 pt-3 px-4'>
+             <div className='form_wrapper w-100 mx-auto pb-5 pt-3 px-4'>
 
                 <form onSubmit={formik.handleSubmit} className='pb-5'>
                     

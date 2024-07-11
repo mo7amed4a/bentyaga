@@ -254,12 +254,12 @@ export default function Drop() {
                 <div className={Styles.layer2}></div>
             </div>
 
-            <div className="mb-5 mx-3">
+            <div className="mb-5">
 
                 {/* Results count and view options */}
-                <div className="mt-2 d-flex justify-content-between align-items-center">
+                <div className="px-2 py-3 d-flex justify-content-between bg-light align-items-center">
                     <p className={Styles.results}>{products.length} results</p>
-                    <div className="d-flex justify-content-center align-items-center pb-2">
+                    <div className="d-flex justify-content-center align-items-center">
 
                         <Button
                             id="demo-positioned-button-drop"

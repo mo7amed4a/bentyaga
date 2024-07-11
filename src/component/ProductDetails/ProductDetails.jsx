@@ -111,14 +111,18 @@ const ProductDetails = () => {
         <div className={`${styles.productDetailsContainer} product_details_wrapper`}>
             <div className={styles.imagesContainer}>
                 {/* Heart icon */}
-                <Link to={'/wishlist'} className="fa-regular fa-heart fs-3 text-decoration-none text-black"></Link>
+                <Link to={'/wishlist'} className="fs-3 text-decoration-none text-black">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.2 24H10.8V22.6667H9.6V21.3333H8.4V20H7.2V18.6667H6V17.3333H4.8V16H3.6V14.6667H2.4V13.3333H1.2V10.6667H0V4H1.2V2.66667H2.4V1.33333H3.6V0H9.6V1.33333H10.8V2.66667H13.2V1.33333H14.4V0H20.4V1.33333H21.6V2.66667H22.8V4H24V10.6667H22.8V13.3333H21.6V14.6667H20.4V16H19.2V17.3333H18V18.6667H16.8V20H15.6V21.3333H14.4V22.6667H13.2V24ZM4.8 12V13.3333H6V14.6667H7.2V16H8.4V17.3333H9.6V18.6667H10.8V20H13.2V18.6667H14.4V17.3333H15.6V16H16.8V14.6667H18V13.3333H19.2V12H20.4V9.33333H21.6V5.33333H20.4V4H19.2V2.66667H15.6V4H14.4V5.33333H13.2V6.66667H10.8V5.33333H9.6V4H8.4V2.66667H4.8V4H3.6V5.33333H2.4V9.33333H3.6V12H4.8Z" fill="#121212"/>
+                    </svg>
+                </Link>
                 {/* Product images */}
                 {deviceType === 'Desktop' ? renderImagesAsList() : renderImagesAsSlider()}
             </div>
             <div className={styles.detailsContainer}>
                 <div className={`${styles.detail} detail_1 d-flex justify-content-between align-items-center mt-3 mb-4`}>
                     <h1 className='pt-4'>{product.title.split(' ').slice(0, 3).join(' ')}</h1>
-                    <p>${product.price}</p>
+                    <p className='pt-4'>${product.price}</p>
 
                 </div>
                 <div className={styles.detailsContainer1}>
@@ -156,10 +160,10 @@ const ProductDetails = () => {
                         // onClick={() => handleAddToCartClick(product.id)}
                     >Add to Cart</Link>
                 </div>
-                <div className="my-3 d-flex flex-column">
+                <div className="toggleFeature my-3 mb-0 d-flex flex-column m-0">
                     <button className={`${styles.btnProductDetails} d-flex align-items-center justify-content-between ${showDetails ? 'active' : ''} w-100  text-start p-4 border-left-0`} onClick={toggleDetails} aria-expanded={showDetails} aria-controls="productDetailsCollapse">
                         <span className={styles.detaills}>{showDetails ? 'Product Details' : 'Product Details'}</span>
-                        <i className={`fas fa-arrow-${showDetails ? 'up' : 'down'}`}></i>
+                        <i className={`fas fa-chevron-${showDetails ? 'up' : 'down'}`}></i>
                     </button>
                     <div className={`collapse ${showDetails ? 'show' : ''}`} id="productDetailsCollapse">
                         <div className={`${styles.specificDetail} card card-body`}>
@@ -172,10 +176,10 @@ const ProductDetails = () => {
                     </div>
                 </div>
 
-                <div className="my-3 d-flex flex-column">
+                <div className="toggleFeature toggleFeature2 my-5 mt-0 d-flex flex-column m-0">
                     <button className={`${styles.btnProductDetails} d-flex align-items-center justify-content-between ${size ? 'active' : ''} w-100  text-start p-4 border-left-0`} onClick={toggleSize} aria-expanded={size} aria-controls="productDetailsCollapse">
                         <span ame={styles.detaills}>{size ? 'Size & Fit' : 'Size & Fit'}</span>
-                        <i className={`fas fa-arrow-${size ? 'up' : 'down'}`}></i>
+                        <i className={`fas fa-chevron-${size ? 'up' : 'down'}`}></i>
                     </button>
                     <div className={`collapse ${size ? 'show' : ''}`} id="productDetailsCollapse">
                         <div className={`${styles.specificDetail} card card-body`}>

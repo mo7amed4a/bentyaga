@@ -6,6 +6,7 @@
     flex-direction: row; /* Stack vertically on smaller screens */
     gap: 20px; /* Space between the images and details */
     padding: 20px;
+    padding-top: 0 !important;
     margin-top: 60px; /* Adjust this value based on your navbar height */
 }
 
@@ -16,7 +17,7 @@
     gap: 10px; /* Adjust as needed for space between images */
 }
   select{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.571);
     border-radius: 4px;
     padding: 15px 10px;
     width: 100% ;
@@ -25,13 +26,13 @@
     color: #00000099 ;
     font-family: 'Inter', sans-serif;
     background: transparent;
-    border-radius: 0;
+    border-radius: 3px;
   }
 .productImage {
     width: 100%;
     height: auto; /* Maintain aspect ratio */
-    border-right: 2px solid black; /* Border on the right */
-    border-bottom: 2px solid black; /* Border on the bottom */
+    border-right: 1px solid black; /* Border on the right */
+    border-bottom: 1px solid black; /* Border on the bottom */
     padding: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 0; /* Remove bottom margin */
@@ -44,7 +45,7 @@
 
 .detailsContainer h1,
 .detailsContainer p {
-    margin-bottom: 20px;
+    margin-bottom: 0 !important;
     font-weight: 700;
     font-size: 17px;
     font-family: 'Inter' , sans-serif;
@@ -62,6 +63,7 @@
     transition: all 1s;
     text-decoration: none;
     text-align: center;
+    border: 1px solid #000;
 }
 
 .buyBtn {
@@ -75,7 +77,7 @@
 .buyBtn:hover {
     background-color: white !important;
     color: black !important;
-    border: 2px solid black !important;
+    border: 1px solid black !important;
 }
 .detaills{
     font-size: 16px !important;
@@ -97,7 +99,7 @@
 .addBtn:hover {
     background-color: black !important;
     color: white !important;
-    border: 2px solid black !important;
+    border: 1px solid black !important;
 }
 
 .btnProductDetails {
@@ -113,7 +115,7 @@
         padding: 0;
     }
     .imagesContainer {
-        padding: 20px 20px 0
+        padding: 10px 20px 0
     }
     .detailsContainer {
         padding: 0;
@@ -129,6 +131,8 @@
     }
     .detailsContainer1{
         border-bottom: 1px solid black;
+        padding-bottom: 24px;
+        margin-bottom: 56px;
     }
     .detail{
         border-top: 1px solid black;
@@ -136,4 +140,8 @@
     }
    
 
+    
+    .addBtn {
+        margin-bottom: 16px;
+    }
 }

@@ -53,33 +53,32 @@ export default function Footer() {
     return (
         <>
             <div className={`${styles.rowFooter} `}>
-            <div className="col-md-1 border border-1 border-black"></div>
 
                 {/* NEWSLETTER */}
-                <div className="col-md-2 border border-1 border-black pb-2 pt-3 ps-2">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3">
                     <h3
-                        className={`d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
+                        className={`px-2 pb-1 d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('newsletter')}
                     >
                         NEWSLETTER
                         {deviceType === 'Mobile' && renderArrowIcon('newsletter')}
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['newsletter']) && (
-                        <a className="text-black ps-2 text-decoration-none">Subscribe to our newsletter</a>
+                        <a className="text-black p-2 bg-white-m d-block text-decoration-none">Subscribe to our newsletter</a>
                     )}
                 </div>
 
                 {/* CLIENT SERVICES */}
-                <div className="col-md-2 border border-1 border-black pb-2 pt-3 ps-2">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
                     <h3
-                        className={`d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
+                        className={`px-2 pb-1 d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('clientServices')}
                     >
                         CLIENT SERVICES
                         {deviceType === 'Mobile' && renderArrowIcon('clientServices')}
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['clientServices']) && (
-                        <div className="d-flex flex-column ps-2">
+                        <div className="d-flex flex-column p-2 bg-white-m">
                             <a>Returns</a>
                             <a>Delivery</a>
                             <a>Payment</a>
@@ -88,30 +87,30 @@ export default function Footer() {
                 </div>
 
                 {/* THE COMPANY */}
-                <div className="col-md-2 border border-1 border-black pb-2 pt-3 ps-2">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
                     <h3
-                        className={`d-flex justify-content-between   ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
+                        className={`px-2 pb-1 d-flex justify-content-between   ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('company')}
                     >
                         THE COMPANY
                         {deviceType === 'Mobile' && renderArrowIcon('company')}
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['company']) && (
-                        <a className='ps-2 text-decoration-none text-black'>About Us</a>
+                        <a className='p-2 text-decoration-none text-black  w-100 d-block bg-white-m'>About Us</a>
                     )}
                 </div>
 
                 {/* FOLLOW US */}
-                <div className="col-md-2 border border-1 border-black pb-2 pt-3 ps-2">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
                     <h3
-                        className={`d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
+                        className={`d-flex px-2 pb-1 justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('followUs')}
                     >
                         FOLLOW US
                         {deviceType === 'Mobile' && renderArrowIcon('followUs')}
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['followUs']) && (
-                        <div className="d-flex flex-column ps-2">
+                        <div className="d-flex flex-column p-2 bg-white-m">
                             <a>Facebook</a>
                             <a>Instagram</a>
                             <a>Tiktok</a>
@@ -121,21 +120,21 @@ export default function Footer() {
                 </div>
 
                 {/* CONTACT US */}
-                <div className="col-md-2 border border-1 border-black pb-2 pt-3 ps-2">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
                     <h3
-                        className={`d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
+                        className={`px-2 pb-1 d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('contactUs')}
                     >
                         CONTACT US
                         {deviceType === 'Mobile' && renderArrowIcon('contactUs')}
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['contactUs']) && (
-                        <span className='ps-2'>Call US at: <br /> <a className="text-black ps-2 text-decoration-none">+201090359579</a></span>
+                        <span className='ps-2 p-2 bg-white-m w-100 d-block'>Call US at: <br /> <a className="text-black ps-2 text-decoration-none">+201090359579</a></span>
                     )}
                 </div>
 
                 {/* Empty column for spacing */}
-                <div className="col-md-1 border border-1 border-black"></div>
+                <div className="col-md-1 border-top border-t-1 border-black"></div>
             </div>
 
             {/* Footer */}

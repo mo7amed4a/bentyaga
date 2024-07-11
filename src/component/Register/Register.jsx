@@ -87,7 +87,7 @@ const handleMouseDownPassword = (event) => {
 
   return <>
    
-    <div className="align-items-center d-flex flex-column justify-content-center">
+    <div className="login_wrapper align-items-center d-flex flex-column justify-content-center">
         <div className="col-md-6  border border-2 border-black border-bottom-0 py-5" >
         <div className='text-center pt-5'>
         <h3 className='overflow-hidden fw-bold mt-5 pt-5'>CREATE A PROFILE </h3>

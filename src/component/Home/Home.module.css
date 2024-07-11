@@ -128,7 +128,7 @@ p {
   height: 500px;
 }
 li:not(:first-child) .imageContainer{
-  border-left: 2px solid black !important;
+  border-left: 1px solid black !important;
 }
 
 .checkboxContainer {
@@ -294,5 +294,18 @@ span {
   }
   .sizeOptions {
     top: 83%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .dotSlider {
+    gap: 12px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+  .react-multi-carousel-item {
+    max-width: 150px  !important;
   }
 }

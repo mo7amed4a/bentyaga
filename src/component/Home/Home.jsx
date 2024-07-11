@@ -48,9 +48,12 @@ export default function Home() {
         <div className={styles.layer2}></div>
       </div>
 
-      <Carousel autoPlay={500} infinite
+      <Carousel 
+      autoPlay={500} infinite
         arrows={false} 
-        responsive={responsive} partialVisibility={true}>
+        responsive={responsive} partialVisibility={true}
+        >
+
         {images.map((image, index) => (
           <div className={`${styles.border} ${styles.imageContainer}`} key={index}>
             <img className="w-100" src={image} alt="Fashion Item" />
