@@ -323,7 +323,7 @@ export default function Drop() {
                 </div>
 
                 {/* Product grid */}
-                <div className="row" style={{width: "calc(100vw + 2px)",transform: "translateX(11px)"}}>
+                <div className="row drop_wrapper" style={{width: "calc(100vw + 2px)",transform: "translateX(11px)"}}>
                     {products.map((item) => (
                         <div
                             key={item._id}
