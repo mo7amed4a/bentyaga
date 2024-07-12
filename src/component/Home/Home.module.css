@@ -125,12 +125,11 @@ p {
 
 .imageContainer {
   position: relative;
-  height: 500px;
+  height: 480px;
+  max-width: 315px;
+  border-left: 1px solid #000;
+  min-height: 390px;
 }
-li:not(:first-child) .imageContainer{
-  border-left: 1px solid black !important;
-}
-
 .checkboxContainer {
   display: none;
   position: absolute;
@@ -304,6 +303,18 @@ span {
   .dot {
     width: 8px;
     height: 8px;
+  }
+  .imageContainer p{
+    margin-bottom: 0;
+  }
+  .imageContainer {
+    max-width: 150px;
+    height: 230px;
+    min-height: 230px;
+    overflow: hidden;
+    padding: 0;
+    padding-bottom: 12px;
+    box-sizing: border-box;
   }
   .react-multi-carousel-item {
     max-width: 150px  !important;

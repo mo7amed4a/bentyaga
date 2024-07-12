@@ -3,6 +3,11 @@ import styles from './Home.module.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
+// Import Swiper styles
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { FreeMode, Navigation, Autoplay } from "swiper/modules";
 
 export default function Home() {
   const [activeIndexes, setActiveIndexes] = useState(Array(10).fill(0)); // Array to store active image index for each item
@@ -48,14 +53,18 @@ export default function Home() {
         <div className={styles.layer2}></div>
       </div>
 
-      <Carousel 
-      autoPlay={500} infinite
-        arrows={false} 
-        responsive={responsive} partialVisibility={true}
+      <Swiper 
+          slidesPerView={"auto"}
+          freeMode={true}
+          loop={true}
+          className="mySwiper"
+          modules={[Navigation, FreeMode, Autoplay]}
+          // autoplay={{ delay: 2500, disableOnInteraction: false }}
+          speed={350}
         >
 
         {images.map((image, index) => (
-          <div className={`${styles.border} ${styles.imageContainer}`} key={index}>
+          <SwiperSlide className={`${styles.border} ${styles.imageContainer}`} key={index}>
             <img className="w-100" src={image} alt="Fashion Item" />
 
             <div className={styles.checkboxContainer}>
@@ -86,9 +95,9 @@ export default function Home() {
             <p className="text-black text-center">
               <span>2 color</span>
             </p>
-          </div>
+          </SwiperSlide>
         ))}
-      </Carousel>
+      </Swiper>
 
       <div className={`${styles.theBackGround1} d-flex flex-column justify-content-center`}>
         <div className={styles.layer1}>

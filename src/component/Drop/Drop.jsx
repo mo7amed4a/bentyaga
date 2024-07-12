@@ -10,9 +10,13 @@ import WindowIcon from '@mui/icons-material/Window';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import TuneIcon from '@mui/icons-material/Tune';
-import Pagination from '@mui/material/Pagination';
+import { Pagination as MuiPagination } from '@mui/material';
 import { PaginationItem, styled } from '@mui/material';
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 export default function Drop() {
     const [products, setProducts] = useState([]);
     const [anchorElView, setAnchorElView] = useState(null);
@@ -257,7 +261,7 @@ export default function Drop() {
             <div className="mb-5">
 
                 {/* Results count and view options */}
-                <div className="px-2 py-3 d-flex justify-content-between bg-light align-items-center">
+                <div style={{backgroundColor: '#fff'}} className="px-2 py-3 d-flex justify-content-between bg-white align-items-center">
                     <p className={Styles.results}>{products.length} results</p>
                     <div className="d-flex justify-content-center align-items-center">
 
@@ -270,7 +274,6 @@ export default function Drop() {
                             onClick={handleClickDrop}
                         >
                             Drop
-                        </Button>
                         <Menu
                             id="demo-positioned-menu-drop"
                             anchorEl={anchorElDrop}
@@ -290,6 +293,7 @@ export default function Drop() {
                             <MenuItem onClick={() => handleDropSelect()}>999</MenuItem>
 
                         </Menu>
+                        </Button>
 
                         <Button
                             id="demo-positioned-button-view"
@@ -319,17 +323,29 @@ export default function Drop() {
                 </div>
 
                 {/* Product grid */}
-                <div className="row">
+                <div className="row" style={{width: "calc(100vw + 2px)",transform: "translateX(11px)"}}>
                     {products.map((item) => (
                         <div
                             key={item._id}
                             className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 4 ? 6 : 12} border border-1 border-black`}
-                            onClick={() => handleProductClick(item._id)}
                             style={{ cursor: 'pointer' }}
                         >
-                            <img src={item.imageCover} className="w-100" alt="" />
-                            <br />
-                            <span className="text-black d-flex justify-content-center pb-5 pt-2 fw-bolder">Leather Jacket</span>
+                            <Swiper 
+                            slidesPerView={"auto"}
+                            loop={true}
+                            className="mySwiper"
+                            navigation={true} // Enable navigation
+                            pagination={{ clickable: true }} // Enable pagination and make it clickable
+                            modules={[Navigation, Pagination]}>
+                                {
+                                    item.images.map(image => (
+                                        <SwiperSlide onClick={() => handleProductClick(item._id)}>
+                                            <img src={image} className="w-100" alt="" />
+                                        </SwiperSlide>
+                                    ))
+                                }
+                            </Swiper>
+                            <span onClick={() => handleProductClick(item._id)} style={{fontSize: "14px !important"}} className="text-black d-flex justify-content-center pb-5 pt-2 fw-bolder">Leather Jacket</span>
                         </div>
                     ))}
                 </div>
@@ -353,7 +369,7 @@ export default function Drop() {
 
                 {/* Pagination */}
                 <div className="d-flex justify-content-center mt-3">
-                    <Pagination
+                    <MuiPagination
                         count={6}
                         page={currentPage}
                         onChange={handleChange}
