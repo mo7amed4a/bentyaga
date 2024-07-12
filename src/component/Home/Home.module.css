@@ -301,11 +301,12 @@ span {
     gap: 12px;
   }
   .dot {
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
   }
   .imageContainer p{
     margin-bottom: 0;
+    font-size: 13px !important;
   }
   .imageContainer {
     max-width: 150px;

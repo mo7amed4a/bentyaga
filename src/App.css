@@ -294,3 +294,8 @@ html {
     border-top: none !important;
 }
 
+.drop_prod_name {
+    font-size: 12px !important;
+    padding-top: 0 !important;
+    margin-top: -4px;
+}

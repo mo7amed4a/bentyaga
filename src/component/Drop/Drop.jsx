@@ -345,7 +345,7 @@ export default function Drop() {
                                     ))
                                 }
                             </Swiper>
-                            <span onClick={() => handleProductClick(item._id)} style={{fontSize: "14px !important"}} className="text-black d-flex justify-content-center pb-5 pt-2 fw-bolder">Leather Jacket</span>
+                            <span onClick={() => handleProductClick(item._id)} style={{fontSize: "12px !important"}} className="text-black mb-2 d-flex justify-content-center pb-5 fw-bolder drop_prod_name">Leather Jacket</span>
                         </div>
                     ))}
                 </div>
