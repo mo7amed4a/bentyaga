@@ -135,7 +135,7 @@ body {
         z-index: 55;
         background: #fbfbfb;
         display: none;
-        min-height: 100vh;
+        min-height: 200vh;
     }
     #navbarSupportedContent.open {
         display: block;
