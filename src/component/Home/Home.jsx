@@ -59,7 +59,7 @@ export default function Home() {
           loop={true}
           className="mySwiper"
           modules={[Navigation, FreeMode, Autoplay]}
-          // autoplay={{ delay: 2500, disableOnInteraction: false }}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
           speed={350}
         >
 
