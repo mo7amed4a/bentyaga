@@ -18,6 +18,8 @@ import CartContextProvider from './CartContext';
 import Cart from './component/Cart/Cart';
 import Wishlist from './component/Wishlist/Wishlist';
 import Check from './component/CheckOut/Check';
+import { useEffect, useState } from 'react';
+import loaderimg from "./../src/assets/images/loader.jpg"
 
 let routers = createBrowserRouter([
   { path:'/' ,element: <Layout/> ,children:[
@@ -41,23 +43,19 @@ let routers = createBrowserRouter([
 
 
 function App() {
-  return <>
+  const [loader, setLoader] = useState(true)
+  useEffect(() => {
+    setTimeout(() => setLoader(false), 1000);
+  }, []);
 
- 
-
-  {/* <div className='back'>
-    <div className='layer'>
-
+  return loader ? (
+    <div style={{display: "flex", justifyContent: "center", alignItems: "center", width: '100vw', height: "100vh"}}>
+      <img src={loaderimg} alt="" className='loader' style={{width: 100}}/>
     </div>
-  </div> */}
-  {/* <CartContextProvider> */}
-  <RouterProvider router={routers}></RouterProvider>
+  ) : (
+    <RouterProvider router={routers}></RouterProvider>
+  )
 
-  {/* </CartContextProvider> */}
-
-
-
-  </>
 }
 
 export default App;
