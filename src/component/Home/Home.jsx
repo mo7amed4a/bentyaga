@@ -55,6 +55,7 @@ export default function Home() {
 
       <Swiper 
           slidesPerView={"auto"}
+          spaceBetween={5}
           freeMode={true}
           loop={true}
           className="mySwiper"
