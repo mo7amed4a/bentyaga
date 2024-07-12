@@ -139,16 +139,14 @@ body {
     #navbarSupportedContent.open {
         display: block;
         animation-delay: 1s;
-        animation: opacityAni .5s ease-out ;    
+        animation: opacityAni .05s ease-in ;    
     }
     @keyframes opacityAni {
         0% {
           opacity: 0;
-          transform: translateX(-100%);
         }
         100% {
             opacity: 1;
-            transform: translateX(0);
         }
       }
     #navbarSupportedContent ul {
@@ -164,6 +162,7 @@ body {
         padding: 10px 10px !important;
         border-bottom: 2px solid #3838384b;
         background-color: #fff;
+        font-family: inter;
     }
     #navbarSupportedContent a {
         color: #a1a1a1 !important;
