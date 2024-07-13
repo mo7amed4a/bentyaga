@@ -241,7 +241,7 @@ export default function Drop() {
 
     // Custom style for Pagination item
     const paginationItemStyle = (pageNumber) => ({
-        border: pageNumber === currentPage ? '1px solid black' : '3px solid black',
+        border: pageNumber === currentPage ? '1px solid black' : '2px solid black',
         borderRadius: '0px',
         padding: '0px',
         margin: '0 1px',
@@ -323,12 +323,11 @@ export default function Drop() {
                 </div>
 
                 {/* Product grid */}
-                <div className="row drop_wrapper" style={{width: "calc(100vw + 2px)",transform: "translateX(11px)"}}>
+                <div className="row drop_wrapper border-top border-black" style={{width: "calc(100vw + 2px)",transform: "translateX(11px)"}}>
                     {products.map((item) => (
                         <div
                             key={item._id}
-                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 4 ? 6 : 12} border border-1 border-black`}
-                            style={{ cursor: 'pointer' }}
+                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 4 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer'}}
                         >
                             <Swiper 
                             slidesPerView={"auto"}
@@ -378,6 +377,9 @@ export default function Drop() {
                                 {...item}
                                 style={{
                                     ...paginationItemStyle(item.page), // Optional custom styles for other pages
+                                    width: 20,
+                                    MaxWidth: 20,
+                                    height: 25
                                 }}
                             />
                         )}

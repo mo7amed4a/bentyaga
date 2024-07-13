@@ -55,7 +55,7 @@ export default function Footer() {
             <div className={`${styles.rowFooter} `}>
 
                 {/* NEWSLETTER */}
-                <div className="col-md-2 border-top border-t-1 border-black pt-3">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3 ps-2 pb-2">
                     <h3
                         className={`px-2 pb-1 d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('newsletter')}
@@ -69,7 +69,7 @@ export default function Footer() {
                 </div>
 
                 {/* CLIENT SERVICES */}
-                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3 ps-2 pb-2 ">
                     <h3
                         className={`px-2 pb-1 d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('clientServices')}
@@ -87,7 +87,7 @@ export default function Footer() {
                 </div>
 
                 {/* THE COMPANY */}
-                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3  ps-2 pb-2">
                     <h3
                         className={`px-2 pb-1 d-flex justify-content-between   ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('company')}
@@ -101,7 +101,7 @@ export default function Footer() {
                 </div>
 
                 {/* FOLLOW US */}
-                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3 ps-2 pb-2 ">
                     <h3
                         className={`d-flex px-2 pb-1 justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('followUs')}
@@ -120,7 +120,7 @@ export default function Footer() {
                 </div>
 
                 {/* CONTACT US */}
-                <div className="col-md-2 border-top border-t-1 border-black pt-3 ">
+                <div className="col-md-2 border-top border-t-1 border-black pt-3  ps-2 pb-2">
                     <h3
                         className={`px-2 pb-1 d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
                         onClick={() => handleToggleMobileDetails('contactUs')}
