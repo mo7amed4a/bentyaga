@@ -301,6 +301,11 @@ html {
 }
 .search_wrapper_main {
     border-bottom: 1px solid #000 ;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 99999;
 }
 .search_wrapper_main form{
     display: flex;
@@ -378,5 +383,11 @@ input:focus {
     .coupon_form button {
         width: 150px;
         margin: 16px auto;
+    }
+    .search_wrapper_main input{
+        padding: 12px 8px;
+        width: 100%;
+        border: none !important;
+        font-size: 12px;
     }
 }

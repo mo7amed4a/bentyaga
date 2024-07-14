@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Styles from './Drop.module.css';
@@ -22,7 +22,7 @@ export default function Drop() {
     const [anchorElView, setAnchorElView] = useState(null);
     const [anchorElDrop, setAnchorElDrop] = useState(null);
     const [grid, setGrid] = useState(1);
-    const [columnSize, setColumnSize] = useState(4); // Default to 3 columns on desktop
+    const [columnSize, setColumnSize] = useState(3); // Default to 3 columns on desktop
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [colorInputs, setColorInputs] = useState(Array.from({ length: 8 }).fill(''));
     const [currentPage, setCurrentPage] = useState(1);
@@ -231,7 +231,7 @@ export default function Drop() {
     // Handle click to open view menu
     const toggleGrid = () => {
         setGrid(!grid)
-        setColumnSize(columnSize == 6 ? 4 : 6)
+        setColumnSize(columnSize == 6 ? 3 : 6)
     };
 
     // Handle click to open drop menu
@@ -252,12 +252,36 @@ export default function Drop() {
         navigate(`/productdetails/${id}`);
     };
 
+    const [isSticky, setIsSticky] = useState(false);
+    const elementRef = useRef(null);
+    const headRef = useRef(null);
+  
+    const handleScroll = () => {
+      if (elementRef.current) {
+        const offsetTop = elementRef.current.getBoundingClientRect().top;
+        console.log();
+        if (offsetTop <= 0 && headRef.current.getBoundingClientRect().top <= 0) {
+            setIsSticky(true);
+        }
+        if (headRef.current.getBoundingClientRect().top > 0) {
+            setIsSticky(false);
+        }
+      }
+    };
+  
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+    
     return (
         <>
             <div className={`${Styles.theBackGround} d-flex flex-column justify-content-center`}>
                 <div className={Styles.layer2}></div>
             </div>
-            <div className="search_wrapper_main">
+            <div className="search_wrapper_main" style={{position: isSticky ? "fixed" : "relative"}}  ref={elementRef}>
                 <form action="">
                     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20.297 20.9935L13.7741 14.4706C13.2533 14.9143 12.6543 15.2577 11.9772 15.5008C11.3001 15.7438 10.6196 15.8654 9.93555 15.8654C8.26749 15.8654 6.85569 15.2879 5.70013 14.1331C4.54457 12.9782 3.9668 11.5668 3.9668 9.8987C3.9668 8.23064 4.54388 6.81849 5.69805 5.66224C6.85221 4.50599 8.26332 3.92717 9.93138 3.92578C11.5994 3.92439 13.0119 4.50217 14.1689 5.65912C15.3258 6.81606 15.9043 8.22821 15.9043 9.89558C15.9043 10.6192 15.7762 11.3195 15.5199 11.9966C15.2637 12.6737 14.9269 13.2529 14.5095 13.7341L21.0324 20.256L20.297 20.9935ZM9.93659 14.8227C11.3185 14.8227 12.4852 14.347 13.4366 13.3956C14.388 12.4442 14.8637 11.2772 14.8637 9.89453C14.8637 8.51189 14.388 7.34523 13.4366 6.39453C12.4852 5.44384 11.3185 4.96814 9.93659 4.96745C8.55464 4.96676 7.38763 5.44245 6.43555 6.39453C5.48346 7.34662 5.00777 8.51328 5.00846 9.89453C5.00916 11.2758 5.48485 12.4425 6.43555 13.3945C7.38624 14.3466 8.55291 14.8223 9.93555 14.8216" fill="black"/>
@@ -265,14 +289,14 @@ export default function Drop() {
                     <input type="text" name="search" id="search" placeholder='WHAT ARE YOU LOOKING FOR?' />
                 </form>
             </div>
-            <div className="mb-5">
+            <div className="mb-5" ref={headRef}>
 
                 {/* Results count and view options */}
-                <div style={{backgroundColor: '#fff'}} className="px-2 py-3 d-flex justify-content-between bg-white align-items-center">
+                <div style={{backgroundColor: '#fff'}} className="px-2 py-2 d-flex justify-content-between bg-white align-items-center">
                     <p className={Styles.results}>{products.length} results</p>
                     <div className="d-flex justify-content-center align-items-center">
 
-                        <Button
+                        <select
                             id="demo-positioned-button-drop"
                             className={Styles.viewBTN}
                             aria-controls={anchorElDrop ? 'demo-positioned-menu-drop' : undefined}
@@ -281,26 +305,10 @@ export default function Drop() {
                             onClick={handleClickDrop}
                         >
                             Drop
-                        <Menu
-                            id="demo-positioned-menu-drop"
-                            anchorEl={anchorElDrop}
-                            open={Boolean(anchorElDrop)}
-                            onClose={handleCloseDrop}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                        >
-                            <MenuItem onClick={() => handleDropSelect()}>999</MenuItem>
-                            <MenuItem onClick={() => handleDropSelect()}>999</MenuItem>
-                            <MenuItem onClick={() => handleDropSelect()}>999</MenuItem>
-
-                        </Menu>
-                        </Button>
+                            <option value="">999</option>
+                            <option value="">999</option>
+                            <option value="">999</option>
+                        </select>
 
                         <Button
                             id="demo-positioned-button-view"
@@ -334,7 +342,7 @@ export default function Drop() {
                     {products.map((item) => (
                         <div
                             key={item._id}
-                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 4 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer'}}
+                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 3 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer'}}
                         >
                             <Swiper 
                             slidesPerView={"auto"}
@@ -351,7 +359,7 @@ export default function Drop() {
                                     ))
                                 }
                             </Swiper>
-                            <span onClick={() => handleProductClick(item._id)} style={{fontSize: "12px !important"}} className="text-black mb-2 d-flex justify-content-center pb-5 fw-bolder drop_prod_name">Leather Jacket</span>
+                            <span onClick={() => handleProductClick(item._id)} style={{fontSize: "12px !important"}} className="text-black mb-4 d-flex justify-content-center pb-5 fw-bolder drop_prod_name">Leather Jacket</span>
                         </div>
                     ))}
                 </div>
@@ -375,22 +383,8 @@ export default function Drop() {
 
                 {/* Pagination */}
                 <div className="d-flex justify-content-center mt-3">
-                    <MuiPagination
-                        count={6}
-                        page={currentPage}
-                        onChange={handleChange}
-                        renderItem={(item) => (
-                            <CustomPaginationItem
-                                {...item}
-                                style={{
-                                    ...paginationItemStyle(item.page), // Optional custom styles for other pages
-                                    width: 20,
-                                    MaxWidth: 20,
-                                    height: 25
-                                }}
-                            />
-                        )}
-                    />
+                    {/* دي تظهر بس بدل الباجيناشن كل ما ينزل يحمل منتجات */}
+                    <h4 className='mt-5 my-3' style={{ fontWeight: 700, color: "rgba(0, 0, 0, .2)" }}>LOADING</h4>
                 </div>
             </div>
         </>
