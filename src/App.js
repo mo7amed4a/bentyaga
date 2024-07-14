@@ -20,6 +20,7 @@ import Wishlist from './component/Wishlist/Wishlist';
 import Check from './component/CheckOut/Check';
 import { useEffect, useState } from 'react';
 import loaderimg from "./../src/assets/images/loader.jpg"
+import Checkout from './component/PaymentCheckout/Checkout';
 
 let routers = createBrowserRouter([
   { path:'/' ,element: <Layout/> ,children:[
@@ -31,7 +32,7 @@ let routers = createBrowserRouter([
     {path:'login',element:<Login/>},
     {path:'drop',element:<Drop/>},
     {path:'cart',element:<Cart/>},
-    {path:'checkOut',element:<Check/>},
+    {path:'checkOut',element:<Checkout/>},
     {path:'wishlist',element:<Wishlist/>},
     {path : 'productdetails/:id' ,element:<ProductDetails/> },
     {path:'contact',element:<ContactUs/>},

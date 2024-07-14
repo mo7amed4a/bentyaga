@@ -100,7 +100,7 @@ export default function Home() {
         ))}
       </Swiper>
 
-      <div className={`${styles.theBackGround1} d-flex flex-column justify-content-center`}>
+      <Link to={"/drop"} className={`${styles.theBackGround1} d-flex flex-column justify-content-center`}>
         <div className={styles.layer1}>
           <h1 className="text-white z-2 px-1">Exclusive Fashion</h1>
           <Link className={`${styles.link} text-white d-flex align-items-center justify-content-center`}>
@@ -108,7 +108,7 @@ export default function Home() {
             Discover
           </Link>
         </div>
-      </div>
+      </Link>
     </>
   );
 }

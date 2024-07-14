@@ -25,12 +25,12 @@
               <input type="text" className='w-50 p-4'  placeholder='Name'/>
 
 
-              <input type="Email"  className='w-50 p-4' placeholder='Email Address'/>
+              <input type="Email"  className='w-50 p-4' placeholder='Email Address' style={{borderRight: "none"}}/>
               <input type="tel" className='w-50 p-4'  placeholder='Phone Number'/>
 
 
-              <input type="Email"  className='w-50 p-4' placeholder='Subject'/>
-              <textarea type="text"  className={Style.msg} rows={5} placeholder='Messege'/>
+              <input type="Email"  className='w-50 p-4' placeholder='Subject'  style={{borderRight: "none"}}/>
+              <textarea style={{border: "none", resize: "none"}} type="text"  className={Style.msg} rows={5} placeholder='Messege'/>
           </div>
 
           <div className='d-flex justify-content-center'>
