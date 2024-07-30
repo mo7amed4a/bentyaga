@@ -32,7 +32,7 @@
 .theBackGround {
   width: 100%;
   height: 100vh; /* Set height to 75% of the viewport height */
-  background-image: url('https://s3-alpha-sig.figma.com/img/f826/d1b6/ac2c0abfc3631949cab9dca01b5aafc4?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=klhyy5-LK-yPZ67ZqHaMJpcPPtR3Do9Y1-N73ol6XaTF4Mkj-LQDY0kGG4yLIU44P-uovc3ZZJniXbZDE-pV36JMPjStf8NlpYbIFYks-OiHnsWuNCsqUTixWmNIqrTkHNUcikdf-szN8kxRThyTZPwZ1VVyyik~RamI2L~2HkURYtJs9b4YMOYFUe6JQY5WGgNVYxL-zFF-SavCt-2DS8lLSzj3Ly0MVkh-Y0kG-1zOBJteNWU~3myPoDlzVkgCsB34dxR45X4zNMEkZ4oT9E4t9wocp7vx79pfjfqnwHmfV6CRTLCqFTfh17KyCZbE4-hfHTzE09FoNCgjBVeBuQ__');
+  background-image: url('./../../assets/images/hero.png');
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -55,7 +55,7 @@
 .theBackGround1 {
   width: 100%;
   height: 100vh; /* Set height to 75% of the viewport height */
-  background-image: url('https://s3-alpha-sig.figma.com/img/f826/d1b6/ac2c0abfc3631949cab9dca01b5aafc4?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=klhyy5-LK-yPZ67ZqHaMJpcPPtR3Do9Y1-N73ol6XaTF4Mkj-LQDY0kGG4yLIU44P-uovc3ZZJniXbZDE-pV36JMPjStf8NlpYbIFYks-OiHnsWuNCsqUTixWmNIqrTkHNUcikdf-szN8kxRThyTZPwZ1VVyyik~RamI2L~2HkURYtJs9b4YMOYFUe6JQY5WGgNVYxL-zFF-SavCt-2DS8lLSzj3Ly0MVkh-Y0kG-1zOBJteNWU~3myPoDlzVkgCsB34dxR45X4zNMEkZ4oT9E4t9wocp7vx79pfjfqnwHmfV6CRTLCqFTfh17KyCZbE4-hfHTzE09FoNCgjBVeBuQ__');
+  background-image: url('./../../assets/images/hero.png');
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;

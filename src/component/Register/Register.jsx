@@ -1,210 +1,166 @@
-import {React,useState} from 'react';
+import React, { useState } from 'react';
 import Style from './Register.css';
-import { Formik, useFormik } from 'formik';
-import { Link } from 'react-router-dom';
-
-// import * as Yup from 'yup';
-import {Checkbox} from '@mui/material';
-// import Box from '@mui/material/Box';
-// import IconButton from '@mui/material/IconButton';
-// import Input from '@mui/material/Input';
-// import FilledInput from '@mui/material/FilledInput';
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import FormHelperText from '@mui/material/FormHelperText';
-// import FormControl from '@mui/material/FormControl';
-// import TextField from '@mui/material/TextField';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-
+import { useFormik } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+import { Checkbox } from '@mui/material';
+import axios from 'axios';
 
 export default function Register() {
 
-    function registerSubmit(values){
-        // console.log(values);
-    }
-    const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-const handleClickShowPassword = () => {
-  setShowPassword((prev) => !prev);
-};
+  const handleClickShowPassword = () => {
+      setShowPassword((prev) => !prev);
+  };
 
-const handleMouseDownPassword = (event) => {
-  event.preventDefault();
-};
-   
+  const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+  };
 
-    function validate(values){
-        let regexPass = /^[A-Z][a-z0-9]{5,10}$/ ;
+  async function sendDataToApi(values) {
+      const transformedValues = {};
+      for (const key in values) {
+          transformedValues[key.toLowerCase()] = values[key];
+      }
 
-        let regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-        let errors = {};
+      try {
+          const res = await axios.post('http://194.164.77.238/sing/', transformedValues);
+          if (res.data.status === true) {
+              navigate('/login'); // Navigate to the login page upon successful registration
+          } else {
+              alert('Registration failed: ' + JSON.stringify(res.data.errors)); // Display error message from API
+          }
+      } catch (err) {
+          console.error(err);
+          alert('An error occurred while registering. Please try again later.');
+      }
+  }
 
-        if(!values.FirstName){
-            errors.FirstName = 'Name is required';
-        }
-        else if (values.FirstName.length < 3){
-            errors.FirstName = 'Name length is 3'
-        }
-        else if(values.FirstName.length > 10){
-            errors.FirstName = 'Name length is 10'
-        }
+  function registerSubmit(values) {
+      sendDataToApi(values);
+  }
 
-        if(!values.Email){
-            errors.FirstName = 'Email is required';
-        } 
-        else if(!regexEmail.test(values.Email)){
-            errors.Email = 'Email is invalid'
-        }
+  function validate(values) {
+      let regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      let errors = {};
 
-        if(!values.Password){
-            errors.Password = 'Password is required';
-        } 
-        else if(!regexPass.test(values.Password)){
-            errors.Password = 'Password first letter must be uppercase followed by any thing'
-        }
+      if (!values.firstname) {
+          errors.firstname = 'Name is required';
+      } else if (values.firstname.length < 3) {
+          errors.firstname = 'Name length must be at least 3 characters';
+      } else if (values.firstname.length > 10) {
+          errors.firstname = 'Name length must be at most 10 characters';
+      }
 
+      if (!values.username) {
+          errors.username = 'Username is required';
+      }
 
-        return errors;
-    }
+      if (!values.email) {
+          errors.email = 'Email is required';
+      } else if (!regexEmail.test(values.email)) {
+          errors.email = 'Email is invalid';
+      }
 
-    let formik = useFormik({
-        initialValues:{
-            Civility:'',
-            FirstName:'',
-            Birthday:'',
-            Email:'',
-            Password:'',
-            Country:''
+      if (!values.password) {
+          errors.password = 'Password is required';
+      } 
 
-        },validate,
-        onSubmit:registerSubmit
-    })
+      if (!values.password2) {
+          errors.password2 = 'Password confirmation is required';
+      } else if (values.password2 !== values.password) {
+          errors.password2 = 'Passwords must match';
+      }
 
+      if (!values.country) {
+          errors.country = 'Country is required';
+      }
 
+      if (!values.currence) {
+          errors.currence = 'Currency is required';
+      }
 
-  return <>
-   
-    <div className="login_wrapper align-items-center d-flex flex-column justify-content-center">
-        <div className="col-md-6  border border-2 border-black border-bottom-0 py-5" >
-        <div className='text-center pt-5 register_title'>
-        <h3 className='overflow-hidden fw-bold mt-5 pt-5 '>CREATE A PROFILE </h3>
-            <p>Create a profile and benefit from order delivery updates and <br /> return management as well as personalized  <br />recommendations</p>
+      return errors;
+  }
 
+  let formik = useFormik({
+      initialValues: {
+          civility: '',
+          firstname: '',
+          username: '',
+          birthday: '',
+          email: '',
+          password: '',
+          password2: '',
+          country: '',
+          currence: ''
+      },
+      validate,
+      onSubmit: registerSubmit
+  });
+
+  return (
+    <>
+      <div className="login_wrapper align-items-center d-flex flex-column justify-content-center">
+        <div className="col-md-6 border border-2 border-black border-bottom-0 py-5">
+          <div className='text-center pt-5 register_title'>
+            <h3 className='overflow-hidden fw-bold mt-5 pt-5'>CREATE A PROFILE</h3>
+            <p>Create a profile and benefit from order delivery updates and <br /> return management as well as personalized <br />recommendations</p>
+          </div>
+          <div className='w-100 mx-auto py-3 px-4'>
+            <form onSubmit={formik.handleSubmit}>
+              <label htmlFor="civility" className='pt-4'>Civility*</label>
+              <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.civility} name="civility" id="civility" className='form-control border border-2 border-black p-4'>
+                <option value="">Select Civility</option>
+                <option value="Mr">MR.</option>
+                <option value="Mrs">MRS.</option>
+              </select>
+              <label htmlFor="firstname" className='pt-4'>First Name*</label>
+              {formik.errors.firstname && formik.touched.firstname ? <div className='text-danger py-1'>{formik.errors.firstname}</div> : ''}
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.firstname} type="text" id='firstname' className='form-control border border-2 border-black p-4' name='firstname' />
+              <label htmlFor="username" className='pt-4'>Username*</label>
+              {formik.errors.username && formik.touched.username ? <div className='text-danger py-1'>{formik.errors.username}</div> : ''}
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.username} type="text" id='username' className='form-control border border-2 border-black p-4' name='username' />
+              <label htmlFor="birthday" className='pt-4'>Birthdate (DD/MM/YYYY)*</label>
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.birthday} type="date" id='birthday' className='form-control border border-2 border-black p-4' name='birthday' />
+              <label htmlFor="email" className='pt-4'>Email*</label>
+              {formik.errors.email && formik.touched.email ? <div className='text-danger py-1'>{formik.errors.email}</div> : ''}
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.email} type="email" id='email' className='form-control border border-2 border-black p-4' name='email' />
+              <label htmlFor="password" className='pt-4'>Password*</label>
+              {formik.errors.password && formik.touched.password ? <div className='text-danger py-1'>{formik.errors.password}</div> : ''}
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password} type={showPassword ? 'text' : 'password'} id='password' className='form-control border border-2 border-black p-4' name='password' />
+              <label htmlFor="password2" className='pt-4'>Confirm Password*</label>
+              {formik.errors.password2 && formik.touched.password2 ? <div className='text-danger py-1'>{formik.errors.password2}</div> : ''}
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password2} type={showPassword ? 'text' : 'password'} id='password2' className='form-control border border-2 border-black p-4' name='password2' />
+              <label htmlFor="country" className='pt-4'>Country/Region of residence*</label>
+              <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.country} name="country" id="country" className='form-control border border-2 border-black p-4'>
+                <option value="">Select Country</option>
+                <option value="Egypt">Egypt / EGP</option>
+                <option value="Saudi Arabia">Saudi Arabia / SAR</option>
+                {/* Add other countries as needed */}
+              </select>
+              <label htmlFor="currence" className='pt-4'>Currency*</label>
+              <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.currence} name="currence" id="currence" className='form-control border border-2 border-black p-4'>
+                <option value="">Select Currency</option>
+                <option value="EGP">Egyptian Pound</option>
+                <option value="SAR">Saudi Riyal</option>
+                {/* Add other currencies as needed */}
+              </select>
+              <div className="d-flex align-items-center py-2">
+                <Checkbox checked disabled />
+                <label htmlFor="updates">I have read and understood the <span className='text-decoration-underline'>privacy policy</span> and I agree to the <br /> <span className='text-decoration-underline'> Terms of use.</span> *</label>
+              </div>
+              <div className="d-flex align-items-center py-2 mb-5">
+                <Checkbox checked disabled />
+                <label className='ps-2' htmlFor="updates">I would like to receive updates about Bantayga new activities, exclusive products, tailored services and to have a personalised client experience based on my interests.*</label>
+              </div>
+              <button type='submit' className='w-100 btn bg-black text-white my-5 py-3 fs-4 border-0'>Create My Profile</button>
+              <p className='text-center mb-5'>Already have a profile? <Link to="/login" className='text-decoration-underline text-black'>Log in</Link></p>
+            </form>
+          </div>
         </div>
-           
-
-             <div className='w-100 mx-auto py-3 px-4'>
-
-                <form onSubmit={formik.handleSubmit}>
-                    
-                    <label htmlFor="civility" className='pt-4'>Civility*</label>
-                    
-
-                    <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.Civility}  name="Civility" id="civility" className='form-control border border-2 border-black  p-4'>
-                        <option value="Mr">MR. </option>
-                        <option value="Mrs">MRS.</option>
-                    </select>
-
-                    
-
-                    <label htmlFor="firstName" className='pt-4'>FirstName*</label>
-                    {formik.errors.FirstName && formik.touched.FirstName? <div className='text-danger py-1 '>{formik.errors.FirstName}</div> :''}
-
-                    <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.FirstName} type="text" id='firstName' className='form-control border border-2 border-black p-4' name='FirstName'/>
-
-
-
-                    <label htmlFor="birthday" className='pt-4'>Birthdate (DD/MM/YYYY)*</label>
-                    <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.Birthday} type="date" id='birthday' className='form-control border border-2 border-black p-4' name='Birthday'/>
-
-
-                    <label htmlFor="email" className='pt-4'>Email*</label>
-                    {formik.errors.Email && formik.touched.Email? <div className='text-danger py-1 '>{formik.errors.Email}</div> :''}
-
-                    <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.Email} type="email" id='email' className='form-control border border-2 border-black p-4' name='Email'/>
-
-
-                    <label htmlFor="password" className='pt-4'>Password*</label>
-                    {formik.errors.Password && formik.touched.Password? <div className='text-danger py-1 '>{formik.errors.Password}</div> :''}
-
-                    <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.Password} type="password" id='password' className='form-control border border-2 border-black p-4' name='Password'/>
-
-
-                    <label htmlFor="country" className='pt-4'>Country/Region of residence*</label>
-                    <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.Country}  name="Country" id="country" className='form-control border border-2 border-black  p-4'>
-                        <option value="Egypt / EGP">Egypt / EGP</option>
-                        <option value="Saudi Arbia">Sauid Arabia / riyal.</option>
-                    </select>
-
-
-                   {/* <div className="d-flex align-items-center py-2 ">
-                   <input type="checkbox" required id="terms" name="terms" value="terms" className='mx-1'/>
-                    <label for="terms"> I have read and understood the privacy policy and I agree to the Terms of use. *</label><br></br>
-                   </div> */}
-
-                  <div className="d-flex align-items-center py-2">
-                    <Checkbox { 
-                        ...<label></label>
-                    }  checked disabled />
-                        {/* <input type="checkbox" required className='mx-1' id="updates" name="updates" value="updates" /> */}
-                        <label className='' for="updates">I have read and understood the <span className='text-decoration-underline'>privacy policy</span> and I agree to the <br /> <span className='text-decoration-underline'> Terms of use.</span> *
-
-                        </label>
-
-                        </div>
-
-
-                   <div className="d-flex align-items-center py-2 mb-5">
-                   <Checkbox { 
-                    ...<label></label>
-                   }  checked disabled/>
-                    {/* <input type="checkbox" required className='mx-1' id="updates" name="updates" value="updates" /> */}
-                    <label className='ps-2' for="updates"> I would like to receive updates about Bantayga new activities, exclusive products, tailored services and to have a personalised client experience based on my interests.*
-
-                    </label>
-
-                    </div>
-
-                    
-
-                    {/* <FormControl sx={{ m: 1, width: '100ch' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl> */}
-            
-
-
-
-                    <button type='submit'  className='w-100 btn bg-black text-white my-5 py-3 fs-4 border0'>Create My Profile</button>
-
-                    <p className='text-center mb-5'>Already have a profile? <Link to="/login" className='text-decoration-underline text-black'>Log in</Link>  </p>
-
-                </form>
-
-            </div>
-            
-        </div>
-    </div>
-
-
-  </>
+      </div>
+    </>
+  );
 }

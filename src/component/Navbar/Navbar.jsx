@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Styles from './Navbar.module.css'; // Import the CSS module
-
+import logo from './../../assets/images/logo.jpg'
 export default function Navbar() {
   const location = useLocation();
   const isHome = location.pathname === '/' || location.pathname === '/drop';
@@ -19,7 +19,7 @@ export default function Navbar() {
           <button onClick={handleNavLinkClick} className={`navbar-toggler ${Styles.navbarToggler}`} type="button">
             <span className={`navbar-toggler-icon ${Styles.navbarTogglerIcon}`}></span>
           </button>
-          <img src="https://s3-alpha-sig.figma.com/img/6cb5/319f/6b3e6ed3ca920dd39630004e75e34edd?Expires=1721001600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=akbsKQPpNF9XQIdsXrgV9hUxFpSRSZaxZPjVrW5jP3wjxIXpwbpbZIbjX0pAjRBGuTTPNicD7vSrWMJSj4KKpH92RxX25L5QOpJrm4UGs3dqOE07KBTdDovg39CrbxNfmfiqbogg8hDKAQ8wkM9wGoQ4c0TTIpKT16KABfX0mm-MQV7XeWDcHAv1x0VRweXB9HNjNnlMHOYF5INYgiALH5tWSwC3OoJvxSUuK2ZPe7GvZo60OkIbhzdSKuB7WLO-FpdwrR-0Uu7NPIaPDzjrhdNwawLiR~GZr1~cJfiNY1GTColGfIyxHQcwKhitLqHLZW9YRyc5Zo3o3BBWj4wsUw" className={Styles.logo} alt="logo" />
+          <img src={logo} className={Styles.logo} alt="logo" />
           <div className={"navbar-collapse" + " " + (showNav ? "open" : "")} id="navbarSupportedContent">
             <i className="fa fa-close" onClick={handleNavLinkClick} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"></i>
             <div className="search_wrapper">
