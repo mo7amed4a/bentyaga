@@ -26,11 +26,7 @@ export default function Register() {
 
       try {
           const res = await axios.post('http://194.164.77.238/sing/', transformedValues);
-          if (res.data.status === true) {
-              navigate('/login'); // Navigate to the login page upon successful registration
-          } else {
-              alert('Registration failed: ' + JSON.stringify(res.data.errors)); // Display error message from API
-          }
+          navigate('/login'); // Navigate to the login page upon successful registration
       } catch (err) {
           console.error(err);
           alert('An error occurred while registering. Please try again later.');

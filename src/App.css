@@ -305,7 +305,7 @@ html {
     left: 0;
     width: 100%;
     background-color: #fff;
-    z-index: 99999;
+    z-index: 1030;
 }
 .search_wrapper_main form{
     display: flex;
@@ -395,4 +395,43 @@ input:focus {
         border: none !important;
         font-size: 12px;
     }
+    .home_img {
+        max-width: 55px;
+    }
+}
+
+.radio-drop {
+    border: 1px solid #b9b9c1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #b9b9c1;
+}
+
+.radio-drop input {
+    display: none;
+}
+
+.radio-drop.selected {
+    border: 1px solid #000;
+    color: #000 ;
+}
+
+
+.fillter_wrapper .row {
+    max-width: 100%
+}
+
+.cart_num {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    background: red;
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }

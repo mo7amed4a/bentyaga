@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Slider from 'react-slick';
 import styles from './ProductDetails.module.css'; // Assuming you have custom styles for buttons and other elements
@@ -11,10 +11,14 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
+import { api } from '../../API';
+import { useDispatch } from 'react-redux';
+import { addProductToCart } from '../../features/cartSlice';
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const dispatch = useDispatch();
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -25,9 +29,9 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
-                console.log(data.data); // Print the response in the console
-                setProduct(data.data); // Set the product data
+                const { data } = await api.get(`http://194.164.77.238/api/products/${id}/`);
+                console.log(data); // Print the response in the console
+                setProduct(data); // Set the product data
             } catch (error) {
                 console.error("Error fetching product details:", error);
             }
@@ -53,9 +57,14 @@ const ProductDetails = () => {
 
     const renderImagesAsList = () => (
         <div className={styles.imageList}>
-            {product.images.map((image, index) => (
-                <img key={index} src={image} alt={`Product image ${index + 1}`} className={styles.productImage} />
+            {product.images?.map((image, index) => (
+                <img key={index} src={image.image} alt={`Product image ${index + 1}`} className={styles.productImage} />
             ))}
+            {
+                (!product.images || product.images.length == 0 )&& (
+                    <img  src={product.photo} alt={`Product image `} className={styles.productImage} />
+                )
+            }
         </div>
     );
 
@@ -70,11 +79,20 @@ const ProductDetails = () => {
 
         return (
             <Swiper pagination={true} modules={[Pagination]} className="productSwiper">
-                {product.images.map((image, index) => (
-                    <SwiperSlide key={index}>
-                        <img src={image} alt={`Product image ${index + 1}`} />
-                    </SwiperSlide>
-                ))}
+                {
+                    product.images?.map(image => (
+                        <SwiperSlide >
+                            <img src={image.image} className="w-100" alt="" />
+                        </SwiperSlide>
+                    ))
+                }
+                {
+                    (!product.images || product.images.length == 0 )&& (
+                        <SwiperSlide >
+                            <img src={product.photo} className="w-100" alt="" />
+                        </SwiperSlide>
+                    )
+                }
             </Swiper>
         );
     };
@@ -91,9 +109,11 @@ const ProductDetails = () => {
         setSelectedQuantity(parseInt(event.target.value));
     };
 
+    const navigation = useNavigate()
+    
     const handleBuyClick = () => {
-        // Implement buy functionality
-        console.log("Buy clicked");
+        dispatch(addProductToCart({ id: id, color: selectedColor, quantity: selectedQuantity, size: selectedSize }))
+        navigation('/cart')
     };
 
     const toggleDetails = () => {
@@ -105,6 +125,10 @@ const ProductDetails = () => {
 
     if (!product) {
         return <div>Loading...</div>;
+    }
+
+    const handleAddToCart = () => {
+        dispatch(addProductToCart({ id: id, color: selectedColor, quantity: selectedQuantity, size: selectedSize }))
     }
 
     return (
@@ -120,45 +144,46 @@ const ProductDetails = () => {
                 {deviceType === 'Desktop' ? renderImagesAsList() : renderImagesAsSlider()}
             </div>
             <div className={styles.detailsContainer}>
-                <div className={`${styles.detail} detail_1 d-flex justify-content-between align-items-center mt-3 mb-4`}>
-                    <h1 className='pt-4'>{product.title.split(' ').slice(0, 3).join(' ')}</h1>
+                <div className={`${styles.details} detail_1 d-flex justify-content-between align-items-center mt-3 mb-4`}>
+                    <h1 className='pt-4'>{product.name}</h1>
                     <p className='pt-4'>${product.price}</p>
 
                 </div>
                 <div className={styles.detailsContainer1}>
-                    <p>{product.description}</p>
+                    <p>{product.about_product}</p>
 
                 </div>
+
                 <div className="my-3 selectContainer">
                     <select id="sizeSelect" className='' value={selectedSize} onChange={handleSizeChange}>
-                        <option value=""  className={styles.selection}>Select Size</option>
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
+                        <option value="" className={styles.selection}>Select Size</option>
+                        {product.sizes?.map((size, index) => (
+                            <option key={index} value={size.size}>{size.size}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="my-3 selectContainer">
-                    <select id="colorSelect"className=''  value={selectedColor} onChange={handleColorChange}>
-                        <option value=""  className={styles.selection}>Select Color</option>
-                        <option>Red</option>
-                        <option>Black</option>
-                        <option>Blue</option>
+                    <select id="colorSelect" className='' value={selectedColor} onChange={handleColorChange}>
+                        <option value="" className={styles.selection}>Select Color</option>
+                        {product.colors?.map((color, index) => (
+                            <option key={index} value={color.color}>{color.color}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="my-3 selectContainer">
                     <select id="quantitySelect" className='' value={selectedQuantity} onChange={handleQuantityChange}>
                         <option value="" className={styles.selection}>Select Quantity</option>
                         {/* Replace with actual quantity options based on your product data */}
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                     </select>
                 </div>
                 <div className="my-3 d-flex flex-column">
-                    <Link className={`${styles.buyBtn}`} onClick={handleBuyClick} to={'/checkOut'}>Buy</Link>
-                    <Link className={`${styles.addBtn}`} to={'/cart'}
+                    <button className={`${styles.buyBtn}`} onClick={handleBuyClick}>Buy</button>
+                    <button className={`${styles.addBtn}`} onClick={handleAddToCart}
                         // onClick={() => handleAddToCartClick(product.id)}
-                    >Add to Cart</Link>
+                    >Add to Cart</button>
                 </div>
                 <div className="toggleFeature my-3 mb-0 d-flex flex-column m-0">
                     <button className={`${styles.btnProductDetails} d-flex align-items-center justify-content-between ${showDetails ? 'active' : ''} w-100  text-start p-4 border-left-0`} onClick={toggleDetails} aria-expanded={showDetails} aria-controls="productDetailsCollapse">
@@ -168,9 +193,7 @@ const ProductDetails = () => {
                     <div className={`collapse ${showDetails ? 'show' : ''}`} id="productDetailsCollapse">
                         <div className={`${styles.specificDetail} card card-body`}>
                             {/* Replace with actual product details */}
-                            <p>{product.description}</p>
-                            <p><strong>Sold:</strong> {product.sold}</p>
-                            <p><strong>Average Rating:</strong> {product.ratingsAverage} ({product.ratingsQuantity} reviews)</p>
+                            <p>{product.details}</p>
                             {/* Add more product details as needed */}
                         </div>
                     </div>
@@ -184,9 +207,7 @@ const ProductDetails = () => {
                     <div className={`collapse ${size ? 'show' : ''}`} id="productDetailsCollapse">
                         <div className={`${styles.specificDetail} card card-body`}>
                             {/* Replace with actual product details */}
-                            <p>{product.description}</p>
-                            <p><strong>Sold:</strong> {product.sold}</p>
-                            <p><strong>Average Rating:</strong> {product.ratingsAverage} ({product.ratingsQuantity} reviews)</p>
+                            {product.sizes.map(size => size.size).join(" - ")}
                             {/* Add more product details as needed */}
                         </div>
                     </div>

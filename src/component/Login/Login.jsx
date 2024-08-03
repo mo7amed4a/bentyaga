@@ -20,12 +20,8 @@ export default function Login() {
 
         try {
             const res = await axios.post('http://194.164.77.238/login/', transformedValues);
-            if (res.data.status === true) {
-                dispatch(setCredentials(res.data));
-                navigate('/'); // Navigate to the home page upon successful login
-            } else {
-                alert('Login failed: ' + res.data.message); // Display error message from API
-            }
+            dispatch(setCredentials(res.data));
+            navigate('/'); // Navigate to the home page upon successful login
         } catch (err) {
             console.error(err);
             alert('An error occurred while logging in. Please try again later.');

@@ -17,8 +17,14 @@ import 'swiper/css';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { api } from '../../API';
 export default function Drop() {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [colors, setColors] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedColor, setSelectedColor] = useState('');
+    const [sort, setSort] = useState('')
     const [anchorElView, setAnchorElView] = useState(null);
     const [anchorElDrop, setAnchorElDrop] = useState(null);
     const [grid, setGrid] = useState(1);
@@ -27,17 +33,47 @@ export default function Drop() {
     const [colorInputs, setColorInputs] = useState(Array.from({ length: 8 }).fill(''));
     const [currentPage, setCurrentPage] = useState(1);
     const [deviceType, setDeviceType] = useState('');
+    const [search, setSearch] = useState('')
 
     const navigate = useNavigate();
     
     // Fetch products from API
-    async function fetchProducts() {
+    async function fetchProducts(search = "", cat_id = selectedCategory, sort = '', color = selectedColor) {        
         try {
-            const { data } = await axios.get("https://ecommerce.routemisr.com/api/v1/products");
-            setProducts(data.data);
+            const { data } = await axios.get(`http://194.164.77.238/api/products?search=${search}&categray__id=${cat_id}&ordering=${sort}&colors_color=${color}`);
+            setProducts(data);            
         } catch (error) {
             console.error("Error fetching products:", error);
         }
+    }
+
+    // Fetch categories from API
+    async function fetchCategories() {
+        try {
+            const { data } = await axios.get(`http://194.164.77.238/categories/`);
+            setCategories(data);            
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+
+    // Fetch categories from API
+    async function fetchColors() {
+        try {
+            const { data } = await axios.get(`http://194.164.77.238/get_colors`);
+            setColors(data);            
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+
+    const handleSortChange = (e) => {
+        setSort(e.target.value)
+        fetchProducts(search, selectedCategory, e.target.value)
+    } 
+    const handleChangeSearch = (e) => {
+        setSearch(e.target.value)
+        fetchProducts(e.target.value)
     }
 
     useEffect(() => {
@@ -94,80 +130,106 @@ export default function Drop() {
             onClick={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
         >
-            <h1 className='mt-3 text-center border-black border-bottom border-2 pb-3'>
-                <Link to={'/drop'} className='fas fa-arrow-left overflow-hidden fs-4 me-3 text-decoration-none text-black'
-                    onClick={(e) => {
-                        e.stopPropagation(); // Prevent propagation to keep drawer open
-                        toggleDrawer(false)(e); // Close the drawer explicitly
-                    }}
-                ></Link>
-                Filters
-            </h1>
+            <div style={{maxWidth: "400px"}} className='fillter_wrapper'>
+                <h1 className='mt-3 text-center border-black border-bottom border-2 pb-3'>
+                    <Link to={'/drop'} className='fas fa-arrow-left overflow-hidden fs-4 me-3 text-decoration-none text-black'
+                        onClick={(e) => {
+                            e.stopPropagation(); // Prevent propagation to keep drawer open
+                            toggleDrawer(false)(e); // Close the drawer explicitly
+                        }}
+                    ></Link>
+                    Filters
+                </h1>
 
-            {/* Drops by inputs section */}
-            <div className='border-black border-bottom border-2 pb-5'>
-                <p className={`${Styles.drops} mt-4 mb-2`}>Drops</p>
-                <div className="row">
-                    <div className="col-6">
-                        <input type="text" placeholder='999' className='w-100 p-3 mx-2 my-1 px-3' />
-                    </div>
-                    <div className="col-6">
-                        <input type="text" placeholder='999' className='w-100 p-3 my-1 ' />
-                    </div>
-                    <div className="col-6">
-                        <input type="text" placeholder='999' className='w-100 p-3 mx-2 my-1' />
-                    </div>
-                    <div className="col-6">
-                        <input type="text" placeholder='999' className='w-100 p-3 my-1' />
-                    </div>
-                </div>
-            </div>
-
-            {/* Sort by inputs section */}
-            <div className='border-black border-bottom border-2 pb-5'>
-                <p className={`${Styles.drops} mt-4 mb-2`}>Sort By</p>
-                <div className="row">
-                    <div className="col-6">
-                        <input type="text" placeholder='Latest Arrival' className='w-100 p-3 mx-2 my-1 px-3' />
-                    </div>
-                    <div className="col-6">
-                        <input type="text" placeholder='Ascending Price' className='w-100 p-3 my-1 ' />
-                    </div>
-                    <div className="col-6">
-                        <input type="text" placeholder='Descending Price' className='w-100 p-3 mx-2 my-1' />
-                    </div>
-                </div>
-            </div>
-
-            {/* Color inputs section */}
-            <div className='border-black border-bottom border-2 pb-5'>
-                <p className={`${Styles.drops} mt-4 mb-2`}>Colors</p>
-                <div className="row m-auto">
-                    {colorInputs.map((value, index) => (
-                        <div key={index} className={`${Styles.colorInputContainer} col-md-6`}>
-                            <div className={`${Styles.customInput} d-flex align-items-center`}>
-                                <input
-                                    type="checkbox"
-                                    id={`colorCheckbox${index}`}
-                                    className={`${Styles.checkboxes}`}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder='Red'
-                                    className={`${Styles.colorInput} w-100 py-3 mx-2 my-1 `}
-                                    value={value}
-                                    onChange={(e) => handleColorInputChange(e, index)}
-                                />
+                {/* Drops by inputs section */}
+                <div className='border-black border-bottom border-2 pb-5'>
+                    <p className={`${Styles.drops} mt-4 mb-2`}>Drops</p>
+                    <div className="row">
+                        {categories.map((category, index) => (
+                            <div key={index} className="col-6">
+                                <label className={'w-100 p-3 my-1 mx-2 radio-drop' + (selectedCategory == category.id ? " selected" : "")}>
+                                    <input
+                                        type="radio"
+                                        name="category"
+                                        value={category.id}
+                                        checked={selectedCategory == category.id}
+                                        onChange={handleClickDrop}
+                                    />
+                                    {category.name}
+                                </label>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
+                {/* Sort by inputs section */}
+                <div className='border-black border-bottom border-2 pb-5'>
+                    <p className={`${Styles.drops} mt-4 mb-2`}>Sort By</p>
+                    <div className="row">
+                        <div className="col-6">
+                            <label className={'w-100 p-3 my-1 mx-2 radio-drop' + (sort == '-id' ? " selected" : "")}>
+                                <input
+                                    type="radio"
+                                    name="sort"
+                                    value={"-id"}
+                                    checked={sort == '-id'}
+                                    onChange={handleSortChange}
+                                />
+                                Latest Arrival
+                            </label>
+                        </div>
+                        <div className="col-6">
+                            <label className={'w-100 p-3 my-1 mx-2 radio-drop' + (sort == 'price' ? " selected" : "")}>
+                                <input
+                                    type="radio"
+                                    name="sort"
+                                    value={"price"}
+                                    checked={sort == 'price'}
+                                    onChange={handleSortChange}
+                                />
+                                Ascending Price
+                            </label>
+                        </div>
+                        <div className="col-6">
+                            <label className={'w-100 p-3 my-1 mx-2 radio-drop' + (sort == '-price' ? " selected" : "")}>
+                                <input
+                                    type="radio"
+                                    name="sort"
+                                    value={"-price"}
+                                    checked={sort == '-price'}
+                                    onChange={handleSortChange}
+                                />
+                                Descending Price
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-            {/* Clear and Apply buttons */}
-            <div className={`${Styles.filterBtns} d-flex justify-content-center`}>
-                <button className={`${Styles.btn1} ms-2 my-4 py-2`}>CLEAR</button>
-                <button className={`${Styles.btn2} ms-2 my-4 py-2`}>APPLY</button>
+                {/* Drops by inputs section */}
+                <div className='border-black border-bottom border-2 pb-5'>
+                    <p className={`${Styles.drops} mt-4 mb-2`}>Colors</p>
+                    <div className="row">
+                        {colors.map((color, index) => (
+                            <div key={index} className="col-6">
+                                <label className={'w-100 p-3 my-1 mx-2 radio-drop' + (selectedColor == color.id ? " selected" : "")}>
+                                    <input
+                                        type="radio"
+                                        name="color"
+                                        value={color.id}
+                                        checked={selectedColor == color.id}
+                                        onChange={handleChangeColor}
+                                    />
+                                    {color.name}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Clear and Apply buttons */}
+                <div className={`${Styles.filterBtns} d-flex justify-content-center`}>
+                    <button className={`${Styles.btn1} ms-2 my-4 py-2`}>CLEAR</button>
+                    <button className={`${Styles.btn2} ms-2 my-4 py-2`}>APPLY</button>
+                </div>
             </div>
         </Box>
     );
@@ -210,6 +272,8 @@ export default function Drop() {
 
     // Close drawer on outside click
     useEffect(() => {
+        fetchCategories()
+        fetchColors()
         const handleClickOutside = (event) => {
             if (drawerOpen && !event.target.closest('.MuiDrawer-root')) {
                 setDrawerOpen(false);
@@ -236,7 +300,14 @@ export default function Drop() {
 
     // Handle click to open drop menu
     const handleClickDrop = (event) => {
-        setAnchorElDrop(event.currentTarget);
+        setSelectedCategory(event.target.value);
+        fetchProducts("", event.target.value)
+    };
+
+    // Handle click to open drop menu
+    const handleChangeColor = (event) => {
+        setSelectedColor(event.target.value);
+        fetchProducts(search, selectedCategory, sort, event.target.value)
     };
 
     // Custom style for Pagination item
@@ -286,14 +357,14 @@ export default function Drop() {
                     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20.297 20.9935L13.7741 14.4706C13.2533 14.9143 12.6543 15.2577 11.9772 15.5008C11.3001 15.7438 10.6196 15.8654 9.93555 15.8654C8.26749 15.8654 6.85569 15.2879 5.70013 14.1331C4.54457 12.9782 3.9668 11.5668 3.9668 9.8987C3.9668 8.23064 4.54388 6.81849 5.69805 5.66224C6.85221 4.50599 8.26332 3.92717 9.93138 3.92578C11.5994 3.92439 13.0119 4.50217 14.1689 5.65912C15.3258 6.81606 15.9043 8.22821 15.9043 9.89558C15.9043 10.6192 15.7762 11.3195 15.5199 11.9966C15.2637 12.6737 14.9269 13.2529 14.5095 13.7341L21.0324 20.256L20.297 20.9935ZM9.93659 14.8227C11.3185 14.8227 12.4852 14.347 13.4366 13.3956C14.388 12.4442 14.8637 11.2772 14.8637 9.89453C14.8637 8.51189 14.388 7.34523 13.4366 6.39453C12.4852 5.44384 11.3185 4.96814 9.93659 4.96745C8.55464 4.96676 7.38763 5.44245 6.43555 6.39453C5.48346 7.34662 5.00777 8.51328 5.00846 9.89453C5.00916 11.2758 5.48485 12.4425 6.43555 13.3945C7.38624 14.3466 8.55291 14.8223 9.93555 14.8216" fill="black"/>
                     </svg>
-                    <input type="text" name="search" id="search" placeholder='WHAT ARE YOU LOOKING FOR?' />
+                    <input type="text" name="search" id="search" placeholder='WHAT ARE YOU LOOKING FOR?' value={search} onChange={handleChangeSearch}/>
                 </form>
             </div>
             <div className="mb-5" ref={headRef}>
 
                 {/* Results count and view options */}
                 <div style={{backgroundColor: '#fff'}} className="px-2 py-2 d-flex justify-content-between bg-white align-items-center">
-                    <p className={Styles.results}>{products.length} results</p>
+                    <p className={Styles.results}>{products?.length} results</p>
                     <div className="d-flex justify-content-center align-items-center">
 
                         <select
@@ -301,13 +372,17 @@ export default function Drop() {
                             className={Styles.viewBTN}
                             aria-controls={anchorElDrop ? 'demo-positioned-menu-drop' : undefined}
                             aria-haspopup="true"
-                            aria-expanded={Boolean(anchorElDrop)}
-                            onClick={handleClickDrop}
+                            onChange={handleClickDrop}
+                            value={selectedCategory}
                         >
-                            Drop
-                            <option value="">999</option>
-                            <option value="">999</option>
-                            <option value="">999</option>
+                            <option value={''}>Drop</option>
+                            {
+                                (categories && categories.length > 0) && (
+                                    categories.map(cat => (
+                                        <option value={cat.id}>{cat.name}</option>
+                                    ))
+                                )
+                            }
                         </select>
 
                         <Button
@@ -339,7 +414,7 @@ export default function Drop() {
 
                 {/* Product grid */}
                 <div className="row drop_wrapper border-top border-black" style={{width: "calc(100vw + 2px)",transform: "translateX(11px)"}}>
-                    {products.map((item) => (
+                    {products?.map((item) => (
                         <div
                             key={item._id}
                             className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 3 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer'}}
@@ -352,14 +427,21 @@ export default function Drop() {
                             pagination={{ clickable: true }} // Enable pagination and make it clickable
                             modules={[Navigation, Pagination]}>
                                 {
-                                    item.images.map(image => (
-                                        <SwiperSlide onClick={() => handleProductClick(item._id)}>
-                                            <img src={image} className="w-100" alt="" />
+                                    item.images?.map(image => (
+                                        <SwiperSlide onClick={() => handleProductClick(item.id)}>
+                                            <img src={image.image} className="w-100" alt="" />
                                         </SwiperSlide>
                                     ))
                                 }
+                                {
+                                    (!item.images || item.images.length == 0 )&& (
+                                        <SwiperSlide onClick={() => handleProductClick(item.id)}>
+                                            <img src={item.photo} className="w-100" alt="" />
+                                        </SwiperSlide>
+                                    )
+                                }
                             </Swiper>
-                            <span onClick={() => handleProductClick(item._id)} style={{fontSize: "12px !important"}} className="text-black mb-4 d-flex justify-content-center pb-5 fw-bolder drop_prod_name">Leather Jacket</span>
+                            <span onClick={() => handleProductClick(item._id)} style={{fontSize: "12px !important"}} className="text-black mb-4 d-flex justify-content-center pb-5 fw-bolder drop_prod_name">{item.name}</span>
                         </div>
                     ))}
                 </div>
@@ -384,7 +466,7 @@ export default function Drop() {
                 {/* Pagination */}
                 <div className="d-flex justify-content-center mt-3">
                     {/* دي تظهر بس بدل الباجيناشن كل ما ينزل يحمل منتجات */}
-                    <h4 className='mt-5 my-3' style={{ fontWeight: 700, color: "rgba(0, 0, 0, .2)" }}>LOADING</h4>
+                    {/* <h4 className='mt-5 my-3' style={{ fontWeight: 700, color: "rgba(0, 0, 0, .2)" }}>LOADING</h4> */}
                 </div>
             </div>
         </>

@@ -17,7 +17,7 @@ export const fetchAllCart = createAsyncThunk(
   'cart/fetchAllCart',
   async (_, thunkAPI) => {
     try {
-      const response = await api.get(API + '/api/cart/get');
+      const response = await api.get(API + '/api/cart/');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -25,11 +25,17 @@ export const fetchAllCart = createAsyncThunk(
   }
 );
 
+// Async thunk for adding a product to the cart with color, size, and quantity
 export const addProductToCart = createAsyncThunk(
   'cart/addProductToCart',
-  async (id, thunkAPI) => {
+  async ({ id, color, quantity, size }, thunkAPI) => {
     try {
-      const response = await api.post(API + `/api/cart/put-product?product_id=${id}&quantity=1`);
+      const response = await api.post(API + `/api/cart/`, {
+        product: id,
+        color: color,
+        quantity: quantity,
+        size: size
+      });
       thunkAPI.dispatch(fetchAllCart()); // Dispatch fetchAllCart to update cart
       return response.data.message; // Return only the message
     } catch (error) {
@@ -38,9 +44,8 @@ export const addProductToCart = createAsyncThunk(
   }
 );
 
-
 export const removeProductFromCart = createAsyncThunk(
-  'cart/remove-product',
+  'cart/removeProductFromCart',
   async (id, thunkAPI) => {
     try {
       const response = await api.post(API + `/api/cart/remove-product?product_id=${id}`);
@@ -58,9 +63,9 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     setMsgs: (state) => {
-        state.message = null;
-        state.errorMsg = null;
-    },  
+      state.message = null;
+      state.errorMsg = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,7 +75,7 @@ const cartSlice = createSlice({
       .addCase(fetchAllCart.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.errors = action.payload.errors;
-        state.cart = action.payload.data[0]; // Access the inner array
+        state.cart = action.payload; // Access the inner array
       })
       .addCase(fetchAllCart.rejected, (state, action) => {
         state.status = 'failed';
@@ -81,22 +86,22 @@ const cartSlice = createSlice({
       })
       .addCase(addProductToCart.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.message = "تم الاضافة بنجاح"; // Update message with the returned message
+        state.message = action.payload; // Use the returned message
       })
       .addCase(addProductToCart.rejected, (state, action) => {
         state.status = 'failed';
-        state.errorMsg =  'Failed to add product to cart';
+        state.errorMsg = 'Failed to add product to cart';
       })
       .addCase(removeProductFromCart.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(removeProductFromCart.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.message = "تم الحذف بنجاح"; // Update message with the returned message
+        state.message = action.payload; // Use the returned message
       })
       .addCase(removeProductFromCart.rejected, (state, action) => {
         state.status = 'failed';
-        state.errorMsg =  'Failed to remove product from cart';
+        state.errorMsg = 'Failed to remove product from cart';
       });
   },
 });
