@@ -19,7 +19,7 @@ export default function Login() {
         }, {});
 
         try {
-            const res = await axios.post('https://194.164.77.238/login/', transformedValues);
+            const res = await axios.post('http://194.164.77.238/login/', transformedValues);
             dispatch(setCredentials(res.data));
             navigate('/'); // Navigate to the home page upon successful login
         } catch (err) {
