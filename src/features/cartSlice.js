@@ -48,7 +48,7 @@ export const removeProductFromCart = createAsyncThunk(
   'cart/removeProductFromCart',
   async (id, thunkAPI) => {
     try {
-      const response = await api.delete(API + `/api/cart/${id}/`);
+      const response = await api.delete(API + `/api/cart/remove-item/${id}/`);
       thunkAPI.dispatch(fetchAllCart()); // Dispatch fetchAllCart to update cart
       return response.data.message; // Return only the message
     } catch (error) {
