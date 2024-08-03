@@ -21,7 +21,6 @@
   width: 40%;
 }
 .imageContainer {
-  background-image: url('../../assets/images/man.png');
   width: 450px;
 
   background-size:cover;
@@ -138,7 +137,6 @@ margin-left: auto;
   }
 
   .all {
-    height: 24vh;
     width: 100%;
     flex-direction: row; /* Stack items vertically */
   }
@@ -167,7 +165,6 @@ margin-left: auto;
 font-size:10px;
   }
   .imageContainer {
-    background-image: url('../../assets/images/man.png');
     width: 199px;
     height: 213px;
     background-size:cover;
@@ -211,7 +208,7 @@ font-size:10px;
   }
   .move{
     font-weight: 500;
-    font-size: 12px;
+    font-size: 11px !important;
   }
   .quantity{
     font-weight: 500;
@@ -239,7 +236,7 @@ text-align: center;
 .customlist .listitem {
   font-family: 'Inter' , sans-serif;
   font-size: 8.0px;
-  line-height: 4.3px;
+  line-height: 15.3px;
   position: relative;
   padding-left: 10px;
   margin-bottom: 5px;
