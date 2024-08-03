@@ -29,7 +29,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const { data } = await api.get(`http://194.164.77.238/api/products/${id}/`);
+                const { data } = await api.get(`https://194.164.77.238/api/products/${id}/`);
                 console.log(data); // Print the response in the console
                 setProduct(data); // Set the product data
             } catch (error) {

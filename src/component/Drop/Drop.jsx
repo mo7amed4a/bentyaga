@@ -40,7 +40,7 @@ export default function Drop() {
     // Fetch products from API
     async function fetchProducts(search = "", cat_id = selectedCategory, sort = '', color = selectedColor) {        
         try {
-            const { data } = await axios.get(`http://194.164.77.238/api/products?search=${search}&categray__id=${cat_id}&ordering=${sort}&colors_color=${color}`);
+            const { data } = await axios.get(`https://194.164.77.238/api/products?search=${search}&categray__id=${cat_id}&ordering=${sort}&colors_color=${color}`);
             setProducts(data);            
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -50,7 +50,7 @@ export default function Drop() {
     // Fetch categories from API
     async function fetchCategories() {
         try {
-            const { data } = await axios.get(`http://194.164.77.238/categories/`);
+            const { data } = await axios.get(`https://194.164.77.238/categories/`);
             setCategories(data);            
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -60,7 +60,7 @@ export default function Drop() {
     // Fetch categories from API
     async function fetchColors() {
         try {
-            const { data } = await axios.get(`http://194.164.77.238/get_colors`);
+            const { data } = await axios.get(`https://194.164.77.238/get_colors`);
             setColors(data);            
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -218,7 +218,7 @@ export default function Drop() {
                                         checked={selectedColor == color.id}
                                         onChange={handleChangeColor}
                                     />
-                                    {color.name}
+                                    {color.color}
                                 </label>
                             </div>
                         ))}

@@ -4,19 +4,23 @@ import Styles from './Navbar.module.css'; // Import the CSS module
 import logo from './../../assets/images/logo.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCart } from '../../features/cartSlice';
+import useAuth from '../../hooks/useAuth';
 export default function Navbar() {
   const location = useLocation();
   const dispatch = useDispatch()
   const isHome = location.pathname === '/' || location.pathname === '/drop';
   const [showNav, setShowNav] = useState(false)
   const cart = useSelector((state => state.cart.cart))
+  const { isAuthentication } = useAuth();
   // Function to handle link clicks and collapse the navbar
   const handleNavLinkClick = () => {
     setShowNav(!showNav)
   };
 
   useEffect(() => {
-    dispatch(fetchAllCart())    
+    if (isAuthentication)   {
+      dispatch(fetchAllCart())    
+    }
   }, [])
 
   return (

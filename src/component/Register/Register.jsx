@@ -25,7 +25,7 @@ export default function Register() {
       }
 
       try {
-          const res = await axios.post('http://194.164.77.238/sing/', transformedValues);
+          const res = await axios.post('https://194.164.77.238/sing/', transformedValues);
           navigate('/login'); // Navigate to the login page upon successful registration
       } catch (err) {
           console.error(err);
