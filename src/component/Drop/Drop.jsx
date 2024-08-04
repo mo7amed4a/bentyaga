@@ -417,7 +417,7 @@ export default function Drop() {
                     {products?.map((item) => (
                         <div
                             key={item._id}
-                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 3 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer'}}
+                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 3 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer', padding: 0}}
                         >
                             <Swiper 
                             slidesPerView={"auto"}

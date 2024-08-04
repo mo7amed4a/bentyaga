@@ -83,6 +83,7 @@ export default function Login() {
                             <div className='pb-5'>
                                 <button type='submit' className='w-100 btn bg-black text-white my-3 py-3 fs-4 border0 mb-5'>Login</button>
                             </div>
+                            <p class="text-center mb-5">Do not have account? <a class="text-decoration-underline text-black" href="/register">Register</a></p>
                         </form>
                     </div>
                 </div>
