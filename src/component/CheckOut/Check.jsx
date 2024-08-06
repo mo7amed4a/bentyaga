@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import Style from './Check.module.css';
 import { Link } from 'react-router-dom';
 import creditImage from '../../assets/images/credit.png'; // Import the image
+import { useSelector } from 'react-redux';
 
 export default function Check() {
     const [isChecked, setIsChecked] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    const cart = useSelector(state => state.cart.cart)
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
@@ -31,11 +34,7 @@ export default function Check() {
                             <h3>Order Summary</h3>
                             <div className='d-flex justify-content-between pt-4'>
                                 <p className={Style.orderPara}>SubTotal</p>
-                                <p className={Style.orderPara}>4,420 EGP</p>
-                            </div>
-                            <div className='d-flex justify-content-between'>
-                                <p className={Style.orderPara}>Taxes</p>
-                                <p className={Style.orderPara}>0 EGP</p>
+                                <p className={Style.orderPara}>{cart[0]?.total_price} EGP</p>
                             </div>
                             <div className='d-flex justify-content-between'>
                                 <p className={Style.orderPara}>Delivery</p>

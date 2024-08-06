@@ -63,7 +63,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="drop" element={<Drop />} />
-          <Route path="cart" element={<ProtectedRoute element={<Cart />} isAuthentication={isAuthentication} />} />
+          <Route path="cart" element={isAuthentication ? <Cart/> : <Login></Login>} />
           <Route path="checkOut" element={<ProtectedRoute element={<Checkout />} isAuthentication={isAuthentication} />} />
           <Route path="wishlist" element={<ProtectedRoute element={<Wishlist />} isAuthentication={isAuthentication} />} />
           <Route path="productdetails/:id" element={<ProductDetails />} />
