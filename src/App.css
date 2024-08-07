@@ -446,3 +446,7 @@ input:focus {
     align-items: center;
     border-radius: 50%;
 }
+
+.nav_opened .search_wrapper_main {
+    opacity: 0 !important;
+}

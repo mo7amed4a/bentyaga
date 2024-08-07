@@ -5,6 +5,7 @@ import logo from './../../assets/images/logo.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCart } from '../../features/cartSlice';
 import useAuth from '../../hooks/useAuth';
+
 export default function Navbar() {
   const location = useLocation();
   const dispatch = useDispatch()
@@ -12,16 +13,25 @@ export default function Navbar() {
   const [showNav, setShowNav] = useState(false)
   const cart = useSelector((state => state.cart.cart))
   const { isAuthentication } = useAuth();
+
   // Function to handle link clicks and collapse the navbar
   const handleNavLinkClick = () => {
-    setShowNav(!showNav)
+    setShowNav(prevState => {
+      const newState = !prevState;
+      if (newState) {
+        document.body.classList.add('nav_opened');
+      } else {
+        document.body.classList.remove('nav_opened');
+      }
+      return newState;
+    });
   };
 
   useEffect(() => {
-    if (isAuthentication)   {
+    if (isAuthentication) {
       dispatch(fetchAllCart())    
     }
-  }, [])
+  }, [isAuthentication, dispatch]);
 
   return (
     <>
