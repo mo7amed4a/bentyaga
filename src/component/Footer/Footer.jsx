@@ -3,13 +3,38 @@ import styles from './Footer.module.css'; // Import the CSS module
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Footer() {
     const [showDetails, setShowDetails] = useState({}); // State to toggle details for each section
     const [deviceType, setDeviceType] = useState('Desktop');
+    const [medai, setMedia] = useState()
+
+    async function fetchSocial() {
+        try {
+            const { data } = await axios.get(`https://api.bantayga.wtf/medai/`);
+            setMedia(data); 
+            console.log(data);
+                       
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+    async function fetchDesc() {
+        try {
+            const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);
+            console.log(data);
+                       
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+
 
     useEffect(() => {
         // Function to determine device type
+        fetchSocial()
+        fetchDesc()
         const getDeviceType = () => {
             const ua = navigator.userAgent;
             if (/mobile/i.test(ua)) {

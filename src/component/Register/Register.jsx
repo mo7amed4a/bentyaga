@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Style from './Register.css';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,6 +9,21 @@ export default function Register() {
 
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    fetch('https://api.bantayga.wtf/sing/', {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+        'X-CSRFToken': '5Ur10C8luOKRCZsSBmgZcp11K9IWt66WspXtcWREwrL6Tf4BzFjVYb1MW9BKhgp2',
+      },
+    })
+      .then(response => response.json())
+      .then(data => setCountries(data))
+      .catch(error => console.error('Error fetching countries:', error));
+  }, []);
 
   const handleClickShowPassword = () => {
       setShowPassword((prev) => !prev);
@@ -130,11 +145,20 @@ export default function Register() {
               {formik.errors.password2 && formik.touched.password2 ? <div className='text-danger py-1'>{formik.errors.password2}</div> : ''}
               <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password2} type={showPassword ? 'text' : 'password'} id='password2' className='form-control border border-2 border-black p-4' name='password2' />
               <label htmlFor="country" className='pt-4'>Country/Region of residence*</label>
-              <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.country} name="country" id="country" className='form-control border border-2 border-black p-4'>
+              <select
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.country}
+                name="country"
+                id="country"
+                className="form-control border border-2 border-black p-4"
+              >
                 <option value="">Select Country</option>
-                <option value="Egypt">Egypt / EGP</option>
-                <option value="Saudi Arabia">Saudi Arabia / SAR</option>
-                {/* Add other countries as needed */}
+                {countries.map(country => (
+                  <option key={country.id} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
               </select>
               <label htmlFor="currence" className='pt-4'>Currency*</label>
               <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.currence} name="currence" id="currence" className='form-control border border-2 border-black p-4'>

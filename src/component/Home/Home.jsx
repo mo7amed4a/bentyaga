@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Home.module.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -9,9 +9,28 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { FreeMode, Navigation, Autoplay } from "swiper/modules";
 import product from './../../assets/images/product_default.png'
+import { useSelector } from 'react-redux';
+import { api } from '../../API';
 
 export default function Home() {
   const [activeIndexes, setActiveIndexes] = useState(Array(10).fill(0)); // Array to store active image index for each item
+
+  const isAuthentication = useSelector(state => state.auth.isAuthentication);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
+    const lastPopupDate = sessionStorage.getItem('lastPopupDate');
+
+    if (isAuthentication && lastPopupDate !== today) {
+      setShowPopup(true);
+      sessionStorage.setItem('lastPopupDate', today); // Store today's date to prevent showing the popup again today
+    }
+  }, [isAuthentication]);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
 
   const images = [
     product,
@@ -22,6 +41,39 @@ export default function Home() {
     product,
     // Add other images here...
   ];
+
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
+
+  useEffect(() => {
+    fetch('https://api.bantayga.wtf/sing/', {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+        'X-CSRFToken': '5Ur10C8luOKRCZsSBmgZcp11K9IWt66WspXtcWREwrL6Tf4BzFjVYb1MW9BKhgp2',
+      },
+    })
+      .then(response => response.json())
+      .then(data => setCountries(data))
+      .catch(error => console.error('Error fetching countries:', error));
+  }, []);
+
+  const handleChange = (event) => {
+    setSelectedCountry(event.target.value);
+  };
+
+  const handleApply = async () => {
+    try {
+        const { data } = await api.patch(`https://api.bantayga.wtf/user/update/`, {
+          country: selectedCountry,
+        });
+        setShowPopup(false)
+    } catch (error) {
+        setShowPopup(false)
+        console.error("Error fetching products:", error);
+    }
+  };
+
 
   const handleDotClick = (itemIndex, dotIndex) => {
     const newActiveIndexes = [...activeIndexes];
@@ -53,6 +105,27 @@ export default function Home() {
       <div className={`${styles.theBackGround} d-flex flex-column justify-content-center`}>
         <div className={styles.layer2}></div>
       </div>
+
+      {
+        showPopup && (
+          <>
+          <div className="hide_content" onClick={() => setShowPopup(false)}></div>
+          <div className='home_popup'>
+            <h1>Welcome to Bantayga</h1>
+            <h3>We are shipping to :</h3>
+              <select name="country" id="country" onChange={handleChange}>
+                <option value="">Select Country</option>
+                {countries.map(country => (
+                  <option key={country.id} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+              <button onClick={handleApply}>Apply</button>
+          </div>
+          </>
+        )
+      }
 
       <Swiper 
           slidesPerView={"auto"}
