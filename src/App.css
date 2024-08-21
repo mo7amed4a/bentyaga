@@ -511,3 +511,18 @@ input:focus {
     background-color: #00000062;
     z-index: 999999;
 }
+
+.sale_span {
+    padding: 4px 40px;
+    font-size: 13px !important;
+    display: block;
+    width: max-content;
+    font-weight: 800 !important;
+    line-height: 20px;
+    color: #fff;
+    background-color: #E5002B;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { api } from '../../API';
 
 export default function Footer() {
     const [showDetails, setShowDetails] = useState({}); // State to toggle details for each section
@@ -31,8 +32,20 @@ export default function Footer() {
     }
 
 
+    async function tst() {
+        try {
+            const { data } = await api.post(`https://api.bantayga.wtf/wishlist/`, {
+                product_id: 2
+            });
+            console.log(data);
+                       
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+
+
     useEffect(() => {
-        // Function to determine device type
         fetchSocial()
         fetchDesc()
         const getDeviceType = () => {
@@ -136,10 +149,13 @@ export default function Footer() {
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['followUs']) && (
                         <div className="d-flex flex-column p-2 bg-white-m">
-                            <a>Facebook</a>
-                            <a>Instagram</a>
-                            <a>Tiktok</a>
-                            <a>Spotify</a>
+                            {
+                                (medai?.length > 0 && medai) && (
+                                    medai.map(social => (
+                                        <a href={social.lnik} target='_blanck'>{social.name}</a>
+                                    ))
+                                )
+                            }
                         </div>
                     )}
                 </div>

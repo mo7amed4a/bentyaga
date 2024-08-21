@@ -3,20 +3,22 @@ import styles from './Home.module.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
-// Import Swiper styles
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { FreeMode, Navigation, Autoplay } from "swiper/modules";
-import product from './../../assets/images/product_default.png'
+import product from './../../assets/images/product_default.png';
 import { useSelector } from 'react-redux';
 import { api } from '../../API';
+import axios from 'axios';
 
 export default function Home() {
-  const [activeIndexes, setActiveIndexes] = useState(Array(10).fill(0)); // Array to store active image index for each item
-
+  // const [activeIndexes, setActiveIndexes] = useState(Array(10).fill(0)); // Array to store active image index for each item
   const isAuthentication = useSelector(state => state.auth.isAuthentication);
   const [showPopup, setShowPopup] = useState(false);
+  const [featuredProducts, setFeaturedProducts] = useState([]); // State to store featured products
+  const [countries, setCountries] = useState([]); // State to store countries
+  const [selectedCountry, setSelectedCountry] = useState('');
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
@@ -32,18 +34,37 @@ export default function Home() {
     setShowPopup(false);
   };
 
-  const images = [
-    product,
-    product,
-    product,
-    product,
-    product,
-    product,
-    // Add other images here...
-  ];
+  const handleChange = (event) => {
+    setSelectedCountry(event.target.value);
+  };
 
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const handleApply = async () => {
+    try {
+      const { data } = await api.patch(`https://api.bantayga.wtf/user/update/`, {
+        country: selectedCountry,
+        currency: "EGP"
+      });
+      setShowPopup(false);
+    } catch (error) {
+      setShowPopup(false);
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  const fetchFeaturedProduct = async () => {
+    try {
+      const { data } = await axios.get(`https://api.bantayga.wtf/get-featured-products/`);
+      setFeaturedProducts(data)
+    } catch (error) {
+      // setShowPopup(false);
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  // Fetch Featured Products
+  useEffect(() => {
+    fetchFeaturedProduct()
+  }, []);
 
   useEffect(() => {
     fetch('https://api.bantayga.wtf/sing/', {
@@ -57,29 +78,6 @@ export default function Home() {
       .then(data => setCountries(data))
       .catch(error => console.error('Error fetching countries:', error));
   }, []);
-
-  const handleChange = (event) => {
-    setSelectedCountry(event.target.value);
-  };
-
-  const handleApply = async () => {
-    try {
-        const { data } = await api.patch(`https://api.bantayga.wtf/user/update/`, {
-          country: selectedCountry,
-        });
-        setShowPopup(false)
-    } catch (error) {
-        setShowPopup(false)
-        console.error("Error fetching products:", error);
-    }
-  };
-
-
-  const handleDotClick = (itemIndex, dotIndex) => {
-    const newActiveIndexes = [...activeIndexes];
-    newActiveIndexes[itemIndex] = dotIndex;
-    setActiveIndexes(newActiveIndexes);
-  };
 
   const responsive = {
     superLargeDesktop: {
@@ -99,7 +97,22 @@ export default function Home() {
       items: 2,
     }
   };
+  // State to keep track of the active slide index for each product
+  const [activeIndexes, setActiveIndexes] = useState(
+    featuredProducts.map(() => 0) // Initialize with 0 for each product
+  );
 
+  // Function to handle dot click
+  const handleDotClick = (productIndex, dotIndex) => {
+    // Update the active index for the clicked product
+    const newIndexes = [...activeIndexes];
+    newIndexes[productIndex] = dotIndex;
+    setActiveIndexes(newIndexes);
+
+    // Slide to the clicked image
+    const swiper = document.querySelectorAll('.mySwiper2')[productIndex];
+    swiper.swiper.slideTo(dotIndex);
+  };
   return (
     <>
       <div className={`${styles.theBackGround} d-flex flex-column justify-content-center`}>
@@ -134,42 +147,77 @@ export default function Home() {
           loop={true}
           className="mySwiper"
           modules={[Navigation, FreeMode, Autoplay]}
-          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          // autoplay={{ delay: 2500, disableOnInteraction: false }}
           speed={350}
         >
 
-        {images.map((image, index) => (
-          <SwiperSlide className={`${styles.border} ${styles.imageContainer}`} key={index}>
-            <img className="w-100 home_img" src={image} alt="Fashion Item" />
-
+        {featuredProducts.map((product, index) => (
+          <SwiperSlide className={`${styles.border} ${styles.imageContainer}`} style={{position: 'relative',}} key={index}>
+            {
+              product.sale_status && (
+                <span className="sale_span">{product.sale_status}</span>
+              )
+            }
+            {product.images && product.images.length > 0 ? (
+              <Swiper
+                slidesPerView={"auto"}
+                spaceBetween={5}
+                freeMode={true}
+                loop={true}
+                className={"mySwiper2"}
+                modules={[Navigation, FreeMode, Autoplay]}
+                // autoplay={{ delay: 2500, disableOnInteraction: false }}
+                speed={350}
+              >
+                {product.images.map((image, imageIndex) => (
+                  <SwiperSlide key={imageIndex}>
+                    <Link to={'/productdetails/' + product.id}>
+                      <img className="w-100 home_img" src={'https://api.bantayga.wtf' +  image.image} alt={product.name} />
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              <Link to={'/productdetails/' + product.id}>
+                <img className="w-100 home_img" src={'https://api.bantayga.wtf' + product.photo || product} alt={product.name} />
+              </Link>
+            )}
             <div className={styles.checkboxContainer}>
-              <input type="checkbox" id={`checkbox-red-${index}`} className={styles.checkbox} />
-              <label htmlFor={`checkbox-red-${index}`} className={styles.checkboxLabelRed}></label>
-              <input type="checkbox" id={`checkbox-gray-${index}`} className={styles.checkbox} />
-              <label htmlFor={`checkbox-gray-${index}`} className={styles.checkboxLabelGray}></label>
+              {product.colors.map((colorObj, colorIndex) => (
+                <React.Fragment key={colorIndex}>
+                  <label 
+                    htmlFor={`checkbox-${colorObj.color}-${index}`} 
+                    className={styles.checkboxLabel}
+                    style={{ backgroundColor: colorObj.color, width: 20, height: 20 }} // Set the background color
+                  ></label>
+                </React.Fragment>
+              ))}
             </div>
-
             <div className={styles.sizeOptions}>
-              <span className={styles.size}>XS</span>
-              <span className={styles.size}>S</span>
-              <span className={styles.size}>M</span>
-              <span className={styles.size}>L</span>
+              {product.sizes.map((size, sizeIndex) => (
+                <span key={sizeIndex} className={styles.size}>{size.size}</span>
+              ))}
             </div>
 
             <div className={styles.dotSlider}>
-              {images.map((_, dotIndex) => (
+              {product.images?.map((_, dotIndex) => (
                 <span
                   key={dotIndex}
-                  className={`${styles.dot} ${activeIndexes[index] === dotIndex ? styles.active : ''}`}
+                  className={`${styles.dot} ${activeIndexes[index] === dotIndex ? styles.active : ''}`} // Apply active class to the first dot by default
                   onClick={() => handleDotClick(index, dotIndex)}
                 ></span>
               ))}
             </div>
-
-            <p className="text-black text-center">Leather Jacket</p>
-            <p className="text-black text-center">
-              <span>2 color</span>
-            </p>
+            <Link to={'/productdetails/' + product.id} style={{textDecoration: "none"}}>
+            <p className="text-black text-center">{product.name}</p>
+            </Link>
+            {
+              product.colors.length > 0 && (
+                <p className="text-black text-center">
+                  <span>{product.colors.length} colors</span>
+                </p>
+              )
+            }
           </SwiperSlide>
         ))}
       </Swiper>

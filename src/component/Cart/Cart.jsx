@@ -3,6 +3,7 @@ import Styles from './Cart.module.css'; // Import the CSS module
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllCart, removeProductFromCart } from '../../features/cartSlice';
+import { addProductToWishlist } from '../../features/wishlistSlice';
 
 export default function Cart() {
   const cart = useSelector(state => state.cart.cart);
@@ -16,6 +17,11 @@ export default function Cart() {
   // Function to handle item deletion
   const handleRemoveItem = (itemId) => {
     dispatch(removeProductFromCart(itemId));
+  };
+
+  // Function to handle item deletion
+  const handleMoveToWishlist = (itemId) => {
+    dispatch(addProductToWishlist(itemId));
   };
 
   useEffect(() => {
@@ -59,7 +65,7 @@ export default function Cart() {
 
                       <div className='d-flex justify-content-between'>
                         <h2 className={`${Styles.hh} h5 pt-4 overflow-hidden`}>{item.product_name}</h2>
-                        <p className={`${Styles.hh} pt-4`}>{item.converted_price} L.E</p>
+                        <p className={`${Styles.hh} pt-4`}>${item.converted_price}</p>
                       </div>
 
                       <div className='d-flex'>
@@ -92,7 +98,7 @@ export default function Cart() {
                       }} />
                       <div className='d-flex justify-content-between'>
                         <p className={Styles.size}>Details</p>
-                        <Link className={Styles.move}>Move to Wishlist</Link>
+                        <button onClick={() => handleMoveToWishlist(item.product)} style={{background: "transparent", border: 'none'}} className={Styles.move}>Move to Wishlist</button>
                       </div>
 
                       <div className={Styles.customlist}>

@@ -12,8 +12,9 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper/modules';
 import { api } from '../../API';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProductToCart } from '../../features/cartSlice';
+import { addProductToWishlist, fetchAllWishlist, removeProductFromWishlist } from '../../features/wishlistSlice';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -25,20 +26,37 @@ const ProductDetails = () => {
     const [showDetails, setShowDetails] = useState(false); // Toggle state for showing details
     const [size, setsize] = useState(false); // Toggle state for showing details
     const [deviceType, setDeviceType] = useState('Desktop');
+    const wishlist = useSelector(state => state.wishlist.wishlist);
+    const [isFav, setIsFav] = useState(false)
 
+    const fetchProduct = async () => {
+        try {
+            const { data } = await api.get(`https://api.bantayga.wtf/api/products/${id}/`);
+            console.log(data); // Print the response in the console
+            setProduct(data); // Set the product data
+        } catch (error) {
+            console.error("Error fetching product details:", error);
+        }
+    };
     useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const { data } = await api.get(`https://api.bantayga.wtf/api/products/${id}/`);
-                console.log(data); // Print the response in the console
-                setProduct(data); // Set the product data
-            } catch (error) {
-                console.error("Error fetching product details:", error);
-            }
-        };
-
         fetchProduct();
     }, [id]);
+    useEffect(() => {
+        dispatch(fetchAllWishlist());
+      }, [dispatch]);
+
+    useEffect(() => {
+        setIsFav(wishlist.find(item => item.product.id == id) ? true : false)
+    }, [wishlist])
+    
+    const handleAddToWishlist = (id) => {
+        dispatch(!isFav ? addProductToWishlist(id) : removeProductFromWishlist(id));
+        setTimeout(() => {
+            dispatch(fetchAllWishlist());
+            fetchProduct()
+        }, 1000)
+        
+    };
 
     useEffect(() => {
         const getDeviceType = () => {
@@ -123,6 +141,7 @@ const ProductDetails = () => {
         setsize(!size);
     };
 
+
     if (!product) {
         return <div>Loading...</div>;
     }
@@ -135,11 +154,20 @@ const ProductDetails = () => {
         <div className={`${styles.productDetailsContainer} product_details_wrapper`}>
             <div className={styles.imagesContainer}>
                 {/* Heart icon */}
-                <Link to={'/wishlist'} className="fs-3 text-decoration-none text-black px-3">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.2 24H10.8V22.6667H9.6V21.3333H8.4V20H7.2V18.6667H6V17.3333H4.8V16H3.6V14.6667H2.4V13.3333H1.2V10.6667H0V4H1.2V2.66667H2.4V1.33333H3.6V0H9.6V1.33333H10.8V2.66667H13.2V1.33333H14.4V0H20.4V1.33333H21.6V2.66667H22.8V4H24V10.6667H22.8V13.3333H21.6V14.6667H20.4V16H19.2V17.3333H18V18.6667H16.8V20H15.6V21.3333H14.4V22.6667H13.2V24ZM4.8 12V13.3333H6V14.6667H7.2V16H8.4V17.3333H9.6V18.6667H10.8V20H13.2V18.6667H14.4V17.3333H15.6V16H16.8V14.6667H18V13.3333H19.2V12H20.4V9.33333H21.6V5.33333H20.4V4H19.2V2.66667H15.6V4H14.4V5.33333H13.2V6.66667H10.8V5.33333H9.6V4H8.4V2.66667H4.8V4H3.6V5.33333H2.4V9.33333H3.6V12H4.8Z" fill="#121212"/>
-                    </svg>
-                </Link>
+                <button onClick={() => handleAddToWishlist(id)} style={{background: 'transparent', border: 'none', width: 'max-content'}} className={"fs-3 text-decoration-none text-black px-3" }>
+                    {
+                        isFav ? (
+                            <svg width="24" height="24" viewBox="0 0 39 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.5 5.5L11 2L19.5 5.5L25 3H31L36 5.5V12L26.5 27L19.5 33L11 26L2.5 14.5L3.5 5.5Z" fill="#FC4343"/>
+                            <path d="M21.45 35H17.55V33.0556H15.6V31.1111H13.65V29.1667H11.7V27.2222H9.75V25.2778H7.8V23.3333H5.85V21.3889H3.9V19.4444H1.95V15.5556H0V5.83333H1.95V3.88889H3.9V1.94444H5.85V0H15.6V1.94444H17.55V3.88889H21.45V1.94444H23.4V0H33.15V1.94444H35.1V3.88889H37.05V5.83333H39V15.5556H37.05V19.4444H35.1V21.3889H33.15V23.3333H31.2V25.2778H29.25V27.2222H27.3V29.1667H25.35V31.1111H23.4V33.0556H21.45V35ZM7.8 17.5V19.4444H9.75V21.3889H11.7V23.3333H13.65V25.2778H15.6V27.2222H17.55V29.1667H21.45V27.2222H23.4V25.2778H25.35V23.3333H27.3V21.3889H29.25V19.4444H31.2V17.5H33.15V13.6111H35.1V7.77778H33.15V5.83333H31.2V3.88889H25.35V5.83333H23.4V7.77778H21.45V9.72222H17.55V7.77778H15.6V5.83333H13.65V3.88889H7.8V5.83333H5.85V7.77778H3.9V13.6111H5.85V17.5H7.8Z" fill="#121212"/>
+                            </svg>
+                        ) : (
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.2 24H10.8V22.6667H9.6V21.3333H8.4V20H7.2V18.6667H6V17.3333H4.8V16H3.6V14.6667H2.4V13.3333H1.2V10.6667H0V4H1.2V2.66667H2.4V1.33333H3.6V0H9.6V1.33333H10.8V2.66667H13.2V1.33333H14.4V0H20.4V1.33333H21.6V2.66667H22.8V4H24V10.6667H22.8V13.3333H21.6V14.6667H20.4V16H19.2V17.3333H18V18.6667H16.8V20H15.6V21.3333H14.4V22.6667H13.2V24ZM4.8 12V13.3333H6V14.6667H7.2V16H8.4V17.3333H9.6V18.6667H10.8V20H13.2V18.6667H14.4V17.3333H15.6V16H16.8V14.6667H18V13.3333H19.2V12H20.4V9.33333H21.6V5.33333H20.4V4H19.2V2.66667H15.6V4H14.4V5.33333H13.2V6.66667H10.8V5.33333H9.6V4H8.4V2.66667H4.8V4H3.6V5.33333H2.4V9.33333H3.6V12H4.8Z" fill="#121212"/>
+                            </svg>
+                        )
+                    }
+                </button>
                 {/* Product images */}
                 {deviceType === 'Desktop' ? renderImagesAsList() : renderImagesAsSlider()}
             </div>
@@ -207,7 +235,9 @@ const ProductDetails = () => {
                     <div className={`collapse ${size ? 'show' : ''}`} id="productDetailsCollapse">
                         <div className={`${styles.specificDetail} card card-body`}>
                             {/* Replace with actual product details */}
-                            {product.sizes.map(size => size.size).join(" - ")}
+                            {product.sizes.map(size => (
+                                <div>{size.size}: {size.descrtions_size_fit}</div>
+                            ))}
                             {/* Add more product details as needed */}
                         </div>
                     </div>

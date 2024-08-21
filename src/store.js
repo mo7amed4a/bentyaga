@@ -4,10 +4,12 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import authReducer from "./features/auth/authSlice"
 import cartReducer from "./features/cartSlice"
+import wishlistReducer from "./features/wishlistSlice"
 
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
+  wishlist: wishlistReducer,
 });
 
 const persistConfig = {

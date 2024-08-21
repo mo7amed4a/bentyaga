@@ -210,12 +210,12 @@ export default function Drop() {
                     <div className="row">
                         {colors.map((color, index) => (
                             <div key={index} className="col-6">
-                                <label className={'w-100 p-3 my-1 mx-2 radio-drop' + (selectedColor == color.id ? " selected" : "")}>
+                                <label className={'w-100 p-3 my-1 mx-2 radio-drop' + (selectedColor == color.color ? " selected" : "")}>
                                     <input
                                         type="radio"
                                         name="color"
-                                        value={color.id}
-                                        checked={selectedColor == color.id}
+                                        value={color.color}
+                                        checked={selectedColor == color.color}
                                         onChange={handleChangeColor}
                                     />
                                     {color.color}
@@ -417,8 +417,14 @@ export default function Drop() {
                     {products?.map((item) => (
                         <div
                             key={item._id}
-                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 3 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer', padding: 0}}
+                            className={`col-${deviceType === 'Desktop' ? columnSize : columnSize == 3 ? 6 : 12}`} style={{borderRight: "1px solid #000",borderBottom: "1px solid #000", cursor: 'pointer', position: 'relative', padding: 0}}
                         >
+                                        {
+                            item.sale_status && (
+                                <span className="sale_span">{item.sale_status}</span>
+                            )
+                            }
+
                             <Swiper 
                             slidesPerView={"auto"}
                             loop={true}
