@@ -168,7 +168,7 @@ export default function Footer() {
                             {
                                 (medai?.length > 0 && medai) && (
                                     medai.map(social => (
-                                        <a href={social.lnik} target='_blanck'>{social.name}</a>
+                                        <a href={social.link} target='_blanck'>{social.name}</a>
                                     ))
                                 )
                             }
