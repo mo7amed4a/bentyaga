@@ -64,7 +64,7 @@
   
   @media (max-width: 768px) {
     .backAbout{
-      margin-top: 45px;
+      margin-top: 40px;
     }
     .container {
       margin-top: 5vh; /* Adjust top margin for smaller screens */

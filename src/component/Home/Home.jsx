@@ -11,6 +11,7 @@ import product from './../../assets/images/product_default.png';
 import { useSelector } from 'react-redux';
 import { api } from '../../API';
 import axios from 'axios';
+import { API } from '../../features/globals';
 
 export default function Home() {
   // const [activeIndexes, setActiveIndexes] = useState(Array(10).fill(0)); // Array to store active image index for each item
@@ -42,7 +43,7 @@ export default function Home() {
     try {
       const { data } = await api.patch(`https://api.bantayga.wtf/user/update/`, {
         country: selectedCountry,
-        currency: "EGP"
+        currency: "$"
       });
       setShowPopup(false);
     } catch (error) {
@@ -113,9 +114,30 @@ export default function Home() {
     const swiper = document.querySelectorAll('.mySwiper2')[productIndex];
     swiper.swiper.slideTo(dotIndex);
   };
+  const [web, setWeb] = useState()
+  async function fetchDesc() {
+    try {
+        const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);
+        setWeb(data);
+                   
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
+}
+
+
+useEffect(() => {
+  fetchDesc()
+}, [])
+
+
+
   return (
     <>
-      <div className={`${styles.theBackGround} d-flex flex-column justify-content-center`}>
+<div
+  className={`${styles.theBackGround} d-flex flex-column justify-content-center`}
+  style={{ backgroundImage: `url(${API + web?.based_pic})` }}
+>
         <div className={styles.layer2}></div>
       </div>
 
@@ -222,7 +244,8 @@ export default function Home() {
         ))}
       </Swiper>
 
-      <Link to={"/drop"} className={`${styles.theBackGround1} d-flex flex-column justify-content-center`}>
+      <Link to={"/drop"} className={`${styles.theBackGround1} d-flex flex-column justify-content-center`}
+      style={{ backgroundImage: `url(${API + web?.based_pic2})` }}>
         <div className={styles.layer1}>
           <h1 className="text-white z-2 px-1">Exclusive Fashion</h1>
           <Link className={`${styles.link} text-white d-flex align-items-center justify-content-center`}>

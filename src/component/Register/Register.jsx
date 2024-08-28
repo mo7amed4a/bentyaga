@@ -163,7 +163,7 @@ export default function Register() {
               <label htmlFor="currence" className='pt-4'>Currency*</label>
               <select onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.currence} name="currence" id="currence" className='form-control border border-2 border-black p-4'>
                 <option value="">Select Currency</option>
-                <option value="EGP">Egyptian Pound</option>
+                <option value="$">Egyptian Pound</option>
                 <option value="SAR">Saudi Riyal</option>
                 {/* Add other currencies as needed */}
               </select>

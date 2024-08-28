@@ -53,7 +53,7 @@ export default function Cart() {
                     </div>
 
                     <div className={`border border-2 border-black ${Styles.flexColumn}`}>
-                      <div className='d-flex align-items-center justify-content-end bg-danger'>
+                      <div className='d-flex align-items-center justify-content-end '>
                         <button
                           className={Styles.removeBtn}
                           onClick={() => handleRemoveItem(item.product)}
@@ -115,12 +115,12 @@ export default function Cart() {
                   <h3>Order Summary</h3>
                   <div className='d-flex justify-content-between pt-4'>
                     <p className={Styles.orderPara}>SubTotal</p>
-                    <p className={Styles.orderPara}>{cart[0]?.total_price} EGP</p>
+                    <p className={Styles.orderPara}>{cart[0]?.total_price} $</p>
                   </div>
                   <div className={Styles.dashed}></div>
                   <div className='d-flex justify-content-between'>
                     <p className={Styles.orderPara1}>Total</p>
-                    <p className={Styles.orderPara1}>{cart[0]?.total_price} EGP</p>
+                    <p className={Styles.orderPara1}>{cart[0]?.total_price} $</p>
                   </div>
                 </div>
               </div>

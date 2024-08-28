@@ -28,6 +28,7 @@ const ProductDetails = () => {
     const [deviceType, setDeviceType] = useState('Desktop');
     const wishlist = useSelector(state => state.wishlist.wishlist);
     const [isFav, setIsFav] = useState(false)
+    const [isReq, setIsReq] = useState(false)
 
     const fetchProduct = async () => {
         try {
@@ -130,8 +131,15 @@ const ProductDetails = () => {
     const navigation = useNavigate()
     
     const handleBuyClick = () => {
-        dispatch(addProductToCart({ id: id, color: selectedColor, quantity: selectedQuantity, size: selectedSize }))
-        navigation('/cart')
+        if (!selectedColor || !selectedQuantity || !selectedSize) {
+            setIsReq(true)
+            setTimeout(() => {
+                setIsReq(false)
+            }, 1000);
+        } else {
+            dispatch(addProductToCart({ id: id, color: selectedColor, quantity: selectedQuantity, size: selectedSize }))
+            navigation('/cart')
+        }
     };
 
     const toggleDetails = () => {
@@ -147,7 +155,15 @@ const ProductDetails = () => {
     }
 
     const handleAddToCart = () => {
-        dispatch(addProductToCart({ id: id, color: selectedColor, quantity: selectedQuantity, size: selectedSize }))
+        if (!selectedColor || !selectedQuantity || !selectedSize) {
+            setIsReq(true)
+            setTimeout(() => {
+                setIsReq(false)
+            }, 1000);
+        } else {
+
+            dispatch(addProductToCart({ id: id, color: selectedColor, quantity: selectedQuantity, size: selectedSize }))
+        }
     }
 
     return (
@@ -183,7 +199,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="my-3 selectContainer">
-                    <select id="sizeSelect" className='' value={selectedSize} onChange={handleSizeChange}>
+                    <select id="sizeSelect" className={(isReq && !selectedSize ? 'redBorder' : '')} value={selectedSize} onChange={handleSizeChange}>
                         <option value="" className={styles.selection}>Select Size</option>
                         {product.sizes?.map((size, index) => (
                             <option key={index} value={size.size}>{size.size}</option>
@@ -191,7 +207,7 @@ const ProductDetails = () => {
                     </select>
                 </div>
                 <div className="my-3 selectContainer">
-                    <select id="colorSelect" className='' value={selectedColor} onChange={handleColorChange}>
+                    <select id="colorSelect" className={(isReq && !selectedColor ? 'redBorder' : '')} value={selectedColor} onChange={handleColorChange}>
                         <option value="" className={styles.selection}>Select Color</option>
                         {product.colors?.map((color, index) => (
                             <option key={index} value={color.color}>{color.color}</option>
@@ -199,7 +215,7 @@ const ProductDetails = () => {
                     </select>
                 </div>
                 <div className="my-3 selectContainer">
-                    <select id="quantitySelect" className='' value={selectedQuantity} onChange={handleQuantityChange}>
+                    <select id="quantitySelect" className={(isReq  && !selectedQuantity ? 'redBorder' : '')} value={selectedQuantity} onChange={handleQuantityChange}>
                         <option value="" className={styles.selection}>Select Quantity</option>
                         {/* Replace with actual quantity options based on your product data */}
                         <option value="1">1</option>
@@ -236,7 +252,7 @@ const ProductDetails = () => {
                         <div className={`${styles.specificDetail} card card-body`}>
                             {/* Replace with actual product details */}
                             {product.sizes.map(size => (
-                                <div>{size.size}: {size.descrtions_size_fit}</div>
+                                <div style={{fontSize: 12}}>{size.size}: {size.descrtions_size_fit}</div>
                             ))}
                             {/* Add more product details as needed */}
                         </div>

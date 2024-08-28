@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Footer.module.css'; // Import the CSS module
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { api } from '../../API';
 
@@ -47,7 +47,6 @@ export default function Footer() {
 
     useEffect(() => {
         fetchSocial()
-        fetchDesc()
         const getDeviceType = () => {
             const ua = navigator.userAgent;
             if (/mobile/i.test(ua)) {
@@ -88,6 +87,23 @@ export default function Footer() {
         return null;
     };
 
+    const [web, setWeb] = useState()
+    async function fetchDesc() {
+      try {
+          const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);
+          setWeb(data);
+                     
+      } catch (error) {
+          console.error("Error fetching products:", error);
+      }
+  }
+  
+  
+  useEffect(() => {
+    fetchDesc()
+  }, [])
+  
+  
     return (
         <>
             <div className={`${styles.rowFooter} `}>
@@ -164,14 +180,14 @@ export default function Footer() {
                 <div className="col-md-2 border-top border-t-1 border-black pt-3  ps-2 pb-2">
                     <h3
                         className={`px-2 pb-1 d-flex justify-content-between ${deviceType === 'Mobile' ? 'cursor-pointer' : ''}`}
-                        onClick={() => handleToggleMobileDetails('contactUs')}
+                        onClick={() => {window.location.href ='/contact'}}
                     >
                         CONTACT US
-                        {deviceType === 'Mobile' && renderArrowIcon('contactUs')}
+                        {/* {deviceType === 'Mobile' && renderArrowIcon('contactUs')} */}
                     </h3>
-                    {(deviceType === 'Desktop' || showDetails['contactUs']) && (
+                    {/* {(deviceType === 'Desktop' || showDetails['contactUs']) && (
                         <span className='ps-2 p-2 bg-white-m w-100 d-block'>Call US at: <br /> <a className="text-black ps-2 text-decoration-none">+201090359579</a></span>
-                    )}
+                    )} */}
                 </div>
 
                 {/* Empty column for spacing */}
@@ -180,7 +196,7 @@ export default function Footer() {
 
             {/* Footer */}
             <div className={`${styles.foot} d-flex flex-column align-items-center justify-content-center`}>
-                <p className={`${styles.banagia} mt-2 pt-1`}> <span>&copy;</span> 2024 BANTAYGA</p>
+                <p className={`${styles.banagia} mt-2 pt-1`}> {web?.trademark}</p>
                 <p>Powered by <Link to="https://webbing-agency.com/" className={styles.webbing}>Webbing Agency</Link></p>
             </div>
         </>

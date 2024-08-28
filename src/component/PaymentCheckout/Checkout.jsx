@@ -89,7 +89,7 @@ import { api } from '../../API'
           <div className='border border-black border-1 contact-form-wrapper'>
 
               <select className='w-50 p-4' value={city} onChange={handleChangeCity} required>
-                <option value=''>City</option>
+                <option value=''>Province</option>
                 {
                   (provinces && provinces.length > 0) && (
                     provinces.map((province, index) => (
@@ -130,20 +130,20 @@ import { api } from '../../API'
                   <h2 style={{fontWeight: "700 !important", fontSize: 20}}>Order Summary</h2>
                   <div className='d-flex justify-content-between pt-4'>
                       <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>SubTotal</p>
-                      <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{cart[0]?.total_price} EGP</p>
+                      <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{cart[0]?.total_price} $</p>
                   </div>
                   {
                     shippingPrice && (
                       <div className='d-flex justify-content-between'>
                           <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>Delivery</p>
-                          <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{shippingPrice} EGP</p>
+                          <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{shippingPrice} $</p>
                       </div>
                     )
                   }
                   <div className={Style.dashed}></div>
                   <div className='d-flex justify-content-between'>
                       <p className={Style.orderPara} style={{fontWeight: 500, fontSize: 13}}>Total</p>
-                      <p className={Style.orderPara}  style={{fontWeight: 500, fontSize: 13}}>{parseFloat(cart[0]?.total_price) + parseFloat(shippingPrice || 0)} EGP</p>
+                      <p className={Style.orderPara}  style={{fontWeight: 500, fontSize: 13}}>{parseFloat(cart[0]?.total_price) + parseFloat(shippingPrice || 0)} $</p>
                   </div>
               </div>
           </div>

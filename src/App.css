@@ -348,6 +348,7 @@ html {
         border: none !important;
         border-right: none !important;
         border-bottom: 1px solid #000 !important;
+        width: 100% !important;
     }
     .contact-form-wrapper textarea {
         padding: 20px;
@@ -384,7 +385,7 @@ input:focus {
 }
 .home_img {
     width: 100%;
-    max-width: 100px;
+    max-width: 200px;
     display: block;
     margin: auto;
 }
@@ -407,7 +408,7 @@ input:focus {
         font-size: 12px;
     }
     .home_img {
-        max-width: 55px;
+        max-width: 110px;
     }
 }
 
@@ -525,4 +526,81 @@ input:focus {
     top: 0;
     left: 0;
     z-index: 2;
+}
+
+@media (max-width: 767.98px) {
+    .home_popup {
+        padding: 20px;
+        width: calc(100vw - 24px);
+    }
+    .home_popup h1 {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 24.16px;
+        text-align: left;
+        color: #060606;
+        margin-bottom: 7px;
+    }
+    .home_popup h3 {
+        font-size: 18px;
+        font-weight: 600 !important;
+        line-height: 21.09px;
+        text-align: left;
+        color: #959595;
+        margin-bottom: 17px;
+        font-size: 13px !important;
+    }
+    .home_popup select {
+        border-width: 2px;
+        padding: 12px 12px;
+        font-size: 13px;
+        border-radius: 0;
+        border-color: #808080a1;
+    }
+    .home_popup button {
+        padding: 10px 16px !important;
+        border-radius: 0 !important;
+        background: #000;
+        width: 100%;
+        color: #fff;
+        margin-top: 20px;
+        border-radius: 4px;
+        font-family: Inter;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 24.26px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .sale_span {
+        padding: 4px 20px;
+        font-size: 10px !important;
+        display: block;
+        width: max-content;
+        font-weight: 800 !important;
+        line-height: 13px;
+        color: #fff;
+        background-color: #E5002B;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+    }
+}
+
+.redBorder {
+    border-color: #E5002B;
+}
+
+.dorp-link svg {
+    display: none;
+}
+
+@media (max-width:  767.98px) {
+
+    .dorp-link svg {
+        display: block;
+    }
 }

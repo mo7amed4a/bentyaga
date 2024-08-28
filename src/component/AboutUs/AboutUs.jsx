@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Styles from './AboutUs.module.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { API } from '../../features/globals';
 
 export default function AboutUs() {
+  const [web, setWeb] = useState()
+  async function fetchDesc() {
+    try {
+        const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);
+        setWeb(data);
+                   
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
+}
+
+
+useEffect(() => {
+  fetchDesc()
+}, [])
+
+
   return (
     <>
-      <div className={Styles.backAbout}>
+      <div className={Styles.backAbout}
+        style={{ backgroundImage: `url(${API + web?.about_us_pic  })` }}
+      >
         <div className={`${Styles.layerAbout} d-flex align-items-center`}>
           <p className='fs-1 fw-light d-flex align-items-center'>About Us</p>
         </div>
@@ -13,23 +34,14 @@ export default function AboutUs() {
 
       <div className={Styles.container}>
         <p className={Styles.paragraph}>
-          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. There are many variations of passages of Lorem Ipsum available. some form, by injected humour, or randomised words which don't look even slightly believable.
+          {
+            web?.about_us
+          }
         </p>
 
-        <p className={Styles.paragraph}>
-          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. There are many variations of passages of Lorem Ipsum available. some form, by injected humour, or randomised words which don't look even slightly believable.
-        </p>
-
-        <p className={Styles.paragraph}>
-          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. There are many variations of passages of Lorem Ipsum available. some form, by injected humour, or randomised words which don't look even slightly believable.
-        </p>
-
-        <p className={Styles.paragraph}>
-          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. There are many variations of passages of Lorem Ipsum available. some form, by injected humour, or randomised words which don't look even slightly believable.
-        </p>
 
         <p className={`${Styles.copyRight} fw-medium`}>
-          <span>&copy;</span> 2024 BANTAYGA
+          {web?.trademark	}
         </p>
 
         <button 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Styles from './Drop.module.css';
 import Button from '@mui/material/Button';
@@ -45,6 +45,15 @@ export default function Drop() {
         } catch (error) {
             console.error("Error fetching products:", error);
         }
+    }
+
+    function handleClear (e) {
+        e.stopPropagation(); // Prevent propagation to keep drawer open
+        toggleDrawer(false)(e); // Close the drawer explicitly
+        setSelectedCategory('')
+        setSelectedColor('')
+        setSort('')
+        fetchProducts()
     }
 
     // Fetch categories from API
@@ -121,7 +130,17 @@ export default function Drop() {
             return newColors;
         });
     };
+    const [searchParams] = useSearchParams();
 
+    // Using useSearchParams
+    const id = searchParams.get('id');
+    
+    useEffect(() => {
+        if (id) {
+            setSelectedCategory(id)
+            fetchProducts('', id)
+        } 
+    }, [id]);
     // Drawer list content
     const drawerList = () => (
         <Box
@@ -227,8 +246,12 @@ export default function Drop() {
 
                 {/* Clear and Apply buttons */}
                 <div className={`${Styles.filterBtns} d-flex justify-content-center`}>
-                    <button className={`${Styles.btn1} ms-2 my-4 py-2`}>CLEAR</button>
-                    <button className={`${Styles.btn2} ms-2 my-4 py-2`}>APPLY</button>
+                    <button className={`${Styles.btn1} ms-2 my-4 py-2`} onClick={handleClear}>CLEAR</button>
+                    <button className={`${Styles.btn2} ms-2 my-4 py-2`}                         onClick={(e) => {
+                            e.stopPropagation(); // Prevent propagation to keep drawer open
+                            toggleDrawer(false)(e); // Close the drawer explicitly
+                        }}
+>APPLY</button>
                 </div>
             </div>
         </Box>

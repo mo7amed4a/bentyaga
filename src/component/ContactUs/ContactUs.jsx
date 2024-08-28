@@ -1,9 +1,30 @@
-  import React from 'react'
+  import React, { useEffect, useState } from 'react'
   import Style from './ContactUs.module.css'
+import axios from 'axios';
+import { API } from '../../features/globals';
   export default function ContactUs() {
+    const [web, setWeb] = useState()
+    async function fetchDesc() {
+      try {
+          const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);
+          setWeb(data);
+                     
+      } catch (error) {
+          console.error("Error fetching products:", error);
+      }
+  }
+  
+  
+  useEffect(() => {
+    fetchDesc()
+  }, [])
+  
+  
     return <>
     
-    <div className={Style.backContact}>
+    <div className={Style.backContact}
+      style={{ backgroundImage: `url(${API + web?.contect_us_pic})` }}
+    >
       <div className={Style.layerContact}  >
           <p className='fs-1 fw-light d-flex align-items-center'>contact us</p>
       </div> 
@@ -17,7 +38,9 @@
 
           <div className= {Style.container} >
             <p className={Style.firstPara}>send messege</p>
-            <p className={Style.secondPara}>feel free to message us any time , anywhere</p>
+            <p className={Style.secondPara}>
+              {web?.contect_us	}
+            </p>
           </div>
 
           <div className='border border-black border-1 contact-form-wrapper'>
@@ -39,7 +62,9 @@
           </div>       
         </form>
 
-        <p className={Style.copy}> <span>&copy;</span> 2024 BANTAYGA</p>
+        <p className={Style.copy}>
+        {web?.trademark	}
+        </p>
 
 
       </div>
