@@ -16,8 +16,8 @@ const initialState = {
 export const fetchAllCart = createAsyncThunk(
   'cart/fetchAllCart',
   async (_, thunkAPI) => {
-    try {
-      const response = await api.get(API + '/api/cart/');
+    try {     
+      const response = await api.get(API + '/api/cart');      
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

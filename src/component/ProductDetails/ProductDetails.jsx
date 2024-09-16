@@ -13,7 +13,7 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { api } from '../../API';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProductToCart } from '../../features/cartSlice';
+import { addProductToCart, fetchAllCart } from '../../features/cartSlice';
 import { addProductToWishlist, fetchAllWishlist, removeProductFromWishlist } from '../../features/wishlistSlice';
 
 const ProductDetails = () => {
@@ -161,7 +161,6 @@ const ProductDetails = () => {
                 setIsReq(false)
             }, 1000);
         } else {
-
             dispatch(addProductToCart({ id: id, color: selectedColor, quantity: selectedQuantity, size: selectedSize }))
         }
     }
@@ -225,7 +224,13 @@ const ProductDetails = () => {
                 </div>
                 <div className="my-3 d-flex flex-column">
                     <button className={`${styles.buyBtn}`} onClick={handleBuyClick}>Buy</button>
-                    <button className={`${styles.addBtn}`} onClick={handleAddToCart}
+                    <button className={`${styles.addBtn}`} onClick={() => {
+                        handleAddToCart()
+
+                        // console.log(cart);
+                        dispatch(fetchAllCart());
+                        
+                    }}
                         // onClick={() => handleAddToCartClick(product.id)}
                     >Add to Cart</button>
                 </div>

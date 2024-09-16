@@ -121,10 +121,10 @@ import { api } from '../../API'
 
           </div> */}
 
-          <form action="" className="coupon_form mt-5 mb-5">
+          {/* <form action="" className="coupon_form mt-5 mb-5">
             <input type="text" name="coupon" id="coupon" placeholder='Enter a Voutcher' />
             <button>Apply</button>
-          </form>
+          </form> */}
           <div className={`w-100`}>
               <div className={`mb-4 p-3 border-black ${Style.summaryContainer}`}>
                   <h2 style={{fontWeight: "700 !important", fontSize: 20}}>Order Summary</h2>

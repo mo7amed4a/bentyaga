@@ -3,8 +3,8 @@ import { setCredentials, clearCredentials } from '../features/auth/authSlice';
 import { API } from '../features/globals';
 
 const api = axios.create({
-  baseURL: API, // Replace with your API base URL
-  withCredentials: false, // Include cookies with requests if needed
+  baseURL: API, 
+  withCredentials: false, 
 });
 
 const setupInterceptors = (store) => {
