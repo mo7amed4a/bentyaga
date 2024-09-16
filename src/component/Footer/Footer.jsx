@@ -14,18 +14,14 @@ export default function Footer() {
     async function fetchSocial() {
         try {
             const { data } = await axios.get(`https://api.bantayga.wtf/medai/`);
-            setMedia(data); 
-            console.log(data);
-                       
+            setMedia(data);                        
         } catch (error) {
             console.error("Error fetching products:", error);
         }
     }
     async function fetchDesc() {
         try {
-            const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);
-            console.log(data);
-                       
+            const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);                       
         } catch (error) {
             console.error("Error fetching products:", error);
         }
@@ -36,9 +32,7 @@ export default function Footer() {
         try {
             const { data } = await api.post(`https://api.bantayga.wtf/wishlist/`, {
                 product_id: 2
-            });
-            console.log(data);
-                       
+            });                       
         } catch (error) {
             console.error("Error fetching products:", error);
         }
@@ -133,9 +127,11 @@ export default function Footer() {
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['clientServices']) && (
                         <div className="d-flex flex-column p-2 bg-white-m">
-                            <a>Returns</a>
+                            <Link className='text-decoration-none text-black' to={'/drop'}>Drop</Link>
+                            <Link className='text-decoration-none text-black' to={'/cart'}>Cart</Link>
+                            {/* <a>Returns</a>
                             <a>Delivery</a>
-                            <a>Payment</a>
+                            <a>Payment</a> */}
                         </div>
                     )}
                 </div>
@@ -150,7 +146,7 @@ export default function Footer() {
                         {deviceType === 'Mobile' && renderArrowIcon('company')}
                     </h3>
                     {(deviceType === 'Desktop' || showDetails['company']) && (
-                        <a className='p-2 text-decoration-none text-black  w-100 d-block bg-white-m'>About Us</a>
+                        <Link to={'/about'} className='p-2 text-decoration-none text-black  w-100 d-block bg-white-m'>About Us</Link>
                     )}
                 </div>
 
@@ -167,8 +163,8 @@ export default function Footer() {
                         <div className="d-flex flex-column p-2 bg-white-m">
                             {
                                 (medai?.length > 0 && medai) && (
-                                    medai.map(social => (
-                                        <a href={social.link} target='_blanck'>{social.name}</a>
+                                    medai.map((social, index) => (
+                                        <a href={social.link} key={index} style={{color: 'black', textDecoration: 'none'}} target='_blanck'>{social.name}</a>
                                     ))
                                 )
                             }
@@ -185,9 +181,10 @@ export default function Footer() {
                         CONTACT US
                         {/* {deviceType === 'Mobile' && renderArrowIcon('contactUs')} */}
                     </h3>
-                    {/* {(deviceType === 'Desktop' || showDetails['contactUs']) && (
-                        <span className='ps-2 p-2 bg-white-m w-100 d-block'>Call US at: <br /> <a className="text-black ps-2 text-decoration-none">+201090359579</a></span>
-                    )} */}
+                    <Link to={'/contact'} className='text-decoration-none text-black'>contact us page</Link>
+                    {(deviceType === 'Desktop' || showDetails['contactUs']) && (
+                        <div style={{textDecoration: 'none'}} className='ps-2 p-2 bg-white-m w-100 d-block'>Call US at: <br /> <a className="text-black ps-2 text-decoration-none" href='tel:+201090359579'>+201090359579</a></div>
+                    )}
                 </div>
 
                 {/* Empty column for spacing */}

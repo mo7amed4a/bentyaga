@@ -60,8 +60,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={!isAuthentication ? <Login /> : <Navigate to="/" />} />
+          <Route path="/register" element={!isAuthentication ? <Register />: <Navigate to="/" />} />
           <Route path="/drop " element={<Drop />} />
           <Route path="cart" element={isAuthentication ? <Cart/> : <Login></Login>} />
           <Route path="checkOut" element={<ProtectedRoute element={<Checkout />} isAuthentication={isAuthentication} />} />
