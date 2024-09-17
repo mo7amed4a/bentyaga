@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./ProductDetails.module.css"; // Assuming you have custom styles for buttons and other elements
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-
+import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
@@ -96,34 +95,39 @@ const ProductDetails = () => {
         />
       )} */}
       <Swiper
-                slidesPerView={"auto"}
-                loop={true}
-                className={`mySwiper${product.id} ${styles.imageList}`}
-                navigation={true} // Enable navigation
-                pagination={{ clickable: true }} // Enable pagination and make it clickable
-                modules={[Navigation, Pagination]}
-              >
-                <SwiperSlide>
-                  <Link to={"/productdetails/" + product.id}>
-                    <img
-                      style={{width: "100%",height: "500px"}}
-                      src={product.photo || product}
-                      alt={product.name}
-                    />
-                  </Link>
-                </SwiperSlide>
-                {product.images.map((image, imageIndex) => (
-                  <SwiperSlide key={imageIndex + image.created_at} id={image.created_at}>
-                    <Link to={"/productdetails/" + product.id}>
-                      <img
-                        style={{width: "100%",height: "500px"}}
-                        src={image.image}
-                        alt={product.name}
-                      />
-                    </Link>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+        slidesPerView={"auto"}
+        loop={true}
+        className={`mySwiper${product.id} ${styles.imageList}`}
+        navigation={true} // Enable navigation
+        pagination={{ clickable: true }} // Enable pagination and make it clickable
+        modules={[Navigation, Pagination, Autoplay]}
+        autoplay={{ delay: 4100, disableOnInteraction: false }}
+        speed={350}
+      >
+        <SwiperSlide>
+          <Link to={"/productdetails/" + product.id}>
+            <img
+              style={{ width: "100%", height: "500px" }}
+              src={product.photo || product}
+              alt={product.name}
+            />
+          </Link>
+        </SwiperSlide>
+        {product.images.map((image, imageIndex) => (
+          <SwiperSlide
+            key={imageIndex + image.created_at}
+            id={image.created_at}
+          >
+            <Link to={"/productdetails/" + product.id}>
+              <img
+                style={{ width: "100%", height: "500px" }}
+                src={image.image}
+                alt={product.name}
+              />
+            </Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 
@@ -139,8 +143,14 @@ const ProductDetails = () => {
     return (
       <Swiper
         pagination={true}
-        modules={[Pagination]}
         className="productSwiper"
+        slidesPerView={"auto"}
+          spaceBetween={5}
+          freeMode={true}
+          loop={true}
+          modules={[Navigation, FreeMode, Autoplay]}
+          autoplay={{ delay: 4100, disableOnInteraction: false }}
+          speed={350}
       >
         {product.images?.map((image) => (
           <SwiperSlide>
@@ -210,9 +220,9 @@ const ProductDetails = () => {
       dispatch(
         addProductToCart({
           id: id,
-          color: selectedColor || 'none',
+          color: selectedColor || "none",
           quantity: selectedQuantity || "none",
-          size: selectedSize || 'none',
+          size: selectedSize || "none",
         })
       );
     }
@@ -358,7 +368,7 @@ const ProductDetails = () => {
           </div>
         ) : (
           <div className="my-3 d-flex flex-column justify-content-center align-items-center p-2">
-            <h6 style={{color: 'gray'}}>Sold out</h6>
+            <h6 style={{ color: "gray" }}>Sold out</h6>
           </div>
         )}
         <div className="toggleFeature my-3 mb-0 d-flex flex-column m-0">

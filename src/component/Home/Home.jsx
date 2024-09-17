@@ -171,8 +171,8 @@ export default function Home() {
         freeMode={true}
         loop={true}
         className="mySwiper"
-        modules={[Navigation, FreeMode, Autoplay]}
-        // autoplay={{ delay: 2500, disableOnInteraction: false }}
+        modules={[Autoplay, Navigation, FreeMode]}
+        autoplay={{ delay: 500, disableOnInteraction: false }}
         speed={350}
       >
         {featuredProducts.map((product, index) => (
@@ -192,7 +192,7 @@ export default function Home() {
                 loop={true}
                 className={`mySwiper${product.id}`}
                 modules={[Navigation, FreeMode, Autoplay]}
-                // autoplay={{ delay: 2500, disableOnInteraction: false }}
+                autoplay={{ delay: 4100, disableOnInteraction: false }}
                 speed={350}
               >
                 <SwiperSlide key={product.id + 'ojm'}>

@@ -19,7 +19,7 @@ import { Pagination as MuiPagination } from "@mui/material";
 import { PaginationItem, styled } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { api } from "../../API";
@@ -561,7 +561,7 @@ export default function Drop() {
                 padding: 0,
               }}
             >
-              {item.sale_status != 'none' && (
+              {item.sale_status != "none" && (
                 <span className="sale_span">{item.sale_status}</span>
               )}
 
@@ -571,7 +571,9 @@ export default function Drop() {
                 className={`mySwiper${item.id}`}
                 navigation={true} // Enable navigation
                 pagination={{ clickable: true }} // Enable pagination and make it clickable
-                modules={[Navigation, Pagination]}
+                modules={[Navigation, Pagination, Autoplay]}
+                autoplay={{ delay: 4100, disableOnInteraction: false }}
+                speed={350}
               >
                 <SwiperSlide>
                   <Link to={"/productdetails/" + item.id}>
@@ -583,7 +585,10 @@ export default function Drop() {
                   </Link>
                 </SwiperSlide>
                 {item.images.map((image, imageIndex) => (
-                  <SwiperSlide key={imageIndex + image.created_at} id={image.created_at}>
+                  <SwiperSlide
+                    key={imageIndex + image.created_at}
+                    id={image.created_at}
+                  >
                     <Link to={"/productdetails/" + item.id}>
                       <img
                         className="w-100 home_img"

@@ -70,17 +70,19 @@ export default function Wishlist() {
                       navigation={true} // Enable navigation
                       pagination={{ clickable: true }} // Enable pagination and make it clickable
                       modules={[Navigation, Pagination]}
+                      autoplay={{ delay: 4100, disableOnInteraction: false }}
+                      speed={350}
                     >
                       <SwiperSlide>
-                          <img
-                            // style={{ width: "100%", height: "500px" }}
-                            className="w-100"
-                            src={
-                              `https://api.bantayga.wtf${item.product.photo}` ||
-                              item
-                            }
-                            alt={item.name}
-                          />
+                        <img
+                          // style={{ width: "100%", height: "500px" }}
+                          className="w-100"
+                          src={
+                            `https://api.bantayga.wtf${item.product.photo}` ||
+                            item
+                          }
+                          alt={item.name}
+                        />
                       </SwiperSlide>
                       {item?.product?.images?.map((image, imageIndex) => (
                         <SwiperSlide
@@ -88,12 +90,12 @@ export default function Wishlist() {
                           id={image.created_at}
                         >
                           {console.log(image)}
-                            <img
-                              // style={{ width: "100%", height: "500px" }}
-                              className="w-100"
-                              src={`https://api.bantayga.wtf${image.image}`}
-                              alt={item.name}
-                            />
+                          <img
+                            // style={{ width: "100%", height: "500px" }}
+                            className="w-100"
+                            src={`https://api.bantayga.wtf${image.image}`}
+                            alt={item.name}
+                          />
                         </SwiperSlide>
                       ))}
                     </Swiper>
