@@ -408,7 +408,8 @@ input:focus {
         font-size: 12px;
     }
     .home_img {
-        max-width: 110px;
+        max-width: 210px;
+        background-color: #E5002B;
     }
 }
 
