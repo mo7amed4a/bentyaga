@@ -181,7 +181,7 @@ export default function Home() {
             style={{ position: "relative" }}
             key={index}
           >
-            {product.sale_status && (
+            {product.sale_status != 'none' && (
               <span className="sale_span">{product.sale_status}</span>
             )}
             {product.images && product.images.length > 0 ? (

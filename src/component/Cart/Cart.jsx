@@ -42,7 +42,7 @@ export default function Cart() {
             {/* Cart items */}
             <div className={`pt-0 mt-5 border border-bottom-0 ${Styles.flexContainer}`}>
               <div className='w-100'>
-                {cart[0].items.map(item => (
+                {cart[0].items.map((item, index) => (
                   <div key={item.id} className={Styles.all}>
                     <div className={`border border-2 border-black ${Styles.imageContainer}`}>
                       <img

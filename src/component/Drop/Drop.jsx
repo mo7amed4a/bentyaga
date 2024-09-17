@@ -561,7 +561,7 @@ export default function Drop() {
                 padding: 0,
               }}
             >
-              {item.sale_status && (
+              {item.sale_status != 'none' && (
                 <span className="sale_span">{item.sale_status}</span>
               )}
 

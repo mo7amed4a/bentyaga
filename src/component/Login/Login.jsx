@@ -5,11 +5,13 @@ import { Checkbox } from '@mui/material';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 export default function Login() {
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    const { isAuthentication } = useAuth();
 
     async function sendDataToApi(values) {
         // Transform keys to lowercase
@@ -57,7 +59,7 @@ export default function Login() {
         onSubmit: loginSubmit,
     });
 
-    return (
+    return isAuthentication ? <Navigate to={'/'} /> : (
         <>
             <div className="align-items-center d-flex flex-column justify-content-center">
                 <div className="login_wrapper col-md-6 border border-2 border-black border-bottom-0 py-5">

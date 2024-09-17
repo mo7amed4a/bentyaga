@@ -30,11 +30,8 @@ export const addProductToCart = createAsyncThunk(
   'cart/addProductToCart',
   async ({ id, color, quantity, size }, thunkAPI) => {
     try {
-      const response = await api.post(API + `/api/cart/`, {
-        product: id,
-        color: color,
+      const response = await api.post(API + `/api/cart/add-item/${id}/`, {
         quantity: quantity,
-        size: size
       });
       thunkAPI.dispatch(fetchAllCart()); // Dispatch fetchAllCart to update cart
       return response.data.message; // Return only the message

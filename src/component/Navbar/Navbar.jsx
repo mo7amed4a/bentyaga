@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Styles from './Navbar.module.css'; // Import the CSS module
-import logo from './../../assets/images/logo.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCart } from '../../features/cartSlice';
 import useAuth from '../../hooks/useAuth';
@@ -140,7 +139,7 @@ useEffect(() => {
                 }
                 <Link to={'/cart'} className="text-decoration-none fa-solid fa-cart-shopping text-white px-3" onClick={handleNavLinkClick}></Link>
               </div>
-              <div style={{ position: "relative" }}>
+              {isAuthentication && <div style={{ position: "relative" }}>
                 {
                   (wishlist.length > 0 && wishlist) && (
                     <span className='cart_num' style={{ width: 10, height: 10, top: 0, left: 4 }}>
@@ -149,10 +148,19 @@ useEffect(() => {
                 }
                 <Link to={'/wishlist'} className="text-decoration-none fa-regular fa-heart text-white px-3" onClick={handleNavLinkClick}>
                 </Link>
-              </div>
-              <Link to="/login" onClick={handleNavLinkClick}>
+              </div>}
+              {!isAuthentication ? <Link to="/login" onClick={handleNavLinkClick}>
                 <i className="fa-regular fa-user text-white ps-3 pe-5"></i>
-              </Link>
+              </Link> : 
+                <div style={{cursor: 'pointer'}} onClick={() => {
+                  localStorage.removeItem("persist:root")
+                  setTimeout(() => {
+                    window.location.href = '/login'
+                  }, 1000);
+                }}>
+                  <i className="fa fa-sign-out text-white ps-3 pe-5"></i>
+                </div>
+              }
             </div>
 </>
               )

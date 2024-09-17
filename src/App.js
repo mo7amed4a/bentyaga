@@ -23,19 +23,35 @@ import loaderimg from "./../src/assets/images/loader.jpg"
 import Checkout from './component/PaymentCheckout/Checkout';
 import useAuth from './hooks/useAuth';
 
-const ProtectedRoute = ({ element, isAuthentication }) => {
+
+
+const ProtectedRoute = ({ element }) => {
+   const { isAuthentication } = useAuth();
   return isAuthentication ? element : <Navigate to="/login" />;
 };
+
+const NoProtectedRoute = ({ element }) => {
+   const { isAuthentication } = useAuth();
+   console.log(isAuthentication);
+   
+  return !isAuthentication ? element : <Navigate to="/" />;
+};
+
+
+
+// const ProtectedRoute = ({ element, isAuthentication }) => {
+//   return isAuthentication ? element : <Navigate to="/login" />;
+// };
 
 let routers = createBrowserRouter([
   { path:'/' ,element: <Layout/> ,children:[
     {index:true ,element:<Home/>},
-    {path:'register',element:<Register/>},
-    {path:'login',element:<Login/>},
+    {path:'register',element:<NoProtectedRoute element={<Register/>} />},
+    {path:'login',element:<NoProtectedRoute element={<Login/>} />},
     {path:'drop',element:<Drop/>},
-    {path:'cart',element:<Cart/>},
-    {path:'checkOut',element:<Checkout/>},
-    {path:'wishlist',element:<Wishlist/>},
+    {path:'cart',element:<ProtectedRoute element={<Cart />}/>},
+    {path:'checkOut',element:<ProtectedRoute element={<Checkout/>} />},
+    {path:'wishlist',element:<ProtectedRoute element={<Wishlist/>} />},
     {path : 'productdetails/:id' ,element:<ProductDetails/> },
     {path:'contact',element:<ContactUs/>},
     {path:'about',element:<AboutUs/>},
@@ -57,7 +73,7 @@ function App() {
     </div>
   ) : (
     <RouterProvider router={routers}>
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/login" element={!isAuthentication ? <Login /> : <Navigate to="/" />} />
@@ -71,7 +87,7 @@ function App() {
           <Route path="about" element={<AboutUs />} />
           <Route path="*" element={<Notfound />} />
         </Route>
-      </Routes>
+      </Routes> */}
     </RouterProvider>
   )
 }

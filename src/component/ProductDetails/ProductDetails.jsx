@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import Slider from "react-slick";
 import styles from "./ProductDetails.module.css"; // Assuming you have custom styles for buttons and other elements
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -173,7 +171,7 @@ const ProductDetails = () => {
   const navigation = useNavigate();
 
   const handleBuyClick = () => {
-    if (!selectedColor || !selectedQuantity || !selectedSize) {
+    if (!selectedQuantity) {
       setIsReq(true);
       setTimeout(() => {
         setIsReq(false);
@@ -203,7 +201,7 @@ const ProductDetails = () => {
   }
 
   const handleAddToCart = () => {
-    if (!selectedColor || !selectedQuantity || !selectedSize) {
+    if (!selectedQuantity) {
       setIsReq(true);
       setTimeout(() => {
         setIsReq(false);
@@ -212,9 +210,9 @@ const ProductDetails = () => {
       dispatch(
         addProductToCart({
           id: id,
-          color: selectedColor,
-          quantity: selectedQuantity,
-          size: selectedSize,
+          color: selectedColor || 'none',
+          quantity: selectedQuantity || "none",
+          size: selectedSize || 'none',
         })
       );
     }
@@ -282,7 +280,6 @@ const ProductDetails = () => {
         <div className={styles.detailsContainer1}>
           <p>{product.about_product}</p>
         </div>
-
         <div className="my-3 selectContainer">
           <select
             id="sizeSelect"
