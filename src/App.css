@@ -386,6 +386,7 @@ input:focus {
 .home_img {
     width: 100%;
     max-width: 200px;
+    max-height: 260px;
     display: block;
     margin: auto;
 }
@@ -409,6 +410,7 @@ input:focus {
     }
     .home_img {
         max-width: 210px;
+        height: 200px;
         background-color: #E5002B;
     }
 }

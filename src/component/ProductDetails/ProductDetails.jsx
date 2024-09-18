@@ -77,37 +77,22 @@ const ProductDetails = () => {
     setDeviceType(getDeviceType());
   }, []);
 
-  const renderImagesAsList = () => (
-    <div className={styles.imageList}>
-      {/* {product.images?.map((image, index) => (
-        <img
-          key={index}
-          src={image.image}
-          alt={`Product image ${index + 1}`}
-          className={styles.productImage}
-        />
-      ))}
-      {(!product.images || product.images.length == 0) && (
-        <img
-          src={product.photo}
-          alt={`Product image `}
-          className={styles.productImage}
-        />
-      )} */}
+  const renderImagesAsList = (device) => (
+    <div className={""}>
       <Swiper
         slidesPerView={"auto"}
+        spaceBetween={5}
+        freeMode={true}
         loop={true}
-        className={`mySwiper${product.id} ${styles.imageList}`}
-        navigation={true} // Enable navigation
-        pagination={{ clickable: true }} // Enable pagination and make it clickable
-        modules={[Navigation, Pagination, Autoplay]}
+        className="mySwiper4"
+        modules={[Autoplay, Navigation, Pagination, FreeMode]}
         autoplay={{ delay: 4100, disableOnInteraction: false }}
         speed={350}
       >
         <SwiperSlide>
           <Link to={"/productdetails/" + product.id}>
             <img
-              style={{ width: "100%", height: "500px" }}
+              style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
               src={product.photo || product}
               alt={product.name}
             />
@@ -120,7 +105,7 @@ const ProductDetails = () => {
           >
             <Link to={"/productdetails/" + product.id}>
               <img
-                style={{ width: "100%", height: "500px" }}
+                style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
                 src={image.image}
                 alt={product.name}
               />
@@ -131,40 +116,48 @@ const ProductDetails = () => {
     </div>
   );
 
-  const renderImagesAsSlider = () => {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 200,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    };
+  // const renderImagesAsSlider = () => {
+  //   // const settings = {
+  //   //   dots: true,
+  //   //   infinite: true,
+  //   //   speed: 200,
+  //   //   slidesToShow: 1,
+  //   //   slidesToScroll: 1,
+  //   // };
 
-    return (
-      <Swiper
-        pagination={true}
-        className="productSwiper"
-        slidesPerView={"auto"}
-          spaceBetween={5}
-          freeMode={true}
-          loop={true}
-          modules={[Navigation, FreeMode, Autoplay]}
-          autoplay={{ delay: 4100, disableOnInteraction: false }}
-          speed={350}
-      >
-        {product.images?.map((image) => (
-          <SwiperSlide>
-            <img src={image.image} className="w-100" alt="" />
-          </SwiperSlide>
-        ))}
-        {(!product.images || product.images.length == 0) && (
-          <SwiperSlide>
-            <img src={product.photo} className="w-100" alt="" />
-          </SwiperSlide>
-        )}
-      </Swiper>
-    );
-  };
+  //   return (
+  //     <Swiper
+  //       // pagination={true}
+  //       // className="jwnjwni"
+  //       // slidesPerView={"auto"}
+  //       //   // spaceBetween={5}
+  //       //   freeMode={true}
+  //       //   loop={true}
+  //       //   modules={[Navigation, Autoplay]}
+  //       //   autoplay={{ delay: 4100, disableOnInteraction: false }}
+  //       //   speed={350}
+  //         slidesPerView={"auto"}
+  //       spaceBetween={5}
+  //       freeMode={true}
+  //       loop={true}
+  //       className="mySwiper"
+  //       modules={[Autoplay, Navigation, FreeMode]}
+  //       autoplay={{ delay: 4100, disableOnInteraction: false }}
+  //       speed={350}
+  //     >
+  //       {product.images?.map((image) => (
+  //         <SwiperSlide>
+  //           <img src={image.image} className="w-100" alt="" />
+  //         </SwiperSlide>
+  //       ))}
+  //       {(!product.images || product.images.length == 0) && (
+  //         <SwiperSlide>
+  //           <img src={product.photo} className="w-100" alt="" />
+  //         </SwiperSlide>
+  //       )}
+  //     </Swiper>
+  //   );
+  // };
 
   const handleSizeChange = (event) => {
     setSelectedSize(event.target.value);
@@ -276,9 +269,9 @@ const ProductDetails = () => {
           )}
         </button>
         {/* Product images */}
-        {deviceType === "Desktop"
-          ? renderImagesAsList()
-          : renderImagesAsSlider()}
+        {deviceType
+          ? renderImagesAsList(deviceType)
+          : renderImagesAsList(deviceType)}
       </div>
       <div className={styles.detailsContainer}>
         <div
@@ -421,8 +414,8 @@ const ProductDetails = () => {
           >
             <div className={`${styles.specificDetail} card card-body`}>
               {/* Replace with actual product details */}
-              {product.sizes.map((size) => (
-                <div style={{ fontSize: 12 }}>
+              {product.sizes.map(({size, index}) => (
+                <div key={index} style={{ fontSize: 12 }}>
                   {size.size}: {size.descrtions_size_fit}
                 </div>
               ))}

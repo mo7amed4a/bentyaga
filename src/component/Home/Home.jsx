@@ -172,7 +172,7 @@ export default function Home() {
         loop={true}
         className="mySwiper"
         modules={[Autoplay, Navigation, FreeMode]}
-        autoplay={{ delay: 500, disableOnInteraction: false }}
+        // autoplay={{ delay: 500, disableOnInteraction: false }}
         speed={350}
       >
         {featuredProducts.map((product, index) => (
