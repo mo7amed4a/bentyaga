@@ -39,7 +39,7 @@ import { API } from '../../features/globals';
           <div className= {Style.container} >
             <p className={Style.firstPara}>send messege</p>
             <p className={Style.secondPara}>
-              {web?.contect_us	}
+              {web?.contect_us} : <a className='text-decoration-none' href="mailto:info@bantayga.wtf">info@bantayga.wtf</a> 
             </p>
           </div>
 

@@ -159,12 +159,26 @@ export default function Footer() {
             {deviceType === "Mobile" && renderArrowIcon("company")}
           </h3>
           {(deviceType === "Desktop" || showDetails["company"]) && (
-            <Link
-              to={"/about"}
-              className="p-2 text-decoration-none text-black  w-100 d-block bg-white-m"
-            >
-              About Us
-            </Link>
+            <>
+              <Link
+                to={"/about"}
+                className="p-2 text-decoration-none text-black  w-100 d-block bg-white-m"
+              >
+                About Us
+              </Link>
+              <Link
+                to={"/contact"}
+                className="p-2 text-decoration-none text-black  w-100 d-block bg-white-m"
+              >
+                Contact Us
+              </Link>
+              <Link
+                to={"/privacy"}
+                className="p-2 text-decoration-none text-black  w-100 d-block bg-white-m"
+              >
+                Privacy and Policy
+              </Link>
+            </>
           )}
         </div>
 

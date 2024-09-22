@@ -578,7 +578,7 @@ export default function Drop() {
                 <SwiperSlide>
                   <Link to={"/productdetails/" + item.id}>
                     <img
-                      className="w-100 home_img"
+                      className="w-100 home_img drop_img"
                       src={item.photo || item}
                       alt={item.name}
                     />
