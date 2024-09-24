@@ -87,7 +87,7 @@ const ProductDetails = () => {
         className="mySwiper4"
         modules={[Autoplay, Navigation, Pagination, FreeMode]}
         autoplay={{ delay: 4100}}
-        speed={350}
+        speed={351}
       >
         <SwiperSlide>
           <Link to={"/productdetails/" + product.id}>
