@@ -86,7 +86,7 @@ const ProductDetails = () => {
         loop={true}
         className="mySwiper4"
         modules={[Autoplay, Navigation, Pagination, FreeMode]}
-        autoplay={{ delay: 4100, disableOnInteraction: false }}
+        autoplay={{ delay: 4100}}
         speed={350}
       >
         <SwiperSlide>
