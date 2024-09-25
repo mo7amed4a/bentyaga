@@ -92,7 +92,9 @@ const ProductDetails = () => {
         <SwiperSlide>
           <Link to={"/productdetails/" + product.id}>
             <img
-              style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
+            className="w-100"
+            style={{borderRight: '1px solid black',borderBottom: '1px solid black'}}
+              // style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
               src={product.photo || product}
               alt={product.name}
             />
@@ -105,7 +107,8 @@ const ProductDetails = () => {
           >
             <Link to={"/productdetails/" + product.id}>
               <img
-                style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
+              className="w-100"
+                // style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
                 src={image.image}
                 alt={product.name}
               />
@@ -278,7 +281,7 @@ const ProductDetails = () => {
           className={`${styles.details} detail_1 d-flex justify-content-between align-items-center mt-3 mb-4`}
         >
           <h1 className="pt-4">{product.name}</h1>
-          <p className="pt-4">${product.price}</p>
+          <p className="pt-4">EGP {product.price}</p>
         </div>
         <div className={styles.detailsContainer1}>
           <p>{product.about_product}</p>

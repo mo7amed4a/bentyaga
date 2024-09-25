@@ -114,11 +114,14 @@ export default function Footer() {
             NEWSLETTER
             {deviceType === "Mobile" && renderArrowIcon("newsletter")}
           </h3>
-          {(deviceType === "Desktop" || showDetails["newsletter"]) && (
-            <a className="text-black p-2 bg-white-m d-block text-decoration-none">
-              Subscribe to our newsletter
+          <form className="d-flex px-2">
+            <input type="text" className="w-100  p-2" placeholder="Enter your email" />
+            {/* {(deviceType === "Desktop" || showDetails["newsletter"]) && ( */}
+            <a className="p-2 text-decoration-none text-center" style={{background: "black", color: "white"}}>
+              Subscribe
             </a>
-          )}
+            {/* )} */}
+          </form>
         </div>
 
         {/* CLIENT SERVICES */}

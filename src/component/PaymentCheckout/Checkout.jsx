@@ -130,20 +130,20 @@ import { api } from '../../API'
                   <h2 style={{fontWeight: "700 !important", fontSize: 20}}>Order Summary</h2>
                   <div className='d-flex justify-content-between pt-4'>
                       <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>SubTotal</p>
-                      <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{cart[0]?.total_price} $</p>
+                      <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{cart[0]?.total_price} EGP</p>
                   </div>
                   {
                     shippingPrice && (
                       <div className='d-flex justify-content-between'>
                           <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>Delivery</p>
-                          <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{shippingPrice} $</p>
+                          <p className={Style.orderPara} style={{fontWeight: 400, fontSize: 12}}>{shippingPrice} EGP</p>
                       </div>
                     )
                   }
                   <div className={Style.dashed}></div>
                   <div className='d-flex justify-content-between'>
                       <p className={Style.orderPara} style={{fontWeight: 500, fontSize: 13}}>Total</p>
-                      <p className={Style.orderPara}  style={{fontWeight: 500, fontSize: 13}}>{parseFloat(cart[0]?.total_price) + parseFloat(shippingPrice || 0)} $</p>
+                      <p className={Style.orderPara}  style={{fontWeight: 500, fontSize: 13}}>{parseFloat(cart[0]?.total_price) + parseFloat(shippingPrice || 0)} EGP</p>
                   </div>
               </div>
           </div>

@@ -34,16 +34,16 @@ export default function Check() {
                             <h3>Order Summary</h3>
                             <div className='d-flex justify-content-between pt-4'>
                                 <p className={Style.orderPara}>SubTotal</p>
-                                <p className={Style.orderPara}>{cart[0]?.total_price} $</p>
+                                <p className={Style.orderPara}>{cart[0]?.total_price} EGP</p>
                             </div>
                             <div className='d-flex justify-content-between'>
                                 <p className={Style.orderPara}>Delivery</p>
-                                <p className={Style.orderPara}>60 $</p>
+                                <p className={Style.orderPara}>60 EGP</p>
                             </div>
                             <div className={Style.dashed}></div>
                             <div className='d-flex justify-content-between'>
                                 <p className={Style.orderPara}>Total</p>
-                                <p className={Style.orderPara}>4,480 $</p>
+                                <p className={Style.orderPara}>4,480 EGP</p>
                             </div>
                         </div>
                     </div>
