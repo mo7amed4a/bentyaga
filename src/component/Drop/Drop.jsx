@@ -121,7 +121,7 @@ export default function Drop() {
 
   const CustomPaginationItem = styled(PaginationItem)(({ theme }) => ({
     borderRadius: "0px", // Makes circles square
-    border: "1px solid black", // Black border for all items
+    // border: "1px solid black", // Black border for all items
     "&.Mui-selected": {
       backgroundColor: "black", // Background color for selected page
       color: "white", // Text color for selected page
@@ -570,10 +570,8 @@ export default function Drop() {
                 loop={true}
                 className={`mySwiper${item.id}`}
                 navigation={true} // Enable navigation
-                pagination={{ clickable: true }} // Enable pagination and make it clickable
-                modules={[Navigation, Pagination, Autoplay]}
-                autoplay={{ delay: 4100, disableOnInteraction: false }}
-                speed={350}
+                pagination={{ clickable: true }}
+                modules={[Navigation, Pagination]}
               >
                 <SwiperSlide>
                   <Link to={"/productdetails/" + item.id}>
@@ -591,7 +589,7 @@ export default function Drop() {
                   >
                     <Link to={"/productdetails/" + item.id}>
                       <img
-                        className="w-100 home_img"
+                        className="w-100 home_img drop_img"
                         src={image.image}
                         alt={item.name}
                       />

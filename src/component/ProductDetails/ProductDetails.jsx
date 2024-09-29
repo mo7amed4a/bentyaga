@@ -78,7 +78,7 @@ const ProductDetails = () => {
   }, []);
 
   const renderImagesAsList = (device) => (
-    <div className={""}>
+    <div className={styles.imageList}>
       <Swiper
         slidesPerView={"auto"}
         spaceBetween={5}
@@ -90,11 +90,12 @@ const ProductDetails = () => {
         speed={351}
       >
         <SwiperSlide>
-          <Link to={"/productdetails/" + product.id}>
+          <Link to={"/productdetails/" + product.id}
+                        style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+>
             <img
-            className="w-100"
-            style={{borderRight: '1px solid black',borderBottom: '1px solid black'}}
-              // style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
+            // className="w-100 bg-"
+            className={styles.productImage}
               src={product.photo || product}
               alt={product.name}
             />
@@ -105,10 +106,13 @@ const ProductDetails = () => {
             key={imageIndex + image.created_at}
             id={image.created_at}
           >
-            <Link to={"/productdetails/" + product.id}>
+            <Link to={"/productdetails/" + product.id} className="d-flex justify-content-center align-items-center"
+                          style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+>
               <img
-              className="w-100"
-                // style={{ width: "100%", height: device === "Mobile" ? "380px" : '500px' }}
+              className={styles.productImage}
+              // className="w-100"
+                // style={{width: "100%", height: device === "Mobile" ? "350px" : 'auto' }}
                 src={image.image}
                 alt={product.name}
               />
@@ -120,13 +124,13 @@ const ProductDetails = () => {
   );
 
   // const renderImagesAsSlider = () => {
-  //   // const settings = {
-  //   //   dots: true,
-  //   //   infinite: true,
-  //   //   speed: 200,
-  //   //   slidesToShow: 1,
-  //   //   slidesToScroll: 1,
-  //   // };
+  //   const settings = {
+  //     dots: true,
+  //     infinite: true,
+  //     speed: 200,
+  //     slidesToShow: 1,
+  //     slidesToScroll: 1,
+  //   };
 
   //   return (
   //     <Swiper
@@ -139,7 +143,7 @@ const ProductDetails = () => {
   //       //   modules={[Navigation, Autoplay]}
   //       //   autoplay={{ delay: 4100, disableOnInteraction: false }}
   //       //   speed={350}
-  //         slidesPerView={"auto"}
+  //       slidesPerView={"auto"}
   //       spaceBetween={5}
   //       freeMode={true}
   //       loop={true}

@@ -26,6 +26,7 @@ export default function Home() {
     const lastPopupDate = sessionStorage.getItem("lastPopupDate");
 
     if (isAuthentication && lastPopupDate !== today) {
+    // if (!isAuthentication) {
       setShowPopup(true);
       sessionStorage.setItem("lastPopupDate", today); // Store today's date to prevent showing the popup again today
     }
