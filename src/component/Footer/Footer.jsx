@@ -10,6 +10,9 @@ export default function Footer() {
   const [showDetails, setShowDetails] = useState({}); // State to toggle details for each section
   const [deviceType, setDeviceType] = useState("Desktop");
   const [medai, setMedia] = useState();
+  const [successNewsletter , setSuccessNewsletter] = useState(null);
+  const [errorNewsletter, setErrorNewsletter] = useState(null);
+
 
   async function fetchSocial() {
     try {
@@ -100,6 +103,22 @@ export default function Footer() {
     fetchDesc();
   }, []);
 
+  const sendEmailNewsletterHandler = async (event) => {
+    event.preventDefault();
+    const email = event.target[0].value;
+    try {
+      const { data } = await axios.post(`https://api.bantayga.wtf/newsletter/`, {
+        email: email,
+      });
+      setErrorNewsletter(null)
+      setSuccessNewsletter(data.message)
+    } catch (error) {
+      setSuccessNewsletter(null)
+      setErrorNewsletter(error.response.data.email[0])
+      console.log("Error fetching:", error.response.data.email[0]);
+    }
+  };
+
   return (
     <>
       <div className={`${styles.rowFooter} `}>
@@ -114,12 +133,14 @@ export default function Footer() {
             NEWSLETTER
             {deviceType === "Mobile" && renderArrowIcon("newsletter")}
           </h3>
-          <form className="d-flex px-2">
-            <input type="text" className="w-100  p-2" placeholder="Enter your email" />
+          {successNewsletter && <label style={{color: "green",paddingLeft: "10px", fontSize: "12px", fontWeight: "bold", marginTop: "10px"}}>{ successNewsletter } </label>}
+          {errorNewsletter && <label style={{color: "red",paddingLeft: "10px", fontSize: "12px", fontWeight: "bold", marginTop: "10px"}}>{ errorNewsletter } </label>}
+          <form className="d-flex px-2" onSubmit={sendEmailNewsletterHandler}>
+            <input type="email" className="w-100  p-2" placeholder="Enter your email" />
             {/* {(deviceType === "Desktop" || showDetails["newsletter"]) && ( */}
-            <a className="p-2 text-decoration-none text-center" style={{background: "black", color: "white"}}>
+            <button className="p-2 text-decoration-none text-center" style={{background: "black", color: "white"}}>
               Subscribe
-            </a>
+            </button>
             {/* )} */}
           </form>
         </div>
