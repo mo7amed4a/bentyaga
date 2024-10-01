@@ -370,7 +370,7 @@ export default function Drop() {
   // Handle click to open view menu
   const toggleGrid = () => {
     setGrid(!grid);
-    setColumnSize(columnSize == 6 ? 3 : 6);
+    setColumnSize(columnSize == 12 ? 3 : 12);
   };
 
   // Handle click to open drop menu
@@ -551,8 +551,8 @@ export default function Drop() {
             <div
               key={item._id}
               className={`col-${
-                deviceType === "Desktop" ? columnSize : columnSize == 3 ? 6 : 12
-              }`}
+                deviceType === "Desktop" ? columnSize : columnSize == 3 && 12
+              }`} 
               style={{
                 borderRight: "1px solid #000",
                 borderBottom: "1px solid #000",
