@@ -2,16 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Link,
   useNavigate,
-  useParams,
   useSearchParams,
 } from "react-router-dom";
 import axios from "axios";
 import Styles from "./Drop.module.css";
 import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ViewModuleIcon from "@mui/icons-material/ViewModule";
-import WindowIcon from "@mui/icons-material/Window";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import TuneIcon from "@mui/icons-material/Tune";
@@ -370,7 +365,8 @@ export default function Drop() {
   // Handle click to open view menu
   const toggleGrid = () => {
     setGrid(!grid);
-    setColumnSize(columnSize == 12 ? 3 : 12);
+    const col = deviceType === "Desktop" ? 12 : 6
+    setColumnSize(columnSize == col ? 3 : col);
   };
 
   // Handle click to open drop menu
@@ -551,8 +547,7 @@ export default function Drop() {
             <div
               key={item._id}
               className={`col-${
-                deviceType === "Desktop" ? columnSize : columnSize == 3 && 12
-              }`} 
+                deviceType === "Mobile" ? (columnSize === 3 ? 12 : 6) : (columnSize === 3 ? 3 : 6)}`} 
               style={{
                 borderRight: "1px solid #000",
                 borderBottom: "1px solid #000",
