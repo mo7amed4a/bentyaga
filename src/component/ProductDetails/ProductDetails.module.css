@@ -34,6 +34,7 @@
      /* border-right: 1px solid black; 
     border-bottom: 1px solid black; */
     padding: 5px;
+    object-fit: contain; 
     /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
     margin-bottom: 0; /* Remove bottom margin */
 }
@@ -41,8 +42,8 @@
 @media (max-width: 767.98px) {
     .productImage {
         width: 86%;
-        height: 400px;
-        /* object-fit: cover;  */
+        height: 364px;
+        object-fit: contain; 
         background-position: center;
     }
     
