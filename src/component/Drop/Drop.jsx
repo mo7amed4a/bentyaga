@@ -485,7 +485,7 @@ export default function Drop() {
               onClick={() => toggleGrid()}
             >
               View
-              {grid ? (
+              {!grid ? (
                 <svg
                   width="27"
                   height="27"
