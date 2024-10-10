@@ -29,9 +29,9 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-        store.dispatch(clearCredentials()); // Dispatch the action to clear credentials
+        store.dispatch(clearCredentials()); 
         if (originalRequest.method === 'post' )
-        window.location.href = '/login'; // Redirect to login
+        window.location.href = '/login';
     }
     return Promise.reject(error);
   }

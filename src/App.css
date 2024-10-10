@@ -618,3 +618,13 @@ input:focus {
         display: block;
     }
 }
+
+.swiper-scrollbar  {
+    width: 70% !important;
+    margin-left: 15% !important;
+    /* background-color: red !important; */
+}
+
+.swiper-scrollbar-drag {
+    background-color: black !important;
+}

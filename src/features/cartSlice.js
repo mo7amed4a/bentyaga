@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from './globals';
 import { api } from '../API';
 
-// Initial state
 const initialState = {
   status: 'idle',
   message: '',
@@ -12,7 +11,6 @@ const initialState = {
   error: null,
 };
 
-// Async thunk for fetching all cart items
 export const fetchAllCart = createAsyncThunk(
   'cart/fetchAllCart',
   async (_, thunkAPI) => {
@@ -25,16 +23,23 @@ export const fetchAllCart = createAsyncThunk(
   }
 );
 
-// Async thunk for adding a product to the cart with color, size, and quantity
 export const addProductToCart = createAsyncThunk(
   'cart/addProductToCart',
   async ({ id, color, quantity, size }, thunkAPI) => {
     try {
+      let data = {}
+      if (size != "none") {
+        data.size = size
+      }
+      if (color != "none") {
+        data.color = color
+      }
       const response = await api.post(API + `/api/cart/add-item/${id}/`, {
         quantity: quantity,
+        ...data
       });
-      thunkAPI.dispatch(fetchAllCart()); // Dispatch fetchAllCart to update cart
-      return response.data.message; // Return only the message
+      thunkAPI.dispatch(fetchAllCart());
+      return response.data.message;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -46,15 +51,31 @@ export const removeProductFromCart = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await api.delete(API + `/api/cart/remove-item/${id}/`);
-      thunkAPI.dispatch(fetchAllCart()); // Dispatch fetchAllCart to update cart
-      return response.data.message; // Return only the message
+      thunkAPI.dispatch(fetchAllCart());
+      return response.data.message;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
 
-// Create the slice
+export const updateQuantity = createAsyncThunk(
+  'cart/updateQuantity',
+  async ({ id, quantity }, thunkAPI) => {
+    try {
+      // TODO: افتكر نوع الميثود
+      const response = await api.put(API + `/Incersquntity/`, {
+        product_id: id,
+        quantity: parseInt(quantity)
+      });
+      thunkAPI.dispatch(fetchAllCart());
+      return response.data.message;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -72,9 +93,9 @@ const cartSlice = createSlice({
       .addCase(fetchAllCart.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.errors = action.payload.errors;
-        state.cart = action.payload; // Access the inner array
+        state.cart = action.payload;
       })
-      .addCase(fetchAllCart.rejected, (state, action) => {
+      .addCase(fetchAllCart.rejected, (state) => {
         state.status = 'failed';
         state.error = 'Failed to fetch cart';
       })
@@ -83,9 +104,9 @@ const cartSlice = createSlice({
       })
       .addCase(addProductToCart.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.message = action.payload; // Use the returned message
+        state.message = action.payload;
       })
-      .addCase(addProductToCart.rejected, (state, action) => {
+      .addCase(addProductToCart.rejected, (state) => {
         state.status = 'failed';
         state.errorMsg = 'Failed to add product to cart';
       })
@@ -94,15 +115,25 @@ const cartSlice = createSlice({
       })
       .addCase(removeProductFromCart.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.message = action.payload; // Use the returned message
+        state.message = action.payload;
       })
-      .addCase(removeProductFromCart.rejected, (state, action) => {
+      .addCase(removeProductFromCart.rejected, (state) => {
         state.status = 'failed';
         state.errorMsg = 'Failed to remove product from cart';
+      })
+      .addCase(updateQuantity.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateQuantity.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.message = action.payload;
+      })
+      .addCase(updateQuantity.rejected, (state) => {
+        state.status = 'failed';
+        state.errorMsg = 'Failed to update product quantity';
       });
   },
 });
 
-// Export the reducer
 export const { setMsgs } = cartSlice.actions;
 export default cartSlice.reducer;

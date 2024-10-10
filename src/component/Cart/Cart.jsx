@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Styles from './Cart.module.css'; // Import the CSS module
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllCart, removeProductFromCart } from '../../features/cartSlice';
+import { fetchAllCart, removeProductFromCart, updateQuantity } from '../../features/cartSlice';
 import { addProductToWishlist } from '../../features/wishlistSlice';
 
 export default function Cart() {
@@ -10,8 +10,8 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   // Function to handle quantity change
-  const handleQuantityChange = (itemId, newQuantity) => {
-    // dispatch(updateQuantity({ itemId, quantity: newQuantity }));
+  const handleQuantityChange = (productId, newQuantity) => {    
+    dispatch(updateQuantity({ id: productId, quantity: newQuantity }));
   };
 
   // Function to handle item deletion
@@ -84,7 +84,7 @@ export default function Cart() {
                               borderRadius: '10px', padding: '5px'
                             }}
                             value={item.quantity}
-                            onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                            onChange={(e) => handleQuantityChange(item.product, parseInt(e.target.value))}
                           >
                             {[...Array(10).keys()].map((num) => (
                               <option key={num} value={num + 1}>{num + 1}</option>

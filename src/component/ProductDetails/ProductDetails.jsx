@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./ProductDetails.module.css"; // Assuming you have custom styles for buttons and other elements
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Scrollbar } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 // import required modules
 import { api } from "../../API";
@@ -17,6 +16,7 @@ import {
   fetchAllWishlist,
   removeProductFromWishlist,
 } from "../../features/wishlistSlice";
+import useCart from "../../hooks/useCart";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -31,6 +31,10 @@ const ProductDetails = () => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   const [isFav, setIsFav] = useState(false);
   const [isReq, setIsReq] = useState(false);
+  const cart = useCart();
+  const isProductInCart = cart?.cart[0]?.items?.some(
+    (pr) => pr.product === parseInt(id)
+  );
 
   const fetchProduct = async () => {
     try {
@@ -82,20 +86,27 @@ const ProductDetails = () => {
       <Swiper
         slidesPerView={"auto"}
         spaceBetween={5}
-        freeMode={true}
         loop={true}
-        className="mySwiper4"
-        modules={[Autoplay, Navigation, Pagination, FreeMode]}
-        autoplay={{ delay: 4100}}
+        className="mySwiper"
+        modules={[Autoplay, Scrollbar]}
+        autoplay={{ delay: 4100 }}
+        scrollbar={{
+          hide: false,
+        }}
         speed={351}
       >
         <SwiperSlide>
-          <Link to={"/productdetails/" + product.id}
-                        style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
->
+          <Link
+            to={"/productdetails/" + product.id}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <img
-            // className="w-100 bg-"
-            className={styles.productImage}
+              // className="w-100 bg-"
+              className={styles.productImage}
               src={product.photo || product}
               alt={product.name}
             />
@@ -106,12 +117,18 @@ const ProductDetails = () => {
             key={imageIndex + image.created_at}
             id={image.created_at}
           >
-            <Link to={"/productdetails/" + product.id} className="d-flex justify-content-center align-items-center"
-                          style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
->
+            <Link
+              to={"/productdetails/" + product.id}
+              className="d-flex justify-content-center align-items-center"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <img
-              className={styles.productImage}
-              // className="w-100"
+                className={styles.productImage}
+                // className="w-100"
                 // style={{width: "100%", height: device === "Mobile" ? "350px" : 'auto' }}
                 src={image.image}
                 alt={product.name}
@@ -221,8 +238,8 @@ const ProductDetails = () => {
         addProductToCart({
           id: id,
           color: selectedColor || "none",
-          quantity: selectedQuantity || "none",
-          size: selectedSize || "none",
+          quantity: selectedQuantity || 1,
+          size: selectedSize || "none"
         })
       );
     }
@@ -230,6 +247,7 @@ const ProductDetails = () => {
 
   return (
     <div
+      style={{ position: "relative" }}
       className={`${styles.productDetailsContainer} product_details_wrapper`}
     >
       <div className={styles.imagesContainer}>
@@ -275,6 +293,55 @@ const ProductDetails = () => {
             </svg>
           )}
         </button>
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            zIndex: 451118,
+          }}
+        >
+          {isProductInCart && (
+            <Link to={"/cart"}>
+              <svg
+                viewBox="-2.4 -2.4 28.80 28.80"
+                fill="none"
+                style={{ width: "35px", height: "35px" }}
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#60e280"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke="#CCCCCC"
+                  stroke-width="0.096"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
+                  <path
+                    opacity="0.5"
+                    d="M2.08368 2.7512C2.22106 2.36044 2.64921 2.15503 3.03998 2.29242L3.34138 2.39838C3.95791 2.61511 4.48154 2.79919 4.89363 3.00139C5.33426 3.21759 5.71211 3.48393 5.99629 3.89979C6.27827 4.31243 6.39468 4.76515 6.44841 5.26153C6.47247 5.48373 6.48515 5.72967 6.49184 6H17.1301C18.815 6 20.3318 6 20.7757 6.57708C21.2197 7.15417 21.0461 8.02369 20.699 9.76275L20.1992 12.1875C19.8841 13.7164 19.7266 14.4808 19.1748 14.9304C18.6231 15.38 17.8426 15.38 16.2816 15.38H10.9787C8.18979 15.38 6.79534 15.38 5.92894 14.4662C5.06254 13.5523 4.9993 12.5816 4.9993 9.64L4.9993 7.03832C4.9993 6.29837 4.99828 5.80316 4.95712 5.42295C4.91779 5.0596 4.84809 4.87818 4.75783 4.74609C4.66977 4.61723 4.5361 4.4968 4.23288 4.34802C3.91003 4.18961 3.47128 4.03406 2.80367 3.79934L2.54246 3.7075C2.1517 3.57012 1.94629 3.14197 2.08368 2.7512Z"
+                    fill="#60e280"
+                  ></path>{" "}
+                  <path
+                    d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
+                    fill="#60e280"
+                  ></path>{" "}
+                  <path
+                    d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z"
+                    fill="#60e280"
+                  ></path>{" "}
+                  <path
+                    d="M15.5421 9.51724C15.8278 9.2173 15.8162 8.74256 15.5163 8.4569C15.2163 8.17123 14.7416 8.18281 14.4559 8.48276L12.1419 10.9125L11.5421 10.2828C11.2565 9.98281 10.7817 9.97123 10.4818 10.2569C10.1818 10.5426 10.1703 11.0173 10.4559 11.3172L11.5988 12.5172C11.7403 12.6659 11.9366 12.75 12.1419 12.75C12.3471 12.75 12.5434 12.6659 12.685 12.5172L15.5421 9.51724Z"
+                    fill="#60e280"
+                  ></path>{" "}
+                </g>
+              </svg>
+            </Link>
+          )}
+        </div>
         {/* Product images */}
         {deviceType
           ? renderImagesAsList(deviceType)
@@ -290,29 +357,31 @@ const ProductDetails = () => {
         <div className={styles.detailsContainer1}>
           <p>{product.about_product}</p>
         </div>
-        <div className="my-3 selectContainer">
-          <select
-            id="sizeSelect"
-            disabled={product.sizes.length < 1}
-            className={isReq && !selectedSize ? "redBorder" : ""}
-            value={selectedSize}
-            onChange={handleSizeChange}
-          >
-            <option value="" className={styles.selection}>
-              {product.sizes.length < 1 ? (
-                <span>The sizes of the product are sold out</span>
-              ) : (
-                "Select Size"
-              )}
-            </option>
-            {product.sizes?.map((size, index) => (
-              <option key={index} value={size.size}>
-                {size.size}
+        {product.sizes.length > 1 && (
+          <div className="my-3 selectContainer">
+            <select
+              id="sizeSelect"
+              disabled={product.sizes.length < 1}
+              className={isReq && !selectedSize ? "redBorder" : ""}
+              value={selectedSize}
+              onChange={handleSizeChange}
+            >
+              <option value="" className={styles.selection}>
+                {product.sizes.length < 1 ? (
+                  <span>The sizes of the product are sold out</span>
+                ) : (
+                  "Select Size"
+                )}
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="my-3 selectContainer">
+              {product.sizes?.map((size, index) => (
+                <option key={index} value={size.size}>
+                  {size.size}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {product.colors.length > 1 && <div className="my-3 selectContainer">
           <select
             disabled={product.colors.length < 1}
             id="colorSelect"
@@ -333,8 +402,8 @@ const ProductDetails = () => {
               </option>
             ))}
           </select>
-        </div>
-        <div className="my-3 selectContainer">
+        </div>}
+        {product.sale_status !== "sold_out" && <div className="my-3 selectContainer">
           <select
             id="quantitySelect"
             className={isReq && !selectedQuantity ? "redBorder" : ""}
@@ -349,8 +418,17 @@ const ProductDetails = () => {
             <option value="2">2</option>
             <option value="3">3</option>
           </select>
-        </div>
-        {product.sale_status !== "sold_out" ? (
+        </div>}
+        {isProductInCart ? (
+          <div className="my-3 d-flex flex-column">
+            <button className={`${styles.buyBtn}`} onClick={handleBuyClick}>
+              Buy
+            </button>
+            <Link to={"/cart"} className={`${styles.addBtn}`}>
+              Item added to your cart
+            </Link>
+          </div>
+        ) : product.sale_status !== "sold_out" ? (
           <div className="my-3 d-flex flex-column">
             <button className={`${styles.buyBtn}`} onClick={handleBuyClick}>
               Buy
@@ -361,7 +439,6 @@ const ProductDetails = () => {
                 handleAddToCart();
                 dispatch(fetchAllCart());
               }}
-              // onClick={() => handleAddToCartClick(product.id)}
             >
               Add to Cart
             </button>
@@ -371,6 +448,7 @@ const ProductDetails = () => {
             <h6 style={{ color: "gray" }}>Sold out</h6>
           </div>
         )}
+
         <div className="toggleFeature my-3 mb-0 d-flex flex-column m-0">
           <button
             className={`${
@@ -421,7 +499,7 @@ const ProductDetails = () => {
           >
             <div className={`${styles.specificDetail} card card-body`}>
               {/* Replace with actual product details */}
-              {product.sizes.map(({size, index}) => (
+              {product.sizes.map(({ size, index }) => (
                 <div key={index} style={{ fontSize: 12 }}>
                   {size.size}: {size.descrtions_size_fit}
                 </div>

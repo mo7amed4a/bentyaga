@@ -6,8 +6,6 @@ import {
   RouterProvider,
   createBrowserRouter,
   Navigate,
-  Route,
-  Routes,
 } from "react-router-dom";
 import Layout from "./component/Layout/Layout";
 import Home from "./component/Home/Home";
@@ -20,10 +18,8 @@ import "@fontsource/inter";
 import "@fontsource/roboto";
 import Drop from "./component/Drop/Drop";
 import ProductDetails from "./component/ProductDetails/ProductDetails";
-import CartContextProvider from "./CartContext";
 import Cart from "./component/Cart/Cart";
 import Wishlist from "./component/Wishlist/Wishlist";
-import Check from "./component/CheckOut/Check";
 import { useEffect, useState } from "react";
 import loaderimg from "./../src/assets/images/loader.jpg";
 import Checkout from "./component/PaymentCheckout/Checkout";
@@ -32,12 +28,13 @@ import Privacy from "./component/Privacy/Privacy";
 
 const ProtectedRoute = ({ element }) => {
   const { isAuthentication } = useAuth();
+  console.log(isAuthentication);
+  
   return isAuthentication ? element : <Navigate to="/login" />;
 };
 
 const NoProtectedRoute = ({ element }) => {
   const { isAuthentication } = useAuth();
-  console.log(isAuthentication);
 
   return !isAuthentication ? element : <Navigate to="/" />;
 };
@@ -59,6 +56,7 @@ let routers = createBrowserRouter([
       { path: "login", element: <NoProtectedRoute element={<Login />} /> },
       { path: "drop", element: <Drop /> },
       { path: "cart", element: <ProtectedRoute element={<Cart />} /> },
+      // { path: "cart", element: <Cart /> },
       { path: "checkOut", element: <ProtectedRoute element={<Checkout />} /> },
       { path: "wishlist", element: <ProtectedRoute element={<Wishlist />} /> },
       { path: "productdetails/:id", element: <ProductDetails /> },
@@ -72,7 +70,6 @@ let routers = createBrowserRouter([
 
 function App() {
   const [loader, setLoader] = useState(true);
-  const { isAuthentication } = useAuth();
 
   useEffect(() => {
     setTimeout(() => setLoader(false), 1000);

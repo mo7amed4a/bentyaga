@@ -1,16 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Link,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import Styles from "./Drop.module.css";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import TuneIcon from "@mui/icons-material/Tune";
-import { Pagination as MuiPagination } from "@mui/material";
 import { PaginationItem, styled } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -18,6 +13,8 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { api } from "../../API";
+import useCart from "../../hooks/useCart";
+import { API } from "../../features/globals";
 export default function Drop() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -38,6 +35,8 @@ export default function Drop() {
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
+
+  const cart = useCart();
 
   // Fetch products from API
   async function fetchProducts(
@@ -365,7 +364,7 @@ export default function Drop() {
   // Handle click to open view menu
   const toggleGrid = () => {
     setGrid(!grid);
-    const col = deviceType === "Desktop" ? 12 : 6
+    const col = deviceType === "Desktop" ? 12 : 6;
     setColumnSize(columnSize == col ? 3 : col);
   };
 
@@ -418,10 +417,27 @@ export default function Drop() {
     };
   }, []);
 
+  const [web, setWeb] = useState();
+  async function fetchDesc() {
+    try {
+      const { data } = await axios.get(`https://api.bantayga.wtf/wep_site/`);
+      console.log(data);
+      
+      setWeb(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchDesc();
+  }, []);
+
   return (
     <>
       <div
         className={`${Styles.theBackGround} d-flex flex-column justify-content-center`}
+        style={{ backgroundImage: `url(${API + web?.based_pic2})` }}
       >
         <div className={Styles.layer2}></div>
       </div>
@@ -485,7 +501,7 @@ export default function Drop() {
               onClick={() => toggleGrid()}
             >
               View
-              {!grid ? (
+              {grid ? (
                 <svg
                   width="27"
                   height="27"
@@ -547,7 +563,14 @@ export default function Drop() {
             <div
               key={item._id}
               className={`col-${
-                deviceType === "Mobile" ? (columnSize === 3 ? 12 : 6) : (columnSize === 3 ? 3 : 6)}`} 
+                deviceType === "Mobile"
+                  ? columnSize === 3
+                    ? 6
+                    : 12
+                  : columnSize === 3
+                  ? 3
+                  : 6
+              }`}
               style={{
                 borderRight: "1px solid #000",
                 borderBottom: "1px solid #000",
@@ -559,7 +582,46 @@ export default function Drop() {
               {item.sale_status != "none" && (
                 <span className="sale_span">{item.sale_status}</span>
               )}
-
+              <div style={{position: "absolute", top: "10px", right: "10px", zIndex: 451118}}>
+                {cart && cart?.cart[0]?.items?.some((pr) => pr.product === item.id) && (
+                  <Link to={'/cart'}><svg
+                  viewBox="-2.4 -2.4 28.80 28.80"
+                  fill="none"
+                  style={{width: "35px", height: "35px"}}
+                  xmlns="http://www.w3.org/2000/svg"
+                  stroke="#60e280"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke="#CCCCCC"
+                    stroke-width="0.096"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    {" "}
+                    <path
+                      opacity="0.5"
+                      d="M2.08368 2.7512C2.22106 2.36044 2.64921 2.15503 3.03998 2.29242L3.34138 2.39838C3.95791 2.61511 4.48154 2.79919 4.89363 3.00139C5.33426 3.21759 5.71211 3.48393 5.99629 3.89979C6.27827 4.31243 6.39468 4.76515 6.44841 5.26153C6.47247 5.48373 6.48515 5.72967 6.49184 6H17.1301C18.815 6 20.3318 6 20.7757 6.57708C21.2197 7.15417 21.0461 8.02369 20.699 9.76275L20.1992 12.1875C19.8841 13.7164 19.7266 14.4808 19.1748 14.9304C18.6231 15.38 17.8426 15.38 16.2816 15.38H10.9787C8.18979 15.38 6.79534 15.38 5.92894 14.4662C5.06254 13.5523 4.9993 12.5816 4.9993 9.64L4.9993 7.03832C4.9993 6.29837 4.99828 5.80316 4.95712 5.42295C4.91779 5.0596 4.84809 4.87818 4.75783 4.74609C4.66977 4.61723 4.5361 4.4968 4.23288 4.34802C3.91003 4.18961 3.47128 4.03406 2.80367 3.79934L2.54246 3.7075C2.1517 3.57012 1.94629 3.14197 2.08368 2.7512Z"
+                      fill="#60e280"
+                    ></path>{" "}
+                    <path
+                      d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
+                      fill="#60e280"
+                    ></path>{" "}
+                    <path
+                      d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z"
+                      fill="#60e280"
+                    ></path>{" "}
+                    <path
+                      d="M15.5421 9.51724C15.8278 9.2173 15.8162 8.74256 15.5163 8.4569C15.2163 8.17123 14.7416 8.18281 14.4559 8.48276L12.1419 10.9125L11.5421 10.2828C11.2565 9.98281 10.7817 9.97123 10.4818 10.2569C10.1818 10.5426 10.1703 11.0173 10.4559 11.3172L11.5988 12.5172C11.7403 12.6659 11.9366 12.75 12.1419 12.75C12.3471 12.75 12.5434 12.6659 12.685 12.5172L15.5421 9.51724Z"
+                      fill="#60e280"
+                    ></path>{" "}
+                  </g>
+                </svg></Link>
+                )}
+              </div>
               <Swiper
                 slidesPerView={"auto"}
                 loop={true}
