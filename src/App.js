@@ -25,6 +25,7 @@ import loaderimg from "./../src/assets/images/loader.jpg";
 import Checkout from "./component/PaymentCheckout/Checkout";
 import useAuth from "./hooks/useAuth";
 import Privacy from "./component/Privacy/Privacy";
+import ThanksForOrder from "./component/PaymentCheckout/thanksForOrder";
 
 const ProtectedRoute = ({ element }) => {
   const { isAuthentication } = useAuth();
@@ -58,6 +59,7 @@ let routers = createBrowserRouter([
       { path: "cart", element: <ProtectedRoute element={<Cart />} /> },
       // { path: "cart", element: <Cart /> },
       { path: "checkOut", element: <ProtectedRoute element={<Checkout />} /> },
+      { path: "thank-you-for-your-order", element: <ProtectedRoute element={<ThanksForOrder />} /> },
       { path: "wishlist", element: <ProtectedRoute element={<Wishlist />} /> },
       { path: "productdetails/:id", element: <ProductDetails /> },
       { path: "contact", element: <ContactUs /> },

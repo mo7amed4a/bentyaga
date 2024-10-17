@@ -11,6 +11,7 @@ const initialState = {
   error: null,
 };
 
+
 export const fetchAllCart = createAsyncThunk(
   'cart/fetchAllCart',
   async (_, thunkAPI) => {
@@ -84,6 +85,9 @@ const cartSlice = createSlice({
       state.message = null;
       state.errorMsg = null;
     },
+    clearCart: (state) => {
+      state.cart = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -135,5 +139,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setMsgs } = cartSlice.actions;
+export const { setMsgs, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
