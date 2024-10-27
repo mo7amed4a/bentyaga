@@ -140,49 +140,6 @@ const ProductDetails = () => {
     </div>
   );
 
-  // const renderImagesAsSlider = () => {
-  //   const settings = {
-  //     dots: true,
-  //     infinite: true,
-  //     speed: 200,
-  //     slidesToShow: 1,
-  //     slidesToScroll: 1,
-  //   };
-
-  //   return (
-  //     <Swiper
-  //       // pagination={true}
-  //       // className="jwnjwni"
-  //       // slidesPerView={"auto"}
-  //       //   // spaceBetween={5}
-  //       //   freeMode={true}
-  //       //   loop={true}
-  //       //   modules={[Navigation, Autoplay]}
-  //       //   autoplay={{ delay: 4100, disableOnInteraction: false }}
-  //       //   speed={350}
-  //       slidesPerView={"auto"}
-  //       spaceBetween={5}
-  //       freeMode={true}
-  //       loop={true}
-  //       className="mySwiper"
-  //       modules={[Autoplay, Navigation, FreeMode]}
-  //       autoplay={{ delay: 4100, disableOnInteraction: false }}
-  //       speed={350}
-  //     >
-  //       {product.images?.map((image) => (
-  //         <SwiperSlide>
-  //           <img src={image.image} className="w-100" alt="" />
-  //         </SwiperSlide>
-  //       ))}
-  //       {(!product.images || product.images.length == 0) && (
-  //         <SwiperSlide>
-  //           <img src={product.photo} className="w-100" alt="" />
-  //         </SwiperSlide>
-  //       )}
-  //     </Swiper>
-  //   );
-  // };
-
   const handleSizeChange = (event) => {
     setSelectedSize(event.target.value);
   };
@@ -207,12 +164,12 @@ const ProductDetails = () => {
       dispatch(
         addProductToCart({
           id: id,
-          color: selectedColor,
-          quantity: selectedQuantity,
-          size: selectedSize,
+          color: selectedColor || "none",
+          quantity: selectedQuantity || 1,
+          size: selectedSize || "none"
         })
       );
-      // navigation('/cart')
+      navigation('/checkout')
     }
   };
 
