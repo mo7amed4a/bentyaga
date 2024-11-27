@@ -628,3 +628,7 @@ input:focus {
 .swiper-scrollbar-drag {
     background-color: black !important;
 }
+
+.bold {
+    font-weight: bold;
+}

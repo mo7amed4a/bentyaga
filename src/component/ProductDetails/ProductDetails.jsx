@@ -314,7 +314,7 @@ const ProductDetails = () => {
         <div className={styles.detailsContainer1}>
           <p>{product.about_product}</p>
         </div>
-        {product.sizes.length > 1 && (
+        {product.sizes.length >= 1 && (
           <div className="my-3 selectContainer">
             <select
               id="sizeSelect"
@@ -338,7 +338,7 @@ const ProductDetails = () => {
             </select>
           </div>
         )}
-        {product.colors.length > 1 && <div className="my-3 selectContainer">
+        {product.colors.length >= 1 && <div className="my-3 selectContainer">
           <select
             disabled={product.colors.length < 1}
             id="colorSelect"
@@ -428,7 +428,11 @@ const ProductDetails = () => {
           >
             <div className={`${styles.specificDetail} card card-body`}>
               {/* Replace with actual product details */}
-              <p>{product.details}</p>
+              
+              <p>
+                <TextToHTML text={product.details} />
+              </p>
+              {/* <p dangerouslySetInnerHTML={{ __html: product.details }}></p> */}
               {/* Add more product details as needed */}
             </div>
           </div>
@@ -456,9 +460,14 @@ const ProductDetails = () => {
           >
             <div className={`${styles.specificDetail} card card-body`}>
               {/* Replace with actual product details */}
-              {product.sizes.map(({ size, index }) => (
+              {product.sizes.map((size, index ) => (
                 <div key={index} style={{ fontSize: 12 }}>
-                  {size.size}: {size.descrtions_size_fit}
+                  <p>
+                    <b className="bold">Size: </b><span>{size.size}</span>
+                  </p>
+                  <p>
+                    <b className="bold">Fit: </b> <span>{size.descrtions_size_fit}</span>
+                  </p>
                 </div>
               ))}
               {/* Add more product details as needed */}
@@ -471,3 +480,61 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+const TextToHTML = ({ text }) => {
+  const parseText = (inputText) => {
+    const lines = inputText.split("\n"); // تقسيم النص إلى أسطر
+    return lines.map((line, index) => {
+      if (/^\*\*(.+?)\*\*$/.test(line)) {
+        // النصوص المحاطة بـ ** تصبح غامقة
+        return (
+          <strong key={index} className="d-block mb-2">
+            {line.replace(/\*\*/g, "").trim()}
+          </strong>
+        );
+      } else if (/^\*(.+?)\*$/.test(line)) {
+        // النصوص المحاطة بـ * تصبح مائلة
+        return (
+          <em key={index} className="d-block mb-2">
+            {line.replace(/\*/g, "").trim()}
+          </em>
+        );
+      } else if (line.startsWith("-")) {
+        // القوائم غير المرتبة
+        return (
+          <li key={index} className="mb-2">
+            {line.replace("-", "").trim()}
+          </li>
+        );
+      } else if (/^\d+\./.test(line)) {
+        // القوائم المرتبة
+        return (
+          <li key={index} className="mb-2">
+            {line.replace(/^\d+\./, "").trim()}
+          </li>
+        );
+      } else {
+        // النصوص العادية
+        return (
+          <p key={index} className="mb-2">
+            {line.trim()}
+          </p>
+        );
+      }
+    });
+  };
+
+  return (
+    <div>
+      {parseText(text).map((element, index) => {
+        if (element.type === "li" && index > 0 && text.split("\n")[index - 1].startsWith("-")) {
+          return <ul key={`ul-${index}`}>{element}</ul>;
+        }
+        return element;
+      })}
+    </div>
+  );
+};
+

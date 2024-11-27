@@ -10,15 +10,24 @@ export default function Checkout() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const [provinces, setProvinces] = useState([]);
+  const [city, setCity] = useState(null);
+  const [cityId, setCityId] = useState(null);
   const [email, setEmail] = useState("");
   const [phone_user, setPhone_user] = useState("");
   const [location, setLocation] = useState("");
   const [shippingPrice, setShippingPrice] = useState("");
 
+
+  useEffect(() => {
+    setCity(provinces.find((province) => province.id === parseInt(cityId)));
+  }, [cityId])
+  
   async function fetchAreas() {
     try {
       const { data } = await api.get(`https://api.bantayga.wtf/Province/`);
       setProvinces(data);
+      console.log(data);
+      
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -50,6 +59,7 @@ export default function Checkout() {
       const { data } = await api.post(
         `https://api.bantayga.wtf/create-order_receipt/`,
         {
+          city: city.id,
           email,
           phone_user,
           location,
@@ -78,7 +88,7 @@ export default function Checkout() {
   };
 
   useEffect(() => {
-    // fetchAreas()
+    fetchAreas()
     if (cart && cart.length === 0) {
       navigate("/cart");
     }
@@ -98,8 +108,8 @@ export default function Checkout() {
             <p className={Style.firstPara}>Address</p>
           </div>
 
-          <div className="border border-black border-1 contact-form-wrapper">
-            {/* <select className='w-50 p-4' value={city} onChange={handleChangeCity} required>
+          <div className="border border-black border-1 contact-form-wrapper w-100">
+             <select className='w-100 p-4' onChange={(e) => setCityId(e.target.value)} required>
                 <option value=''>Province</option>
                 {
                   (provinces && provinces.length > 0) && (
@@ -108,7 +118,7 @@ export default function Checkout() {
                     ))
                   )
                 }
-              </select> */}
+              </select> 
             <input
               type="email"
               value={email}
@@ -164,7 +174,21 @@ export default function Checkout() {
               <h2 style={{ fontWeight: "700 !important", fontSize: 20 }}>
                 Order Summary
               </h2>
-              <div className="d-flex justify-content-between pt-4">
+              {city && <div className="d-flex justify-content-between pt-4">
+                <p
+                  className={Style.orderPara}
+                  style={{ fontWeight: 400, fontSize: 12 }}
+                >
+                  Delivery 
+                </p>
+                <p
+                  className={Style.orderPara}
+                  style={{ fontWeight: 400, fontSize: 12 }}
+                >
+                  <b>{city?.name} - {city.delivery_price} EGP</b> 
+                </p>
+              </div>}
+              <div className="d-flex justify-content-between">
                 <p
                   className={Style.orderPara}
                   style={{ fontWeight: 400, fontSize: 12 }}
@@ -206,8 +230,8 @@ export default function Checkout() {
                   className={Style.orderPara}
                   style={{ fontWeight: 500, fontSize: 13 }}
                 >
-                  {parseFloat(cart[0]?.total_price) +
-                    parseFloat(shippingPrice || 0)}{" "}
+                  {(parseFloat(cart[0]?.total_price) +
+                    parseFloat(shippingPrice || 0))+ (city?.delivery_price || 0 )} {" "}
                   EGP
                 </p>
               </div>

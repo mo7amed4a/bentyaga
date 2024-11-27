@@ -1,5 +1,5 @@
 import React from 'react';
-import Style from './Login.css';
+import Style from '../Login/Login.css';
 import { useFormik } from 'formik';
 import { Checkbox } from '@mui/material';
 import axios from 'axios';
@@ -21,9 +21,9 @@ export default function Login() {
         }, {});
 
         try {
-            const res = await axios.post('https://api.bantayga.wtf/login/', transformedValues);
+            const res = await axios.post('https://api.bantayga.wtf/request-reset-password/', transformedValues);
             dispatch(setCredentials(res.data));
-            navigate('/'); // Navigate to the home page upon successful login
+            navigate('/');
         } catch (err) {
             console.error(err);
             alert('An error occurred while logging in. Please try again later.');
@@ -44,16 +44,12 @@ export default function Login() {
             errors.Email = 'Email is invalid';
         }
 
-        if (!values.Password) {
-            errors.Password = 'Password is required';
-        } 
         return errors;
     }
 
     let formik = useFormik({
         initialValues: {
             Email: '',
-            Password: '',
         },
         validate,
         onSubmit: loginSubmit,
@@ -64,7 +60,7 @@ export default function Login() {
             <div className="align-items-center d-flex flex-column justify-content-center">
                 <div className="login_wrapper col-md-6 border border-2 border-black border-bottom-0 py-5">
                     <div className='text-center mt-5 mb-3'>
-                        <h3 className='overflow-hidden fw-bold mt-5 mb-5'>LOGIN</h3>
+                        <h3 className='overflow-hidden fw-bold mt-5 mb-5'>Forgot Password</h3>
                     </div>
                     <div className='form_wrapper w-100 mx-auto pb-5 pt-3 px-4'>
                         <form onSubmit={formik.handleSubmit} className='pb-5'>
@@ -72,20 +68,12 @@ export default function Login() {
                             {formik.errors.Email && formik.touched.Email ? <div className='text-danger py-1'>{formik.errors.Email}</div> : ''}
                             <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.Email} type="email" id='email' className='form-control border border-2 border-black p-4' name='Email' />
                             
-                            <label htmlFor="password" className='pt-4'>Password*</label>
-                            {formik.errors.Password && formik.touched.Password ? <div className='text-danger py-1'>{formik.errors.Password}</div> : ''}
-                            <input onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.Password} type="password" id='password' className='form-control border border-2 border-black p-4' name='Password' />
-
-                            <div className="d-flex align-items-center py-2 justify-justify-content-center mb-4">
-                                <Checkbox {...<label></label>} checked disabled />
-                                <label className='pe-3' htmlFor="">Remember Me</label>
-                                <Link to={'/forgot-password'} className='text-decoration-underline text-black ms-auto'>Forget Password</Link>
-                            </div>
+                    
 
                             <div className='pb-5'>
-                                <button type='submit' className='w-100 btn bg-black text-white my-3 py-3 fs-4 border0 mb-5'>Login</button>
+                                <button type='submit' className='w-100 btn bg-black text-white my-3 py-3 fs-4 border0 mb-5'>Send</button>
                             </div>
-                            <p class="text-center mb-5">Do not have account? <a class="text-decoration-underline text-black" href="/register">Register</a></p>
+                            <p class="text-center mb-5">Do you have account? <Link class="text-decoration-underline text-black" to="/register">Register</Link></p>
                         </form>
                     </div>
                 </div>

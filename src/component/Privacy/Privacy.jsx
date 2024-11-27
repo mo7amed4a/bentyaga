@@ -82,7 +82,7 @@ const PrivacyPolicy = () => {
         <h2 style={styles.subHeading}>9. Contact Us</h2>
         
         <p style={styles.text}>
-        If you have any questions regarding this policy or how we use your personal data, please do not hesitate to contact us via email at <a href="mailto:info@bantayga.wtf" style={styles.link}>info@bantayga.wtf</a> or call us at <a href="tel:+201090359579" style={styles.link}>+201090359579</a>.
+        If you have any questions regarding this policy or how we use your personal data, please do not hesitate to contact us via email at <a href="mailto:info@bantayga.wtf" style={styles.link}>info@bantayga.wtf</a> or call us at <a href="tel:+201000598141" style={styles.link}>+201000598141</a>.
         You can also visit our office at 123 Street Nasr city, Cairo, Egypt.
       </p>
       </section>

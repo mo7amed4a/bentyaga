@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Styles from './Navbar.module.css'; // Import the CSS module
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCart } from '../../features/cartSlice';
@@ -10,6 +10,7 @@ import { API } from '../../features/globals';
 export default function Navbar() {
   const location = useLocation();
   const dispatch = useDispatch()
+  const router = useNavigate()
   const isHome = location.pathname === '/' || location.pathname === '/drop';
   const [showNav, setShowNav] = useState(false)
   const [showNavCat, setShowNavCat] = useState(false)
@@ -93,7 +94,7 @@ useEffect(() => {
           <button onClick={handleNavLinkClick} className={`navbar-toggler ${Styles.navbarToggler}`} type="button">
             <span className={`navbar-toggler-icon ${Styles.navbarTogglerIcon}`}></span>
           </button>
-          <img src={API + web?.logo} className={Styles.logo} alt="logo" />
+          <img onClick={() => router('/')} src={API + web?.logo} className={Styles.logo} alt="logo" />
           <div className={"navbar-collapse" + " " + (showNav ? "open" : "")} id="navbarSupportedContent">
             <i className="fa fa-close" onClick={handleNavLinkClick} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"></i>
             {

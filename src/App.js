@@ -14,6 +14,8 @@ import AboutUs from "./component/AboutUs/AboutUs";
 import Notfound from "./component/Notfound/Notfound";
 import Register from "./component/Register/Register";
 import Login from "./component/Login/Login";
+import ResetPassword from "./component/reset-password/ResetPassword";
+import ForgotPassword from "./component/forgot-password/ForgotPassword";
 import "@fontsource/inter";
 import "@fontsource/roboto";
 import Drop from "./component/Drop/Drop";
@@ -58,6 +60,8 @@ let routers = createBrowserRouter([
       { path: "drop", element: <Drop /> },
       { path: "cart", element: <ProtectedRoute element={<Cart />} /> },
       // { path: "cart", element: <Cart /> },
+      { path: "forgot-password", element: <NoProtectedRoute element={<ForgotPassword />} /> },
+      { path: "reset-password/:uid/:token", element: <NoProtectedRoute element={<ResetPassword />} /> },
       { path: "checkOut", element: <ProtectedRoute element={<Checkout />} /> },
       { path: "thank-you-for-your-order", element: <ProtectedRoute element={<ThanksForOrder />} /> },
       { path: "wishlist", element: <ProtectedRoute element={<Wishlist />} /> },

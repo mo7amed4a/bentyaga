@@ -263,9 +263,9 @@ export default function Footer() {
                 Call US at: <br />
                 <a
                   className="text-black ps-2 text-decoration-none"
-                  href="tel:+201090359579"
+                  href="tel:+201000598141"
                 >
-                  +201090359579
+                  +201000598141
                 </a>
               </div>
             </>
