@@ -429,10 +429,10 @@ const ProductDetails = () => {
             <div className={`${styles.specificDetail} card card-body`}>
               {/* Replace with actual product details */}
               
-              <p>
+              {/* <p>
                 <TextToHTML text={product.details} />
-              </p>
-              {/* <p dangerouslySetInnerHTML={{ __html: product.details }}></p> */}
+              </p> */}
+              <p dangerouslySetInnerHTML={{ __html: product.details }}></p>
               {/* Add more product details as needed */}
             </div>
           </div>
