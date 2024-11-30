@@ -87,7 +87,7 @@ const ProductDetails = () => {
         slidesPerView={"auto"}
         spaceBetween={5}
         loop={true}
-        className="mySwiper"
+        className="mySwiper mySwiperProductDetails"
         modules={[Autoplay, Scrollbar]}
         autoplay={{ delay: 4100 }}
         scrollbar={{
@@ -166,10 +166,10 @@ const ProductDetails = () => {
           id: id,
           color: selectedColor || "none",
           quantity: selectedQuantity || 1,
-          size: selectedSize || "none"
+          size: selectedSize || "none",
         })
       );
-      navigation('/checkout')
+      navigation("/checkout");
     }
   };
 
@@ -196,7 +196,7 @@ const ProductDetails = () => {
           id: id,
           color: selectedColor || "none",
           quantity: selectedQuantity || 1,
-          size: selectedSize || "none"
+          size: selectedSize || "none",
         })
       );
     }
@@ -309,7 +309,22 @@ const ProductDetails = () => {
           className={`${styles.details} detail_1 d-flex justify-content-between align-items-center mt-3 mb-4`}
         >
           <h1 className="pt-4">{product.name}</h1>
-          <p className="pt-4">EGP {product.price}</p>
+          <div class="text-center mt-4 d-flex align-items-center">
+            {product.Discount > 0 && <span class="text-decoration-line-through text-muted ps-2">
+              {product.price}
+            </span>}
+            <p class={`ms-2 fw-bold`}>
+              {product.Discount === 0 && "EGP "}
+              {(
+                product.price - product.Discount
+                // (product.price * product.Discount) / 100
+              )} EGP
+            </p>
+          </div>
+          {/* <div className="d-flex">
+            <p className="pt-4"> {product.price}</p>
+            <p className="pt-4 ps-3"> {product.price}</p>
+          </div> */}
         </div>
         <div className={styles.detailsContainer1}>
           <p>{product.about_product}</p>
@@ -338,44 +353,48 @@ const ProductDetails = () => {
             </select>
           </div>
         )}
-        {product.colors.length >= 1 && <div className="my-3 selectContainer">
-          <select
-            disabled={product.colors.length < 1}
-            id="colorSelect"
-            className={isReq && !selectedColor ? "redBorder" : ""}
-            value={selectedColor}
-            onChange={handleColorChange}
-          >
-            <option value="" className={styles.selection}>
-              {product.colors.length < 1 ? (
-                <span>The color of the product are sold out</span>
-              ) : (
-                "Select Color"
-              )}
-            </option>
-            {product.colors?.map((color, index) => (
-              <option key={index} value={color.color}>
-                {color.color}
+        {product.colors.length >= 1 && (
+          <div className="my-3 selectContainer">
+            <select
+              disabled={product.colors.length < 1}
+              id="colorSelect"
+              className={isReq && !selectedColor ? "redBorder" : ""}
+              value={selectedColor}
+              onChange={handleColorChange}
+            >
+              <option value="" className={styles.selection}>
+                {product.colors.length < 1 ? (
+                  <span>The color of the product are sold out</span>
+                ) : (
+                  "Select Color"
+                )}
               </option>
-            ))}
-          </select>
-        </div>}
-        {product.sale_status !== "sold_out" && <div className="my-3 selectContainer">
-          <select
-            id="quantitySelect"
-            className={isReq && !selectedQuantity ? "redBorder" : ""}
-            value={selectedQuantity}
-            onChange={handleQuantityChange}
-          >
-            <option value="" className={styles.selection}>
-              Select Quantity
-            </option>
-            {/* Replace with actual quantity options based on your product data */}
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </div>}
+              {product.colors?.map((color, index) => (
+                <option key={index} value={color.color}>
+                  {color.color}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {product.sale_status !== "sold_out" && (
+          <div className="my-3 selectContainer">
+            <select
+              id="quantitySelect"
+              className={isReq && !selectedQuantity ? "redBorder" : ""}
+              value={selectedQuantity}
+              onChange={handleQuantityChange}
+            >
+              <option value="" className={styles.selection}>
+                Select Quantity
+              </option>
+              {/* Replace with actual quantity options based on your product data */}
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        )}
         {isProductInCart ? (
           <div className="my-3 d-flex flex-column">
             <button className={`${styles.buyBtn}`} onClick={handleBuyClick}>
@@ -428,7 +447,7 @@ const ProductDetails = () => {
           >
             <div className={`${styles.specificDetail} card card-body`}>
               {/* Replace with actual product details */}
-              
+
               {/* <p>
                 <TextToHTML text={product.details} />
               </p> */}
@@ -460,13 +479,15 @@ const ProductDetails = () => {
           >
             <div className={`${styles.specificDetail} card card-body`}>
               {/* Replace with actual product details */}
-              {product.sizes.map((size, index ) => (
+              {product.sizes.map((size, index) => (
                 <div key={index} style={{ fontSize: 12 }}>
                   <p>
-                    <b className="bold">Size: </b><span>{size.size}</span>
+                    <b className="bold">Size: </b>
+                    <span>{size.size}</span>
                   </p>
                   <p>
-                    <b className="bold">Fit: </b> <span>{size.descrtions_size_fit}</span>
+                    <b className="bold">Fit: </b>{" "}
+                    <span>{size.descrtions_size_fit}</span>
                   </p>
                 </div>
               ))}
@@ -480,8 +501,6 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-
-
 
 const TextToHTML = ({ text }) => {
   const parseText = (inputText) => {
@@ -529,7 +548,11 @@ const TextToHTML = ({ text }) => {
   return (
     <div>
       {parseText(text).map((element, index) => {
-        if (element.type === "li" && index > 0 && text.split("\n")[index - 1].startsWith("-")) {
+        if (
+          element.type === "li" &&
+          index > 0 &&
+          text.split("\n")[index - 1].startsWith("-")
+        ) {
           return <ul key={`ul-${index}`}>{element}</ul>;
         }
         return element;
@@ -537,4 +560,3 @@ const TextToHTML = ({ text }) => {
     </div>
   );
 };
-

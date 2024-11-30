@@ -620,9 +620,10 @@ input:focus {
 }
 
 .swiper-scrollbar  {
-    width: 70% !important;
-    margin-left: 15% !important;
-    /* background-color: red !important; */
+    width: 50% !important;
+    margin-left:25% !important;
+    height: 2px !important;
+    overflow: hidden;
 }
 
 .swiper-scrollbar-drag {

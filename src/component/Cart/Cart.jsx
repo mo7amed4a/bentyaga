@@ -65,7 +65,7 @@ export default function Cart() {
 
                       <div className='d-flex justify-content-between'>
                         <h2 className={`${Styles.hh} h5 pt-4 overflow-hidden`}>{item.product_name}</h2>
-                        <p className={`${Styles.hh} pt-4`}>${item.converted_price}</p>
+                        <p className={`${Styles.hh} pt-4`}>{item.product_Discount > 0 && <span className='text-decoration-line-through text-muted'>{item.converted_price}</span>} ${item.converted_price - item.product_Discount} EGP </p>
                       </div>
 
                       <div className='d-flex'>
@@ -101,8 +101,8 @@ export default function Cart() {
                         <button onClick={() => handleMoveToWishlist(item.product)} style={{background: "transparent", border: 'none'}} className={Styles.move}>Move to Wishlist</button>
                       </div>
 
-                      <div className={Styles.customlist}>
-                        <p className={Styles.listitem}>{item.product_details}</p>
+                      <div>
+                        <span className={Styles.light + " " +  Styles.line} dangerouslySetInnerHTML={{ __html: item.product_details }}></span>
                       </div>
                     </div>
                   </div>

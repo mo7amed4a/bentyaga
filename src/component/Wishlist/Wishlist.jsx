@@ -119,7 +119,8 @@ export default function Wishlist() {
                         {item.product.name}
                       </h2>
                       <p className={`${Styles.hh} pt-4`}>
-                        ${item.product.price}
+                        {item.product.Discount > 0 && <span className="text-decoration-line-through text-muted">{item.product.Discount} </span>}
+                        &nbsp; ${item.product.price} EGP
                       </p>
                     </div>
 

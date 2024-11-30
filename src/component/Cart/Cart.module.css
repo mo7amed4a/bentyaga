@@ -58,6 +58,15 @@
   font-weight: 300;
 }
 
+.line {
+  padding: 4px 0;
+  width: 100% !important;
+  display: -webkit-box;
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  -webkit-line-clamp: 12;
+}
+
 .customlist .listitem::before {
   content: '•';
   position: absolute;
@@ -127,6 +136,9 @@ margin-left: auto;
 
 
 @media (max-width: 768px) {
+  .line {
+    -webkit-line-clamp: 2;
+  }
  body{
    overflow: hidden;
 
