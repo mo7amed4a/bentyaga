@@ -310,11 +310,10 @@ const ProductDetails = () => {
         >
           <h1 className="pt-4">{product.name}</h1>
           <div class="text-center mt-4 d-flex align-items-center">
-            {product.Discount > 0 && <span class="text-decoration-line-through text-muted ps-2">
+            <p class={`ms-2 fw-bold`}>
+            {product.Discount > 0 && <span class="text-decoration-line-through text-muted pe-2">
               {product.price}
             </span>}
-            <p class={`ms-2 fw-bold`}>
-              {product.Discount === 0 && "EGP "}
               {(
                 product.price - product.Discount
                 // (product.price * product.Discount) / 100
